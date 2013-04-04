@@ -1,0 +1,480 @@
+--
+--
+-- This library supplements the turtle api.  
+--      os.loadAPI("turtleLib")
+--      turtleLib.function(args)
+--
+--[[
+Help information
+----------------
+Functions in the turtleLib API
+-- Logging
+enableDebug()
+disableDebug()
+log()
+
+-- Fueling
+refuel()
+
+-- Digging
+getCollected()
+digForward()
+digUp()
+digDown()
+
+-- Moving
+forward()
+back()
+up()
+down()
+
+-- Attacking
+attackForward()
+attckUp()
+attckDown()
+]]
+
+
+-- Enable debug logging
+local debug = false
+function enableDebug()
+    --print("enableDebug()")
+    debug = true
+end
+
+-- Disable debug logging
+function disableDebug()
+    --print("disableDebug()")
+    debug = false
+end
+
+-- Log the console if debug mode is set
+function log(s) 
+    if debug then
+        print (s)
+    end
+end
+
+-- Keep track of the number of blocks collected
+local collected = 0
+local function collect()
+    log("collect()")
+    collected = collected + 1
+    if math.fmod(collected, 25) == 0 then
+        log( "Mined "..collected.." items" )
+    end
+end
+
+-- Return the number of blocks collected
+function getCollected()
+    log("getCollected() return "..collected)
+    return collected
+end
+
+
+-- helper functions
+local function genericHelper(helper, fn, arg1, arg2)
+    local rc = helper(arg1, arg2)
+    log(fn.." return "..tostring(rc))
+    return rc
+end
+
+function left()
+    return genericHelper(turtle.turnLeft, "left()")
+end
+
+function right()
+    return genericHelper(turtle.turnRight, "right()")
+end
+
+function select(slotNum)
+    return genericHelper(turtle.select, "select()", slotNum)
+end
+
+function getItemCount(slotNum)    
+    return genericHelper(turtle.getItemCount, "getItemCount()", slotNum)
+end
+
+function placeUp()
+    return genericHelper(turtle.placeUp, "placeUp()")
+end
+
+function placeDown()
+    return genericHelper(turtle.placeDown, "placeDown()")
+end
+
+function placeForward()
+    return genericHelper(turtle.place, "placeForward()")
+end
+
+function dropForward()
+    return genericHelper(turtle.drop, "dropForward()")
+end
+
+function dropUp()
+    return genericHelper(turtle.dropUp, "dropUp()")
+end
+
+function dropDown()
+    return genericHelper(turtle.dropDown, "dropDown()")
+end
+
+function detectForward()
+    return genericHelper(turtle.detect, "detectForward()")
+end
+
+function detectUp()
+    return genericHelper(turtle.detectUp, "detectUp()")
+end
+
+function detectDown()
+    return genericHelper(turtle.detectDown, "detectDown()")
+end
+
+function suckForward()
+    return genericHelper(turtle.suck, "suckForward()")
+end
+
+function suckUp()
+    return genericHelper(turtle.suckUp, "suckUp()")
+end
+
+function suckDown()
+    return genericHelper(turtle.suckDown, "suckDown()")
+end
+
+
+
+-- Dig and return false if there is a block, but we failed to dig it.
+local function genericDig(detect, dig, fn)
+    if detect() then
+        if not dig() then
+                log(fn.." return false")
+                return false
+        end
+        collect()
+    end
+    log(fn.." return true")
+    return true
+end
+
+-- Dig forward if there is a block
+function digForward()
+    return genericDig(detectForward, turtle.dig, "digForward()")
+end
+
+-- Dig up if there is a block
+function digUp()
+    return genericDig(detectUp, turtle.digUp, "digUp()")
+end
+
+-- Dig down if there is a block
+-- Returns false if there is a block, but we failed to dig it.
+function digDown()
+    return genericDig(detectDown, turtle.digDown, "digDown()")
+end
+
+-- Attack, return true on successful attack, false if blocked or nothing to attack
+local function genericAttack(detect, attack, fn)
+    if detect() then
+        log(fn.." returns false")
+        return false
+    end
+    if attack() then
+        collect()
+        log(fn.." returns true")
+        return true
+    end
+    log(fn.." returns true")
+    return false
+end
+
+-- Attack forward
+function attackForward()
+    return genericAttack(detectForward, turtle.attack, "attackForward()")
+end
+
+-- Attack up
+function attackUp()
+    return genericAttack(detectUp, turtle.attackUp, "attackUp()")
+end
+
+-- Attack down
+function attackDown()
+    return genericAttack(detectDown, turtle.attackDown, "attackDown()")
+end
+
+
+-- Refuel the turtle by scanning each slot in the inventory and trying to use it as fuel.
+-- In none of the slots have fuel, the "Add more fuel to continue." message is disabled 
+-- until you place fuel in the turtles inventory.
+function refuel()
+    local fuelLevel = turtle.getFuelLevel()
+    if fuelLevel == "unlimited" or fuelLevel > 0 then
+        return true
+    end
+
+    -- Try each slot and fuel the turtle
+    local function tryRefuel()
+        for n=1,16 do
+            if turtle.getItemCount(n) > 0 then
+                turtle.select(n)
+                if turtle.refuel(1) then
+                    turtle.select(1)
+                    return true
+                end
+            end
+        end
+        turtle.select(1)
+        return false
+    end
+    
+    -- Success refuel
+    if tryRefuel() then
+        return true
+    end
+
+    -- Failed to refuel, so wait for someone to put fuel in the turtle
+    print( "Add more fuel to continue" )
+    while not tryRefuel() do
+        sleep(1)
+    end
+    print( "Fuel accepted" )
+    return true
+end
+
+-- Refuel if necessary then move, dig or attackp.
+-- Return true if successfully moved.
+local function genericMove(dir, detect, dig, attack, fn)
+    refuel()
+    while not dir() do
+        if detect() then
+            if not dig() then
+                log(fn.." returns false")
+                return false
+            end
+        elseif attack() then
+        end
+    end
+    log(fn.." returns true")
+    return true
+end
+
+-- Return true if successfully moved forward.
+function forward()
+    return genericMove(turtle.forward, detectForward, digForward, attackForward, "forward()")
+end
+
+-- Return true if successfully moved down.
+function down()
+    return genericMove(turtle.down, detectDown, digDown, attackDown, "down()")
+end
+
+-- Return true if successfully moved up.
+function up()
+    return genericMove(turtle.up, detectUp, digUp, attackUp, "up()")
+end
+
+-- Return true if successfully moved back.
+function back()
+    local rc = turtle.back()
+    log("back() return "..tostring(rc))
+    return rc
+end
+
+
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+
+print( "Starting House..." )
+
+local slotReference = { "wall", "wall", "wall"
+                      }
+
+function put(first, last, type, placeForwardFlag)
+    log("put "..type.." ("..first..".."..last..")")
+    local missing = true
+    local DisplayMsg = true
+    while missing do
+        for x = first, last do
+            if (missing and getItemCount(x) > 0) then 
+                missing = false
+                select(x)
+            end
+        end
+        if (missing and DisplayMsg) then
+            print("Slots "..first..".."..last.." are empty, please fille with "..type)
+            DisplayMsg = false
+        end
+        sleep(1)
+    end
+    
+    -- We can optionally place the block in front of us.
+    if (placeForwardFlag) then
+        return placeForward()
+    end
+
+    -- Normally we clear below us and place the block down.
+    digDown()
+    placeDown()
+    forward()
+end
+
+function skip() 
+    log("skip")
+    forward()
+    while (detectDown()) do
+        if not digDown() then
+            return false
+        end
+    end
+    return true
+end
+
+-- for key, val in pairs(slotReference) do
+--   print(key..":"..val)
+-- end
+
+-- Take an array and run execute the elements in the array
+function runMatrix(matrix, name)
+    print("Run: "..name)
+    for key, val in pairs(matrix) do
+        if (val) then
+            val()
+        else
+            print("Missing function Matrix:"..name.." index: "..key)
+            return false
+        end
+    end
+    return true
+end
+
+-- Refer to the slotReference for the mapping of name to Turtle slot #
+
+function tableRight()
+    log("tableRight")
+    right()
+    forward()
+    put(15, 15, "craftingTable")
+    back()
+    back()
+    return left()
+end
+
+-- Place a wall block
+function wallBlock() 
+    log("wallBlock")
+    return put(1, 3, "wallBlock")
+end
+
+-- Place a window block
+function windowBlock() 
+    log("window")
+    return put(4, 4, "windowBlock")
+end
+
+-- Place a door block.
+function doorBlock() 
+    log("door")
+    return put(14, 14, "doorBlock", true)
+end
+
+-- This has to go down two levels to place the door and then return to original position.
+function placeDoor()
+    local placeDoorMatrix = { left, forward, down, down, left, left, doorBlock, up, up, left, forward, right, forward, left }
+    runMatrix(placeDoorMatrix, "placeDoor")
+end
+
+
+-- A wall w/ a window
+function wallWindow() 
+    local wallWindowMatrix = { wallBlock, wallBlock, windowBlock, wallBlock, right }
+    runMatrix(wallWindowMatrix, "wallWindow")
+end
+
+-- A plain wall and place a crafting table to the right
+function wallCraft() 
+    local wallCraftMatrix = { wallBlock, tableRight, wallBlock, wallBlock, wallBlock, right }
+    runMatrix(wallCraftMatrix, "wallCraft")
+end
+
+-- A wall w/ a doorway
+function wallDoorway() 
+    local wallDoorwayMatrix = { wallBlock, skip, wallBlock, wallBlock, right }
+    runMatrix(wallDoorwayMatrix, "wallDoorway")
+end
+
+-- A wall w/ a door
+function wallDoor() 
+    local wallDoorMatrix = { wallBlock, placeDoor, wallBlock, wallBlock, right }
+    runMatrix(wallDoorMatrix, "wallDoor")
+end
+
+-- A plain wall
+function wallPlain() 
+    local wallPlainMatrix = { wallBlock, wallBlock, wallBlock, wallBlock, right }
+    runMatrix(wallPlainMatrix, "wallPlain")
+end
+
+-- A Door level with crafting table
+function levelDoorwayCraft()
+    local levelDoorwayCraftMatrix = { wallDoorway, wallPlain, wallCraft, wallPlain }
+    runMatrix(levelDoorwayCraftMatrix, "levelDoorwayCraft")
+end
+
+-- A level that uses wall w/ door
+function levelDoor()
+    local levelDoorMatrix = { wallDoor, wallPlain, wallPlain, wallPlain }
+    runMatrix(levelDoorMatrix, "levelDoor")
+end
+
+-- A level that uses wall w/ door and windows
+function levelDoorWindow()
+    local levelDoorWindowMatrix = { wallDoor, wallWindow, wallWindow, wallWindow }
+    runMatrix(levelDoorWindowMatrix, "levelDoorWindow")
+end
+
+-- A plain level
+function levelPlain()
+    local levelPlainMatrix = { wallPlain, wallPlain, wallPlain, wallPlain }
+    runMatrix(levelPlainMatrix, "levelPlain")
+end
+
+function levelFloor() 
+    local floorMatrix1 = { wallBlock, wallBlock, wallBlock, wallBlock, right, wallBlock, right }
+    local floorMatrix2 = { wallBlock, wallBlock, wallBlock, wallBlock, left,  wallBlock, left  }
+    local floorMatrix3 = { wallBlock, wallBlock, wallBlock, wallBlock, wallBlock, right, right, forward }
+    runMatrix(floorMatrix1, "floor1")
+    runMatrix(floorMatrix2, "floor2")
+    runMatrix(floorMatrix1, "floor1")
+    runMatrix(floorMatrix2, "floor2")
+    runMatrix(floorMatrix3, "floor3")
+end
+
+function levelRoof() 
+    local roofMatrix0 = { forward, right, forward, left }
+    local roofMatrix1 = { wallBlock, wallBlock, right, wallBlock, right }
+    local roofMatrix2 = { wallBlock, wallBlock, left,  wallBlock, left  }
+    local roofMatrix3 = { forward, forward, forward, forward  }
+    runMatrix(roofMatrix0, "roof0")
+    runMatrix(roofMatrix1, "roof1")
+    runMatrix(roofMatrix2, "roof2")
+    runMatrix(roofMatrix1, "roof1")
+    runMatrix(roofMatrix3, "roof3")
+end
+                    
+-- The houseMatrix defines what blocks to put where. The value represent the type of object to place. 
+local houseMatrix = { 
+                        levelFloor, up,
+                        levelDoorwayCraft, up,
+                        levelDoorWindow, up, 
+                        levelPlain, up,
+                        levelRoof, 
+                        down, down, down, down -- bring the turtle back down into easy reach.
+                    }
+disableDebug()
+
+-- We have to placeDown for everything, so move up first
+runMatrix( houseMatrix, "house")
+print( "House Complete..." )

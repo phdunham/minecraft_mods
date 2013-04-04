@@ -1,0 +1,366 @@
+--
+--
+-- This library supplements the turtle api.  
+--      os.loadAPI("turtleLib")
+--      turtleLib.function(args)
+--
+--[[
+Help information
+----------------
+Functions in the turtleLib API
+-- Logging
+enableDebug()
+disableDebug()
+log()
+
+-- Fueling
+refuel()
+
+-- Digging
+getCollected()
+digForward()
+digUp()
+digDown()
+
+-- Moving
+forward()
+back()
+up()
+down()
+
+-- Attacking
+attackForward()
+attckUp()
+attckDown()
+]]
+
+
+-- Enable debug logging
+local debug = false
+function enableDebug()
+--    print("enableDebug()")
+    debug = true
+end
+
+-- Disable debug logging
+function disableDebug()
+    print("disableDebug()")
+    debug = false
+end
+
+-- Log the console if debug mode is set
+function log(s) 
+    if debug then
+        print (s)
+    end
+end
+
+-- Keep track of the number of blocks collected
+local collected = 0
+local function collect()
+    log("collect()")
+	collected = collected + 1
+	if math.fmod(collected, 25) == 0 then
+		print( "Mined "..collected.." items" )
+	end
+end
+
+-- Return the number of blocks collected
+function getCollected()
+    log("getCollected() return "..collected)
+	return collected
+end
+
+
+-- helper functions
+function genericHelper(helper, fn)
+    local rc = helper()
+    log(fn.." return "..tostring(rc))
+    return rc
+end
+
+function left()
+    return genericHelper(turtle.turnLeft, "left()")
+end
+
+function right()
+    return genericHelper(turtle.turnRight, "right()")
+end
+
+function placeForward()
+    return genericHelper(turtle.place, "placeForward()")
+end
+
+function placeUp()
+    return genericHelper(turtle.placeUp, "placeUp()")
+end
+
+function placeDown()
+    return genericHelper(turtle.placeDown, "placeDown()")
+end
+
+function dropForward()
+    return genericHelper(turtle.drop, "dropForward()")
+end
+
+function dropUp()
+    return genericHelper(turtle.dropUp, "dropUp()")
+end
+
+function dropDown()
+    return genericHelper(turtle.dropDown, "dropDown()")
+end
+
+function detectForward()
+    return genericHelper(turtle.detect, "detectForward()")
+end
+
+function detectUp()
+    return genericHelper(turtle.detectUp, "detectUp()")
+end
+
+function detectDown()
+    return genericHelper(turtle.detectDown, "detectDown()")
+end
+
+function suckForward()
+    return genericHelper(turtle.suck, "suckForward()")
+end
+
+function suckUp()
+    return genericHelper(turtle.suckUp, "suckUp()")
+end
+
+function suckDown()
+    return genericHelper(turtle.suckDown, "suckDown()")
+end
+
+
+
+-- Dig and return false if there is a block, but we failed to dig it.
+function genericDig(detect, dig, fn)
+	if detect() then
+		if not dig() then
+                log(fn.." return false")
+    			return false
+		end
+		collect()
+	end
+    log(fn.." return true")
+	return true
+end
+
+-- Dig forward if there is a block
+function digForward()
+    return genericDig(detectForward, turtle.dig, "digForward()")
+end
+
+-- Dig up if there is a block
+function digUp()
+    return genericDig(detectUp, turtle.digUp, "digUp()")
+end
+
+-- Dig down if there is a block
+-- Returns false if there is a block, but we failed to dig it.
+function digDown()
+    return genericDig(detectDown, turtle.digDown, "digDown()")
+end
+
+-- Attack, return true on successful attack, false if blocked or nothing to attack
+local function genericAttack(detect, attack, fn)
+	if detect() then
+        log(fn.." returns false")
+	    return false
+	end
+	if attack() then
+		collect()
+        log(fn.." returns true")
+		return true
+	end
+    log(fn.." returns true")
+	return false
+end
+
+-- Attack forward
+function attackForward()
+    return genericAttack(detectForward, turtle.attack, "attackForward()")
+end
+
+-- Attack up
+function attackUp()
+    return genericAttack(detectUp, turtle.attackUp, "attackUp()")
+end
+
+-- Attack down
+function attackDown()
+    return genericAttack(detectDown, turtle.attackDown, "attackDown()")
+end
+
+
+-- Refuel the turtle by scanning each slot in the inventory and trying to use it as fuel.
+-- In none of the slots have fuel, the "Add more fuel to continue." message is disabled 
+-- until you place fuel in the turtles inventory.
+function refuel()
+	local fuelLevel = turtle.getFuelLevel()
+	if fuelLevel == "unlimited" or fuelLevel > 0 then
+		return true
+	end
+
+    -- Try each slot and fuel the turtle
+	local function tryRefuel()
+		for n=1,16 do
+			if turtle.getItemCount(n) > 0 then
+				turtle.select(n)
+				if turtle.refuel(1) then
+					turtle.select(1)
+					return true
+				end
+			end
+		end
+		turtle.select(1)
+		return false
+	end
+	
+	-- Success refuel
+	if tryRefuel() then
+	    return true
+    end
+
+    -- Failed to refuel, so wait for someone to put fuel in the turtle
+	print( "Add more fuel to continue" )
+	while not tryRefuel() do
+		sleep(1)
+	end
+	print( "Fuel accepted" )
+	return true
+end
+
+-- Refuel if necessary then move, dig or attackp.
+-- Return true if successfully moved.
+function genericMove(dir, detect, dig, attack, fn)
+	refuel()
+	while not dir() do
+		if detect() then
+			if not dig() then
+                print(fn.." returns false")
+				return false
+			end
+		elseif attack() then
+		end
+	end
+    print(fn.." returns true")
+	return true
+end
+
+-- Return true if successfully moved forward.
+local function forward()
+    return genericMove(turtle.forward, detectForward, digForward, attackForward, "forward()")
+end
+
+-- Return true if successfully moved down.
+function down()
+    return genericMove(turtle.down, detectDown, digDown, attackDown, "down()")
+end
+
+-- Return true if successfully moved up.
+function up()
+    return genericMove(turtle.up, detectUp, digUp, attackUp, "up()")
+end
+
+-- Return true if successfully moved back.
+function back()
+    local rc = turtle.back()
+    log("back() return "..tostring(rc))
+    return rc
+end
+
+
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+local tArgs = { ... }
+
+if #tArgs ~= 3 then
+	print( "Usage: bigdig <current depth> <target depth> <size>" )
+	print( "This program sends the turtle to <depth> and then tunnels out a cube <size> x <size> x <size>" )
+	return
+end
+
+-- Mine in a quarry pattern until we hit something we can't dig
+local startDepth = tonumber( tArgs[1] )
+if startDepth < 1 then
+	print( "Tunnel depth must be positive" )
+	return
+end
+
+local depth = tonumber( tArgs[2] )
+if depth < 1 then
+	print( "Tunnel depth must be positive" )
+	return
+end
+
+if (depth > startDepth) then
+	print( "Start depth (" .. startDepth .. ") must be greater than end depth (".. depth ..")" )
+	return
+end
+
+local size = tonumber( tArgs[3] )
+if size < 2 then
+	print( "Tunnel size must be greater than 2" )
+	return
+end
+
+print( "Starting Big Dig..." )
+enableDebug()
+
+-- Dig down to a specific depth
+while startDepth > depth do
+	print( "Distance remaining: " .. (startDepth - depth) )
+
+    if not down() then
+        print( "Big Dig aborted... Cannot move down any further." )
+        return
+    end
+    startDepth = startDepth - 1
+end
+
+-- Now dig out a cube
+local x = size
+local y = size
+local z = size
+
+print( "Starting cube" )
+for y = 1, size do  -- make the cube the height we want
+    for x = 1, size do  -- make the cube length we want
+        for z = 1, (size - 1) do -- make the cube the width we want
+            forward()
+            log(x..", "..y..", "..z)
+        end
+
+        if (x < size) then
+            if (x % 2) == 1 then
+                left()
+                forward()
+                left()
+            else
+                right()
+                forward()
+                right()
+            end
+        end
+    end
+
+    if (y < size) then
+        if (size % 2) == 1 then
+            left()
+        end
+        left()
+        down()
+    end
+end
+
+print( "Big Dig complete." )
+print( "Mined "..getCollected().." items total." )
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
