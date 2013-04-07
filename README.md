@@ -1,7 +1,8 @@
 minecraft_mods
 ==============
 
-This is an assortment of MineCraft mods I have made for various plugs.
+This is an assortment of MineCraft mods I have made for MineCraft
 
-* mods/computercraft/lua/rom/programs/turtle/house - uses a turtle to build a house
-* mods/computercraft/lua/rom/programs/turtle/bigdig - uses a turtle to clear a cube of any size
+* mods/computercraft/lua/rom/programs/turtle/house - Lua program to build a house using a turtle
+* mods/computercraft/lua/rom/programs/turtle/bigdig - Lua program to clear an area of any size using a turtle
+* mods/pdunham/weirdBlock - A mod that adds a new block to MineCraft
