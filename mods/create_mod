@@ -1,0 +1,41 @@
+#!/bin/bash
+
+function do_cmd {
+    echo $@
+    $@
+    
+    if [ "$?" -ne "0" ]; then
+        echo "*** ERROR ***"
+        exit
+    fi
+}
+
+# Clear the screen
+/usr/bin/osascript -e 'tell application "System Events" to tell process "Terminal" to keystroke "k" using command down'
+
+# Build and reobfuscate
+do_cmd cd ~/work/forge/mcp
+do_cmd ./recompile.sh
+do_cmd ./reobfuscate.sh
+
+# copy the resources to the mod's directory
+do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weirdBlock/textures/blocks
+do_cmd cp ~/work/forge/mcp/src/minecraft/pdunham/weirdBlock/textures/blocks/* ~/work/forge/mcp/reobf/minecraft/pdunham/weirdBlock/textures/blocks/
+
+# Make the zop file
+do_cmd cd ~/work/forge/mcp/reobf/minecraft/
+do_cmd zip -r weirdBlock.zip pdunham
+
+# Copy the mod to the client and server here and on Ian's machine
+do_cmd cp weirdBlock.zip ~/Desktop/MineCraft/FeedTheBeast/MindCrack/minecraft/mods/
+do_cmd cp weirdBlock.zip ~/Desktop/MineCraft/ftb_server/mods/
+do_cmd cp weirdBlock.zip /Volumes/Users/Ian/Desktop/FTB/Direwolf20/minecraft/mods 
+do_cmd cp weirdBlock.zip ~/ftb/Ultimate/minecraft/mods/
+
+# Copying files w/ spaces is messed up
+set "weirdBlock.zip" "/Volumes/Users/Ian/Documents/Game Folders/Minecraft/Yogcraft server FTB/mods/"
+echo cp $@
+cp "$@"
+
+echo "Successs"
+echo
