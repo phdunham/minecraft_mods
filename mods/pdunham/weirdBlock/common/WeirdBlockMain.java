@@ -31,65 +31,63 @@ import pdunham.weirdBlock.common.core.handlers.ClientPacketHandler;
 import pdunham.weirdBlock.common.core.handlers.ServerPacketHandler;
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, // Whether client side and server side are needed
-			clientPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialGeneral" }, 
-			packetHandler = ClientPacketHandler.class), //For clientside packet handling
-			serverPacketHandlerSpec = @SidedPacketHandler(channels = {}, 
-			packetHandler = ServerPacketHandler.class)) //For serverside packet handling
+            clientPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialGeneral" }, 
+            packetHandler = ClientPacketHandler.class), //For clientside packet handling
+            serverPacketHandlerSpec = @SidedPacketHandler(channels = {}, 
+            packetHandler = ServerPacketHandler.class)) //For serverside packet handling
 @Mod(modid = "weirdBlock", name = "A Weird Block", version = "0.1.0")
 
 public class WeirdBlockMain {
-	
-	@Instance("weirdBlock")
-	public static WeirdBlockMain instance = new WeirdBlockMain();
+    
+    @Instance("weirdBlock")
+    public static WeirdBlockMain instance = new WeirdBlockMain();
 
-	// Tell Forge where the proxies are.
-	@SidedProxy(clientSide="pdunham.weirdBlock.client.WeirdBlockClientProxy", 
-			    serverSide="pdunham.weirdBlock.common.WeirdBlockCommonProxy")
-	
-	public static WeirdBlockCommonProxy proxy;
-	
-	public static Block weirdBlock;
-	
-	public static Logger logger;
+    // Tell Forge where the proxies are.
+    @SidedProxy(clientSide="pdunham.weirdBlock.client.WeirdBlockClientProxy", 
+                serverSide="pdunham.weirdBlock.common.WeirdBlockCommonProxy")
+    
+    public static WeirdBlockCommonProxy proxy;
+    
+    public static Block weirdBlock;
+    
+    public static Logger logger;
 
-	@PreInit
-	public void preInit(FMLPreInitializationEvent event) {
-		logger = Logger.getLogger("weirdBlock");
-		logger.setParent(FMLLog.getLogger());		
-		logger.log(java.util.logging.Level.INFO, "preInit() complete");
-	}
+    @PreInit
+    public void preInit(FMLPreInitializationEvent event) {
+        logger = Logger.getLogger("weirdBlock");
+        logger.setParent(FMLLog.getLogger());        
+        logger.log(java.util.logging.Level.INFO, "preInit() complete");
+    }
 
-	@Init
-	public void init(FMLInitializationEvent event) {
-		logger.log(java.util.logging.Level.INFO, "init()");
+    @Init
+    public void init(FMLInitializationEvent event) {
+        logger.log(java.util.logging.Level.INFO, "init()");
 
-		// Registers this class that deals with GUI data
-		NetworkRegistry.instance().registerGuiHandler(this, proxy);
-		
-		// Create a block 1st parm is unique block id
-		weirdBlock = (new WeirdBlock(3123));
+        // Registers this class that deals with GUI data
+        NetworkRegistry.instance().registerGuiHandler(this, proxy);
+        
+        // Create a block 1st parm is unique block id
+        weirdBlock = (new WeirdBlock(3123));
+        weirdBlock.setTextureFile(weirdBlock.getTextureFile());
+        logger.log(java.util.logging.Level.INFO, "getTextureFile() returns " + weirdBlock.getTextureFile());
 
-		logger.log(java.util.logging.Level.INFO, "snowBlock.getTextureFile() returns " + Block.snow.getTextureFile());
+        // 
+        proxy.registerBlocks();
+        
+        // Register the block w/ MineCraft
+        GameRegistry.registerBlock(WeirdBlockMain.weirdBlock, "weirdBlock");
 
-		logger.log(java.util.logging.Level.INFO, "getTextureFile() returns " + weirdBlock.getTextureFile());
+        // Add a human readable name
+        LanguageRegistry.addName(WeirdBlockMain.weirdBlock , "A weird block");
+        
+        // Only iron and above pick axe can mine this block 
+        MinecraftForge.setBlockHarvestLevel(weirdBlock, "pickaxe", 2);
 
-		// 
-		proxy.registerBlocks();
-		
-		// Register the block w/ MineCraft
-		GameRegistry.registerBlock(WeirdBlockMain.weirdBlock, "weirdBlock");
+        logger.log(java.util.logging.Level.INFO, "init() complete");
+    }
 
-		// Add a human readable name
-		LanguageRegistry.addName(WeirdBlockMain.weirdBlock , "A weird block");
-		
-		// Only iron and above pick axe can mine this block 
-		MinecraftForge.setBlockHarvestLevel(weirdBlock, "pickaxe", 2);
-
-		logger.log(java.util.logging.Level.INFO, "init() complete");
-	}
-
-	@PostInit
-	public static void postInit(FMLPostInitializationEvent event) {
-		logger.log(java.util.logging.Level.INFO, "postInit() complete");
-	}
+    @PostInit
+    public static void postInit(FMLPostInitializationEvent event) {
+        logger.log(java.util.logging.Level.INFO, "postInit() complete");
+    }
 }

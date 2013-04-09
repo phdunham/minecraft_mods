@@ -11,7 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class WeirdBlock extends Block {
 
-	public static String pathTexture = "/textures/blocks/weirdBlock.png";
+	public static String pathTexture = "/pdunham/weirdBlock/weirdBlock.png";
 
 	public WeirdBlock(int ID) {
 		
@@ -44,7 +44,8 @@ public class WeirdBlock extends Block {
 		// Which texture to use from the .png file
 		return 1; // The first icon on the spritesheet
 	}
-	
+
+	@Override
 	public String getTextureFile(){
 		return pathTexture;
 	}	
