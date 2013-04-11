@@ -1,17 +1,21 @@
-package pdunham.weirdBlock.common;
+package pdunham.weird.objects;
 
-import java.util.logging.Logger;
-
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
+import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdMain;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class WeirdBlock extends Block {
 
-	public static String pathTexture = "/pdunham/weirdBlock/weirdBlock.png";
+	private static StandardLogger logger;
+	
+	public static String pathTexture = "/pdunham/weird/weirdBlock.png";
 
 	public WeirdBlock(int ID) {
 		
@@ -34,8 +38,26 @@ public class WeirdBlock extends Block {
 		setStepSound(this.soundMetalFootstep);
 		
 		// Make it glow bright.
-		this.setLightValue(1);
+		setLightValue(1);
 		
+        logger = new StandardLogger("weirdBlock");
+        logger.info("c'tor() complete");		
+	}
+
+	public void postInit() {
+		// Set the graphics texture from a .png file
+		setTextureFile(getTextureFile());
+
+		// Register the block w/ MineCraft
+	    GameRegistry.registerBlock(this, "weirdBlock");
+	
+	    // Only iron and above pick axe can mine this block 
+	    MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
+	
+	    // Add a human readable name
+	    LanguageRegistry.addName(this, "A weird block");
+
+		logger.info("postInit() complete");
 	}
 	
 	// Marks a method as client side only, typically for graphics and rendering

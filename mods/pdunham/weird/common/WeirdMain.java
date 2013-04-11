@@ -1,10 +1,12 @@
-package pdunham.weirdBlock.common;
+package pdunham.weird.common;
 
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -24,37 +26,49 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-import pdunham.weirdBlock.client.WeirdBlockClientProxy;
-import pdunham.weirdBlock.common.WeirdBlockCommonProxy;
-import pdunham.weirdBlock.common.WeirdBlock;
-import pdunham.weirdBlock.common.core.handlers.ClientPacketHandler;
-import pdunham.weirdBlock.common.core.handlers.ServerPacketHandler;
+import pdunham.weird.client.ClientProxy;
+import pdunham.weird.common.CommonProxy;
+import pdunham.weird.common.core.handlers.ClientPacketHandler;
+import pdunham.weird.common.core.handlers.ServerPacketHandler;
+import pdunham.weird.objects.WeirdBlock;
+import pdunham.weird.objects.WeirdOre;
+import pdunham.weird.objects.WeirdIngot;
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, // Whether client side and server side are needed
-            clientPacketHandlerSpec = @SidedPacketHandler(channels = {"TutorialGeneral" }, 
+            clientPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird" }, 
             packetHandler = ClientPacketHandler.class), //For clientside packet handling
-            serverPacketHandlerSpec = @SidedPacketHandler(channels = {}, 
+            serverPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird"}, 
             packetHandler = ServerPacketHandler.class)) //For serverside packet handling
-@Mod(modid = "weirdBlock", name = "A Weird Block", version = "0.1.0")
+@Mod(modid = "weird", name = "Weird stuff", version = "0.1.0")
 
-public class WeirdBlockMain {
+public class WeirdMain {
     
-    @Instance("weirdBlock")
-    public static WeirdBlockMain instance = new WeirdBlockMain();
+    @Instance("WeirdMain")
+    public static WeirdMain instance = new WeirdMain();
 
-    // Tell Forge where the proxies are.
-    @SidedProxy(clientSide="pdunham.weirdBlock.client.WeirdBlockClientProxy", 
-                serverSide="pdunham.weirdBlock.common.WeirdBlockCommonProxy")
-    
-    public static WeirdBlockCommonProxy proxy;
-    
+    @Instance("WeirdOre")
+ 	public static Item weirdOre;
+
+    @Instance("WeirdIngot")
+ 	public static Item weirdIngot;
+
+    	@Instance("WeirdBlock")
     public static Block weirdBlock;
+
+    	@Instance("Logger")
+    	private static Logger logger;
     
-    public static Logger logger;
+    // Tell Forge where the proxies are.
+    @SidedProxy(clientSide="pdunham.weird.client.ClientProxy", 
+                serverSide="pdunham.weird.common.CommonProxy")
+
+	@Instance("CommonProxy")
+    public static CommonProxy proxy;
+
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
-        logger = Logger.getLogger("weirdBlock");
+        logger = Logger.getLogger("WeirdMain");
         logger.setParent(FMLLog.getLogger());        
         logger.log(java.util.logging.Level.INFO, "preInit() complete");
     }
@@ -66,26 +80,17 @@ public class WeirdBlockMain {
         // Registers this class that deals with GUI data
         NetworkRegistry.instance().registerGuiHandler(this, proxy);
         
-        // Create a block 1st parm is unique block id
-        weirdBlock = (new WeirdBlock(3123));
-        weirdBlock.setTextureFile(weirdBlock.getTextureFile());
-        logger.log(java.util.logging.Level.INFO, "getTextureFile() returns " + weirdBlock.getTextureFile());
-
-        // 
+        // Call help functions in the common proxy to register all of the weird objects
+        proxy.init();
+        proxy.registerTextures();
+        proxy.registerTiles();
         proxy.registerBlocks();
+        proxy.registerItems();
+        proxy.registerRecipes();
         
-        // Register the block w/ MineCraft
-        GameRegistry.registerBlock(WeirdBlockMain.weirdBlock, "weirdBlock");
-
-        // Add a human readable name
-        LanguageRegistry.addName(WeirdBlockMain.weirdBlock , "A weird block");
-        
-        // Only iron and above pick axe can mine this block 
-        MinecraftForge.setBlockHarvestLevel(weirdBlock, "pickaxe", 2);
-
         logger.log(java.util.logging.Level.INFO, "init() complete");
     }
-
+    
     @PostInit
     public static void postInit(FMLPostInitializationEvent event) {
         logger.log(java.util.logging.Level.INFO, "postInit() complete");
