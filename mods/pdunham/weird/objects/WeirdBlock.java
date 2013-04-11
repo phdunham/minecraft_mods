@@ -1,26 +1,26 @@
 package pdunham.weird.objects;
 
+import java.util.logging.Logger;
+
+import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdMain;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.item.Item;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.common.MinecraftForge;
-import pdunham.weird.common.StandardLogger;
-import pdunham.weird.common.WeirdMain;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class WeirdBlock extends Block {
 
 	private static StandardLogger logger;
-	
-	public static String pathTexture = "/pdunham/weird/weirdBlock.png";
 
-	public WeirdBlock(int ID) {
+ 	// Standard c'tor
+	public WeirdBlock(int id) {
 		
 		// Call the parent class c'tor first.
-		super(ID, Material.iron);
+		super(id, Material.iron);
 
 		// Set the internal reference name
 		setBlockName("weirdBlock");
@@ -40,8 +40,11 @@ public class WeirdBlock extends Block {
 		// Make it glow bright.
 		setLightValue(1);
 		
-        logger = new StandardLogger("weirdBlock");
-        logger.info("c'tor() complete");		
+		// Pick the correct icon from the .png file.
+		blockIndexInTexture = 4;
+
+        logger = new StandardLogger("weirdSolidBlock");
+        logger.info("c'tor() complete id: " + id);
 	}
 
 	public void postInit() {
@@ -49,26 +52,16 @@ public class WeirdBlock extends Block {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-	    GameRegistry.registerBlock(this, "weirdBlock");
-	
-	    // Only iron and above pick axe can mine this block 
-	    MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
-	
-	    // Add a human readable name
-	    LanguageRegistry.addName(this, "A weird block");
+		GameRegistry.registerBlock(this, "weirdSolidBlock");
 
-		logger.info("postInit() complete");
-	}
-	
-	// Marks a method as client side only, typically for graphics and rendering
-	@SideOnly(Side.CLIENT) 
-	public int getBlockTextureFromSide(int i) {
-		// Which texture to use from the .png file
-		return 1; // The first icon on the spritesheet
+		// Set the external name
+		LanguageRegistry.addName(this, "A block of weird");
+
+		logger.info("postInit() complete newId: " + blockID);
 	}
 
 	@Override
 	public String getTextureFile(){
-		return pathTexture;
+		return WeirdOre.pathTexture;
 	}	
 }

@@ -3,13 +3,12 @@ package pdunham.weird.common;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSnow;
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.MinecraftForge;
-
+import pdunham.weird.common.core.handlers.ClientPacketHandler;
+import pdunham.weird.common.core.handlers.ServerPacketHandler;
+import pdunham.weird.objects.WeirdBlock;
+import pdunham.weird.objects.WeirdIngot;
+import pdunham.weird.objects.WeirdOre;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -23,16 +22,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
-import pdunham.weird.client.ClientProxy;
-import pdunham.weird.common.CommonProxy;
-import pdunham.weird.common.core.handlers.ClientPacketHandler;
-import pdunham.weird.common.core.handlers.ServerPacketHandler;
-import pdunham.weird.objects.WeirdBlock;
-import pdunham.weird.objects.WeirdOre;
-import pdunham.weird.objects.WeirdIngot;
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, // Whether client side and server side are needed
             clientPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird" }, 
@@ -47,13 +36,14 @@ public class WeirdMain {
     public static WeirdMain instance = new WeirdMain();
 
     @Instance("WeirdOre")
- 	public static Item weirdOre;
+  	public static WeirdOre weirdOre;
+
+    @Instance("WeirdSolidBlock")
+ 	public static WeirdBlock weirdBlock;
 
     @Instance("WeirdIngot")
- 	public static Item weirdIngot;
+  	public static WeirdIngot weirdIngot;
 
-    	@Instance("WeirdBlock")
-    public static Block weirdBlock;
 
     	@Instance("Logger")
     	private static Logger logger;

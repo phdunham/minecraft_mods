@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import cpw.mods.fml.common.FMLLog;
 
 public class StandardLogger {
-	private static Logger logger;
+	private Logger logger;
 
 	public void info(String str) {
         logger.log(java.util.logging.Level.INFO, str);
