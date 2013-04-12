@@ -6,9 +6,17 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import pdunham.weird.common.core.handlers.ClientPacketHandler;
 import pdunham.weird.common.core.handlers.ServerPacketHandler;
+import pdunham.weird.objects.WeirdAxe;
 import pdunham.weird.objects.WeirdBlock;
+import pdunham.weird.objects.WeirdHoe;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdOre;
+import pdunham.weird.objects.WeirdPickaxe;
+import pdunham.weird.objects.WeirdPowder;
+import pdunham.weird.objects.WeirdShovel;
+import pdunham.weird.objects.WeirdSlingShot;
+import pdunham.weird.objects.WeirdSword;
+import pdunham.weird.objects.WeirdTNT;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -44,6 +52,29 @@ public class WeirdMain {
     @Instance("WeirdIngot")
   	public static WeirdIngot weirdIngot;
 
+    @Instance("WeirdPickaxe")
+  	public static WeirdPickaxe weirdPickaxe;
+
+    @Instance("WeirdAxe")
+  	public static WeirdAxe weirdAxe;
+
+    @Instance("WeirdShovel")
+    public static WeirdShovel weirdShovel;
+
+    @Instance("WeirdHoe")
+    public static WeirdHoe weirdHoe;
+
+    @Instance("WeirdSlingShot")
+    public static WeirdSlingShot weirdSlingShot;
+    
+    @Instance("WeirdPowder")
+    public static WeirdPowder weirdPowder;
+
+    @Instance("WeirdTNT")
+    public static WeirdTNT weirdTNT;
+
+    @Instance("WeirdSword")
+    public static WeirdSword weirdSword;
 
     	@Instance("Logger")
     	private static Logger logger;
@@ -55,6 +86,7 @@ public class WeirdMain {
 	@Instance("CommonProxy")
     public static CommonProxy proxy;
 
+    public static String pathTexture = "/pdunham/weird/weirdBlock.png";
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -76,13 +108,13 @@ public class WeirdMain {
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.registerItems();
-        proxy.registerRecipes();
         
         logger.log(java.util.logging.Level.INFO, "init() complete");
     }
     
     @PostInit
     public static void postInit(FMLPostInitializationEvent event) {
+    		proxy.postInit();
         logger.log(java.util.logging.Level.INFO, "postInit() complete");
     }
 }

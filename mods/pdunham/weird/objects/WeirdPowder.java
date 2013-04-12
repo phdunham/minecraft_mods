@@ -6,14 +6,15 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 
-public class WeirdIngot extends Item {
+public class WeirdPowder extends Item {
 
 	private static StandardLogger logger;
 
  	// Standard c'tor
-	public WeirdIngot(int id) {
+	public WeirdPowder(int id) {
         super(id);
      
         // Limit the stack size to a weird number
@@ -23,12 +24,12 @@ public class WeirdIngot extends Item {
         setCreativeTab(CreativeTabs.tabMaterials);
         
         // Set the internal name
-        setItemName("weirdIngot");
+        setItemName("weirdPowder");
         
         // Set the texture.
-        setIconCoord(3, 0);
+        setIconCoord(10, 0);
         
-        logger = new StandardLogger("weirdIngot");
+        logger = new StandardLogger("weirdPowder");
         logger.info("c'tor() complete id: " + id);
 	}
 
@@ -37,16 +38,19 @@ public class WeirdIngot extends Item {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-		GameRegistry.registerItem(this, "weirdIngot");
+		GameRegistry.registerItem(this, "weirdPowder");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird ingot");
+		LanguageRegistry.addName(this, "Weird powder");
 
 		// Smelting 1 ore produces 1 ingot and 1 experience
-		GameRegistry.addSmelting(WeirdMain.weirdOre.blockID, new ItemStack(WeirdMain.weirdIngot, 1), 1.0f);
+		GameRegistry.addSmelting(WeirdMain.weirdOre.blockID, new ItemStack(WeirdMain.weirdPowder, 1), 1.0f);
 
-		// Allow user to break blocks back into ingots
-		GameRegistry.addShapelessRecipe(new ItemStack(WeirdMain.weirdIngot, 9), new ItemStack(WeirdMain.weirdBlock));
+		// Complex Recipe for weird Powder
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPowder), "sws", "ggg", "sws",
+				'w', new ItemStack(WeirdMain.weirdIngot), 
+				's', new ItemStack(Block.sand),
+				'g', new ItemStack(Item.gunpowder));
 		
 		logger.info("postInit() complete newId: " + itemID);
 	}

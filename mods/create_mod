@@ -14,12 +14,12 @@ function do_cmd {
 /usr/bin/osascript -e 'tell application "System Events" to tell process "Terminal" to keystroke "k" using command down'
 
 # Build and reobfuscate
-do_cmd cd ~/work/forge/mcp
-do_cmd ./recompile.sh
-do_cmd ./reobfuscate.sh
+#do_cmd cd ~/work/forge/mcp
+#do_cmd ./recompile.sh
+#do_cmd ./reobfuscate.sh
 
 # copy the resources to the mod's directory
-do_cmd cp ~/work/forge/mcp/src/minecraft/pdunham/weirdBlock/*.png ~/work/forge/mcp/reobf/minecraft/pdunham/weirdBlock/
+do_cmd cp ~/work/forge/mcp/src/minecraft/pdunham/weird/*.png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/
 
 # Make the zip file
 do_cmd cd ~/work/forge/mcp/reobf/minecraft/

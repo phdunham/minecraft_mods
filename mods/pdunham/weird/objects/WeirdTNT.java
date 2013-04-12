@@ -10,24 +10,25 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockTNT;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 
-public class WeirdBlock extends Block {
+public class WeirdTNT extends BlockTNT {
 
 	private static StandardLogger logger;
 
  	// Standard c'tor
-	public WeirdBlock(int id) {
+	public WeirdTNT(int id) {
 		
 		// Call the parent class c'tor first.
-		super(id, Material.iron);
+		super(id, 0);
 
 		// Set the internal reference name
-		setBlockName("weirdBlock");
+		setBlockName("weirdTNT");
 		
 		// Put this block on the block tab
-		setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(CreativeTabs.tabRedstone);
 		
 		// The one for dirt is 0.5F. The one for obsidian is 50.0F
 		setHardness(5.6F);
@@ -42,9 +43,9 @@ public class WeirdBlock extends Block {
 		setLightValue(1);
 		
 		// Pick the correct icon from the .png file.
-		blockIndexInTexture = 4;
+		blockIndexInTexture = 11;
 
-        logger = new StandardLogger("weirdBlock");
+        logger = new StandardLogger("weirdTNT");
         logger.info("c'tor() complete id: " + id);
 	}
 
@@ -53,14 +54,17 @@ public class WeirdBlock extends Block {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-		GameRegistry.registerBlock(this, "weirdBlock");
+		GameRegistry.registerBlock(this, "weirdTNT");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "A block of weird");
+		LanguageRegistry.addName(this, "A weird TNT");
 
-		// A solid block is crafted from 9 weirdIngots in the crafting table
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdBlock), "www", "www", "www",
-							'w', new ItemStack(WeirdMain.weirdIngot));
+		// A recipe for weird TNT!
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdTNT), "wfw", "gtg", "wfw",
+				'w', new ItemStack(WeirdMain.weirdPowder), 
+				't', new ItemStack(Block.tnt),
+				'f', new ItemStack(Item.flintAndSteel),
+				'g', new ItemStack(Item.gunpowder));
 
 		logger.info("postInit() complete newId: " + blockID);
 	}

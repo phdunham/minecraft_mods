@@ -3,9 +3,17 @@ package pdunham.weird.common;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import pdunham.weird.objects.WeirdAxe;
+import pdunham.weird.objects.WeirdHoe;
 import pdunham.weird.objects.WeirdOre;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdBlock;
+import pdunham.weird.objects.WeirdPickaxe;
+import pdunham.weird.objects.WeirdPowder;
+import pdunham.weird.objects.WeirdShovel;
+import pdunham.weird.objects.WeirdSlingShot;
+import pdunham.weird.objects.WeirdSword;
+import pdunham.weird.objects.WeirdTNT;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -31,15 +39,21 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	// A helper function when we register items
+	// Don't change the IDs
 	public void registerItems(){
-		// All of our items (not blocks) start at this id #
-		int idStart = 7237;
-
 		// Create the Ingots
-		WeirdMain.weirdIngot = new WeirdIngot(idStart++);
-        ((WeirdIngot) WeirdMain.weirdIngot).postInit();
+		WeirdMain.weirdIngot = new WeirdIngot(7237);
         
-        logger.info("registerItems() complete");
+		// Create the Tools
+		WeirdMain.weirdPickaxe = new WeirdPickaxe(7238);
+		WeirdMain.weirdAxe = new WeirdAxe(7239);
+        WeirdMain.weirdShovel = new WeirdShovel(7240);
+        WeirdMain.weirdHoe = new WeirdHoe(7241);
+        WeirdMain.weirdSlingShot = new WeirdSlingShot(7242);
+        WeirdMain.weirdPowder = new WeirdPowder(7243);
+        WeirdMain.weirdSword = new WeirdSword(7244);
+		
+		logger.info("registerItems() complete");
 	}
 
 	// A helper function when we register tiles
@@ -54,32 +68,26 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	// A helper function when we register blocks
+	// Don't change the IDs
 	public void registerBlocks(){
-		int idStart = 3123;
-		
-        // Create a block param is unique block id
-        WeirdMain.weirdOre = (new WeirdOre(idStart++));
-        ((WeirdOre) WeirdMain.weirdOre).postInit();
-
-		// Create the Solid Block
-		WeirdMain.weirdBlock = new WeirdBlock(idStart++);
-        ((WeirdBlock) WeirdMain.weirdBlock).postInit();
+        WeirdMain.weirdOre = (new WeirdOre(3125));
+		WeirdMain.weirdBlock = new WeirdBlock(3126);
+        WeirdMain.weirdTNT= new WeirdTNT(3127);
        
         logger.info("registerBlocks() complete");
 	}
-
-	// A helper function when we register recipes
-	public void registerRecipes(){
-		// A solid block is crafted from 9 weirdIngots in the crafting table
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdBlock), "xxx", "xxx", "xxx",
-							'x', new ItemStack(WeirdMain.weirdIngot));
-
-		// Allow user to break blocks back into ingots
-		GameRegistry.addShapelessRecipe(new ItemStack(WeirdMain.weirdIngot, 9), new ItemStack(WeirdMain.weirdBlock));
-		
-		// Smelting 1 ore produces 1 ingot and 1 experience
-		GameRegistry.addSmelting(WeirdMain.weirdOre.blockID, new ItemStack(WeirdMain.weirdIngot, 1), 1.0f);
-
-		logger.info("registerRecipes() complete");
+	
+	public void postInit() {
+        ((WeirdOre) WeirdMain.weirdOre).postInit();
+        ((WeirdBlock) WeirdMain.weirdBlock).postInit();
+        ((WeirdIngot) WeirdMain.weirdIngot).postInit();
+        ((WeirdPickaxe) WeirdMain.weirdPickaxe).postInit();
+        ((WeirdAxe) WeirdMain.weirdAxe).postInit();
+        ((WeirdShovel) WeirdMain.weirdShovel).postInit();
+        ((WeirdHoe) WeirdMain.weirdHoe).postInit();
+        ((WeirdSlingShot) WeirdMain.weirdSlingShot).postInit();
+        ((WeirdPowder) WeirdMain.weirdPowder).postInit();
+        ((WeirdTNT) WeirdMain.weirdTNT).postInit();
+        ((WeirdSword) WeirdMain.weirdSword).postInit();
 	}
 }

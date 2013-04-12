@@ -16,8 +16,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class WeirdOre extends Block {
 
 	private static StandardLogger logger;
-	
-	public static String pathTexture = "/pdunham/weird/weirdBlock.png";
 
 	public WeirdOre(int id) {
 		
@@ -25,7 +23,7 @@ public class WeirdOre extends Block {
 		super(id, Material.iron);
 
 		// Set the internal reference name
-		setBlockName("weirdBlock");
+		setBlockName("weirdOre");
 		
 		// Put this block on the block tab
 		setCreativeTab(CreativeTabs.tabBlock);
@@ -39,13 +37,13 @@ public class WeirdOre extends Block {
 		// The sound we make when walked on it and when we break it.
 		setStepSound(this.soundMetalFootstep);
 		
-		// Make it glow bright.
-		setLightValue(1);
+		// Make it glow some.
+		setLightValue(0.1f);
 
 		// Pick the correct icon from the .png file.
 		blockIndexInTexture = 2;
 		
-		logger = new StandardLogger("weirdBlock");
+		logger = new StandardLogger("weirdOre");
         logger.info("c'tor() complete id: " + id);
 	}
 
@@ -54,7 +52,7 @@ public class WeirdOre extends Block {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-	    GameRegistry.registerBlock(this, "weirdBlock");
+	    GameRegistry.registerBlock(this, "weirdOre");
 	
 	    // Only iron and above pick axe can mine this block 
 	    MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
@@ -100,6 +98,6 @@ public class WeirdOre extends Block {
 
 	@Override
 	public String getTextureFile(){
-		return pathTexture;
+		return WeirdMain.pathTexture;
 	}	
 }
