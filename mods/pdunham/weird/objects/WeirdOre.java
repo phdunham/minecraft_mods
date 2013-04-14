@@ -5,6 +5,8 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
@@ -62,6 +64,13 @@ public class WeirdOre extends Block {
 
 		logger.info("postInit() complete newId: " + blockID);
 	}
+
+	// trigger the acheivement
+    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6) {
+    		super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
+    		par2EntityPlayer.addStat(WeirdMain.weirdAchievementOre, 1);
+		logger.info("harvestBlock()");
+	}
 	
 	// Define what the block drops when mined
 	public int idDropped(int zero1, Random random, int zero2) {
@@ -72,21 +81,8 @@ public class WeirdOre extends Block {
 	
 	// Define how many are dropped.
 	public int quantityDropped(Random par1Random) {
-		int rnd = par1Random.nextInt(100);
-		int qty = 1;
-		if (rnd < 55) {  // 55%
-			qty = 1;
-		} else if (rnd < 75) {  // 20%
-			qty = 2;
-		} else if (rnd < 90) {  // 15%
-			qty = 3;
-		} else if (rnd < 95) {  // 5%
-			qty = 4;
-		} else {  // 5%
-			qty = 5;
-		}
-		logger.info("quantityDropped() returns weirdOre: " + qty);
-		return qty;
+		logger.info("quantityDropped() returns 1");
+		return 1;
 	}
 	
 	// Marks a method as client side only, typically for graphics and rendering

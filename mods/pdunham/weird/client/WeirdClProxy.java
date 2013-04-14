@@ -10,12 +10,12 @@ import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
 import pdunham.weird.objects.EntityPebble;
 import pdunham.weird.objects.RenderPebble;
-import pdunham.weird.objects.WeirdOre;
+import pdunham.weird.objects.WeirdAchievementOre;
 
 public class WeirdClProxy extends WeirdCoProxy {
 
 	private static StandardLogger logger;
-
+	
 	public WeirdClProxy() {
 		super();
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
@@ -51,5 +51,12 @@ public class WeirdClProxy extends WeirdCoProxy {
     		
     		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerRenderers complete");
+	}
+
+    @Override
+	public void registerAchievements() {
+    		WeirdMain.weirdAchievementOre = new WeirdAchievementOre();
+    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+		logger.info("registerAchievements complete");
 	}
 }

@@ -96,4 +96,9 @@ public class WeirdCoProxy implements IGuiHandler {
 	public void registerRenderers() {
         logger.info("commonProxy.registerRenderers() complete");
 	}
+	
+	public void registerAchievements() {
+		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+		logger.info("registerRenderers complete");
+	}
 }

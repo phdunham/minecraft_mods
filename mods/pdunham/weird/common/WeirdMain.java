@@ -9,6 +9,7 @@ import pdunham.weird.common.core.handlers.ServerPacketHandler;
 import pdunham.weird.objects.EntityPebble;
 import pdunham.weird.objects.Pebble;
 import pdunham.weird.objects.RenderPebble;
+import pdunham.weird.objects.WeirdAchievementOre;
 import pdunham.weird.objects.WeirdAxe;
 import pdunham.weird.objects.WeirdBlock;
 import pdunham.weird.objects.WeirdHoe;
@@ -89,6 +90,9 @@ public class WeirdMain {
 
     @Instance("RenderPebble")
   	public static RenderPebble renderPebble;
+    
+    @Instance("WeirdAchievementOre")
+    public static WeirdAchievementOre weirdAchievementOre;
 
     @Instance("Logger")
     	private static Logger logger;
@@ -125,6 +129,7 @@ public class WeirdMain {
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.registerItems();
+        proxy.registerAchievements();
         
         // Register our self with the world generator so weird ore will be inserted into new worlds.
         GameRegistry.registerWorldGenerator(worldGen);
