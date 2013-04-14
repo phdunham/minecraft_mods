@@ -13,13 +13,17 @@ public class StandardLogger {
 		}
     }
 
-	public void debug(String str) {
+	public void fine(String str) {
 		if (logger != null) {
 			logger.log(java.util.logging.Level.FINE, str);
 		}
     }
+	
+	public void debug(String str) {
+		fine(str);
+	}
 
-	public void fine(String str) {
+	public void finest(String str) {
 		if (logger != null) {
 			logger.log(java.util.logging.Level.FINEST, str);
 		}

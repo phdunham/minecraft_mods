@@ -18,6 +18,7 @@ import pdunham.weird.objects.WeirdShovel;
 import pdunham.weird.objects.WeirdSlingShot;
 import pdunham.weird.objects.WeirdSword;
 import pdunham.weird.objects.WeirdTNT;
+import pdunham.weird.objects.WeirdWorldGenerator;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -31,6 +32,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, // Whether client side and server side are needed
             clientPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird" }, 
@@ -82,6 +84,8 @@ public class WeirdMain {
 
     @Instance("Logger")
     	private static Logger logger;
+    
+    public static WeirdWorldGenerator worldGen = new WeirdWorldGenerator();
     	
     // Tell Forge where the proxies are.
     @SidedProxy(clientSide="pdunham.weird.client.ClientProxy", 
@@ -112,6 +116,9 @@ public class WeirdMain {
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.registerItems();
+        
+        // Register our self with the world generator so weird ore will be inserted into new worlds.
+        GameRegistry.registerWorldGenerator(worldGen);
         
         logger.log(java.util.logging.Level.INFO, "init() complete");
     }

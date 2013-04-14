@@ -68,6 +68,10 @@ public class CommonProxy implements IGuiHandler {
 	{
         logger.info("registerTextures() complete");
 	}
+	
+	public void registerRenderers() {
+        // Nothing here as the server doesn't render graphics!
+	}
 
 	// A helper function when we register blocks
 	// Don't change the IDs

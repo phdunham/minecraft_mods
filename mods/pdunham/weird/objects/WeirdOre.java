@@ -38,7 +38,7 @@ public class WeirdOre extends Block {
 		setStepSound(this.soundMetalFootstep);
 		
 		// Make it glow some.
-		setLightValue(0.1f);
+		setLightValue(0.25f);
 
 		// Pick the correct icon from the .png file.
 		blockIndexInTexture = 2;

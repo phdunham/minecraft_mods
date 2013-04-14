@@ -10,7 +10,8 @@ public class ClientProxy extends CommonProxy {
 
 	private static StandardLogger logger;
 
-	public void registerRenderInformation() {
+    @Override
+	public void registerTextures() {
 		MinecraftForgeClient.preloadTexture(WeirdMain.pathTexture);
 		logger = new StandardLogger("weird.ClientProxy");
 		logger.info("registerRenderInformation complete");
