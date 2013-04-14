@@ -61,8 +61,12 @@ public class WeirdSlingShot extends Item {
 	}
 	
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-		if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(WeirdMain.pebble.itemID)) {
+		
+		if (par3EntityPlayer.capabilities.isCreativeMode || 
+			par3EntityPlayer.inventory.hasItem(WeirdMain.pebble.itemID)) {
 			par3EntityPlayer.inventory.consumeInventoryItem(WeirdMain.pebble.itemID);
+		} else {
+			return par1ItemStack;
 		}
 		
 		// Play a sound
