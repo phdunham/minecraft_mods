@@ -45,7 +45,7 @@ public class WeirdTNT extends BlockTNT {
 		// Pick the correct icon from the .png file.
 		blockIndexInTexture = 11;
 
-        logger = new StandardLogger("weirdTNT");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

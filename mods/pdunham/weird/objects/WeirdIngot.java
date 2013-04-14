@@ -28,7 +28,7 @@ public class WeirdIngot extends Item {
         // Set the texture.
         setIconCoord(3, 0);
         
-        logger = new StandardLogger("weirdIngot");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

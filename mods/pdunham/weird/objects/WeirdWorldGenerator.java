@@ -15,7 +15,7 @@ public class WeirdWorldGenerator implements IWorldGenerator{
 	private static StandardLogger logger;
 
 	public WeirdWorldGenerator() {
-        logger = new StandardLogger("weirdWGen");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete");
 	}
 

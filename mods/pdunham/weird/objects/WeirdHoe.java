@@ -31,7 +31,7 @@ public class WeirdHoe extends ItemHoe {
         // Set the texture.
         setIconCoord(8, 0);
         
-        logger = new StandardLogger("weirdHoe");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

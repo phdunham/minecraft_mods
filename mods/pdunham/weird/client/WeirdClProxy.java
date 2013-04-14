@@ -1,0 +1,55 @@
+package pdunham.weird.client;
+
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraft.src.ModLoader;
+import net.minecraftforge.client.MinecraftForgeClient;
+import pdunham.weird.common.WeirdCoProxy;
+import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdMain;
+import pdunham.weird.objects.EntityPebble;
+import pdunham.weird.objects.RenderPebble;
+import pdunham.weird.objects.WeirdOre;
+
+public class WeirdClProxy extends WeirdCoProxy {
+
+	private static StandardLogger logger;
+
+	public WeirdClProxy() {
+		super();
+		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+		logger.info("c'tor() complete");
+	}
+	
+	@Override
+	public void postInit() {
+		super.postInit();
+	    ((RenderPebble) WeirdMain.renderPebble).postInit();
+	}
+
+	
+    @Override
+	public void registerTextures() {
+    		// Preload our texture palette so we have all of the icons before we need them.
+    		MinecraftForgeClient.preloadTexture(WeirdMain.pathTexture);
+    		
+    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+		logger.info("registerTextures complete");
+	}
+
+    @Override
+	public void registerRenderers() {
+    		// Globally Register the EntityPebble so we render it in the air 
+      	WeirdMain.renderPebble = new RenderPebble();
+    		EntityRegistry.registerGlobalEntityID(EntityPebble.class, "Pebble", ModLoader.getUniqueEntityId());
+    		logger.info("registerGlobalEntityID " + EntityPebble.class + ", \"Pebble\", " + ModLoader.getUniqueEntityId());
+
+    		// register the render class for EntityPebble which renders Pebble.
+    		RenderingRegistry.registerEntityRenderingHandler(EntityPebble.class, WeirdMain.renderPebble);
+    		logger.info("registerEntityRenderingHandler " + EntityPebble.class + ", " + WeirdMain.renderPebble);
+    		
+    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+		logger.info("registerRenderers complete");
+	}
+}

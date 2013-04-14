@@ -19,7 +19,7 @@ public class ClientPacketHandler implements IPacketHandler {
 		// Handles incoming data
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 		
-		logger = new StandardLogger("weird.CPH");
+		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("OnPacketData recieved");
 	}
 }

@@ -29,7 +29,7 @@ public class WeirdPowder extends Item {
         // Set the texture.
         setIconCoord(10, 0);
         
-        logger = new StandardLogger("weirdPowder");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

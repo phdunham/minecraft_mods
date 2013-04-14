@@ -6,7 +6,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import pdunham.weird.common.core.handlers.ClientPacketHandler;
 import pdunham.weird.common.core.handlers.ServerPacketHandler;
+import pdunham.weird.objects.EntityPebble;
 import pdunham.weird.objects.Pebble;
+import pdunham.weird.objects.RenderPebble;
 import pdunham.weird.objects.WeirdAxe;
 import pdunham.weird.objects.WeirdBlock;
 import pdunham.weird.objects.WeirdHoe;
@@ -82,17 +84,23 @@ public class WeirdMain {
     @Instance("Pebble")
   	public static Pebble pebble;
 
+    @Instance("EntityPebble")
+  	public static EntityPebble entityPebble;
+
+    @Instance("RenderPebble")
+  	public static RenderPebble renderPebble;
+
     @Instance("Logger")
     	private static Logger logger;
     
     public static WeirdWorldGenerator worldGen = new WeirdWorldGenerator();
     	
     // Tell Forge where the proxies are.
-    @SidedProxy(clientSide="pdunham.weird.client.ClientProxy", 
-                serverSide="pdunham.weird.common.CommonProxy")
+    @SidedProxy(clientSide="pdunham.weird.client.WeirdClProxy", 
+                serverSide="pdunham.weird.common.WeirdCoProxy")
 
-	@Instance("CommonProxy")
-    public static CommonProxy proxy;
+	@Instance("WeirdCoProxy")
+    public static WeirdCoProxy proxy;
 
     public static String pathTexture = "/pdunham/weird/weirdBlock.png";
 
@@ -113,6 +121,7 @@ public class WeirdMain {
         // Call help functions in the common proxy to register all of the weird objects
         proxy.init();
         proxy.registerTextures();
+        proxy.registerRenderers();
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.registerItems();

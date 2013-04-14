@@ -2,6 +2,7 @@ package pdunham.weird.objects;
 
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.Item;
@@ -29,7 +30,7 @@ public class Pebble extends Item {
         // Set the texture.
         setIconCoord(15, 0);
         
-        logger = new StandardLogger("Pebble");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

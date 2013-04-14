@@ -19,13 +19,13 @@ import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class CommonProxy implements IGuiHandler {
+public class WeirdCoProxy implements IGuiHandler {
 
 	private static StandardLogger logger;
 	
     @Init
     public void init() {
-    		logger = new StandardLogger("weird.CommonProxy");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("init() complete");
     }
     
@@ -42,10 +42,7 @@ public class CommonProxy implements IGuiHandler {
 	// A helper function when we register items
 	// Don't change the IDs
 	public void registerItems(){
-		// Create the Ingots
 		WeirdMain.weirdIngot = new WeirdIngot(7237);
-        
-		// Create the Tools
 		WeirdMain.weirdPickaxe = new WeirdPickaxe(7238);
 		WeirdMain.weirdAxe = new WeirdAxe(7239);
         WeirdMain.weirdShovel = new WeirdShovel(7240);
@@ -54,7 +51,6 @@ public class CommonProxy implements IGuiHandler {
         WeirdMain.weirdPowder = new WeirdPowder(7243);
         WeirdMain.weirdSword = new WeirdSword(7244);
         WeirdMain.pebble = new Pebble(7245);
-		
 		logger.info("registerItems() complete");
 	}
 
@@ -63,23 +59,12 @@ public class CommonProxy implements IGuiHandler {
         logger.info("registerTiles() complete");
 	}
 
-	// A helper function when we register textures
-	public void registerTextures()
-	{
-        logger.info("registerTextures() complete");
-	}
-	
-	public void registerRenderers() {
-        // Nothing here as the server doesn't render graphics!
-	}
-
 	// A helper function when we register blocks
 	// Don't change the IDs
 	public void registerBlocks(){
         WeirdMain.weirdOre = (new WeirdOre(3125));
 		WeirdMain.weirdBlock = new WeirdBlock(3126);
         WeirdMain.weirdTNT= new WeirdTNT(3127);
-       
         logger.info("registerBlocks() complete");
 	}
 	
@@ -96,5 +81,19 @@ public class CommonProxy implements IGuiHandler {
         ((WeirdTNT) WeirdMain.weirdTNT).postInit();
         ((WeirdSword) WeirdMain.weirdSword).postInit();
         ((Pebble) WeirdMain.pebble).postInit();
+        logger.info("postInit() complete");
+	}
+
+	// A helper function when we register textures
+	// gets overridden by the clientProxy
+	public void registerTextures()
+	{
+        logger.info("commonProxy.registerTextures() complete");
+	}
+	
+    // Nothing here as the server doesn't render graphics!
+	// gets overridden by the clientProxy
+	public void registerRenderers() {
+        logger.info("commonProxy.registerRenderers() complete");
 	}
 }

@@ -6,6 +6,20 @@ import cpw.mods.fml.common.FMLLog;
 
 public class StandardLogger {
 	private Logger logger = null;
+	
+	private StandardLogger(String name) {
+        logger = Logger.getLogger(name);
+        logger.setParent(FMLLog.getLogger());        
+        info("Logger created");		
+	}
+	
+	// A helper function to create the logger when you have multiple c'tors
+	public static StandardLogger getLogger(StandardLogger callerLogger, String name) {
+		if (callerLogger == null) {
+			callerLogger = new StandardLogger(name);
+		}
+		return callerLogger;
+	}
 
 	public void info(String str) {
 		if (logger != null) {
@@ -29,9 +43,4 @@ public class StandardLogger {
 		}
     }
 	
-	public StandardLogger(String name) {
-        logger = Logger.getLogger(name);
-        logger.setParent(FMLLog.getLogger());        
-        info("Logger created");		
-	}
 }

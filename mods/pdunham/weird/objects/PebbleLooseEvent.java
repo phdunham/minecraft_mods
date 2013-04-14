@@ -19,7 +19,7 @@ public class PebbleLooseEvent extends PlayerEvent
         this.sling= sling;
         this.charge = charge;
 
-        logger = new StandardLogger("PebbleLooseEvent");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete player: " + player + ", sling " + sling + ", charge " + charge);
     }
 }

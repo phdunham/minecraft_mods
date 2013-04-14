@@ -21,7 +21,7 @@ public class ServerPacketHandler implements IPacketHandler {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(payload.data));
 		EntityPlayer sender = (EntityPlayer) player;
 
-		logger = new StandardLogger("weird.SPH");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("OnPacketData recieved");		
 	}
 }

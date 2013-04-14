@@ -43,7 +43,7 @@ public class WeirdOre extends Block {
 		// Pick the correct icon from the .png file.
 		blockIndexInTexture = 2;
 		
-		logger = new StandardLogger("weirdOre");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

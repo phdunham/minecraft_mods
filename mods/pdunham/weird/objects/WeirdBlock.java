@@ -44,7 +44,7 @@ public class WeirdBlock extends Block {
 		// Pick the correct icon from the .png file.
 		blockIndexInTexture = 4;
 
-        logger = new StandardLogger("weirdBlock");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

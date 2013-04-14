@@ -35,7 +35,7 @@ public class WeirdAxe extends ItemAxe {
         // Set the texture.
         setIconCoord(6, 0);
         
-        logger = new StandardLogger("weirdAxe");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

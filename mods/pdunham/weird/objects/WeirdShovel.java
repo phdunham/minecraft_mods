@@ -31,7 +31,7 @@ public class WeirdShovel extends ItemSpade {
         // Set the texture.
         setIconCoord(7, 0);
         
-        logger = new StandardLogger("weirdShovel");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

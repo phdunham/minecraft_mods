@@ -31,7 +31,7 @@ public class WeirdPickaxe extends ItemPickaxe {
         // Set the texture.
         setIconCoord(5, 0);
         
-        logger = new StandardLogger("weirdPickaxe");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

@@ -16,7 +16,7 @@ public class PebbleNockEvent extends PlayerEvent
         super(player);
         this.result = result;
 
-        logger = new StandardLogger("PebbleNockEvent");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete player: " + player + ", result " + result);
     }
 }

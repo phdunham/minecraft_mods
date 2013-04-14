@@ -32,7 +32,7 @@ public class WeirdSword extends ItemSword {
         // Set the texture.
         setIconCoord(14, 0);
         
-        logger = new StandardLogger("weirdSword");
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 
