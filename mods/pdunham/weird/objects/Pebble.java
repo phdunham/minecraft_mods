@@ -9,27 +9,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 
-public class WeirdPowder extends Item {
+public class Pebble extends Item {
 
 	private static StandardLogger logger;
 
  	// Standard c'tor
-	public WeirdPowder(int id) {
+	public Pebble(int id) {
         super(id);
-     
-        // Limit the stack size to a weird number
-        setMaxStackSize(29);
+        
+        // Max Limit on stack size
+        setMaxStackSize(64);
         
         // Put on the materials tab
         setCreativeTab(CreativeTabs.tabMaterials);
         
         // Set the internal name
-        setItemName("weirdPowder");
+        setItemName("Pebble");
         
         // Set the texture.
-        setIconCoord(10, 0);
+        setIconCoord(15, 0);
         
-        logger = new StandardLogger("weirdPowder");
+        logger = new StandardLogger("Pebble");
         logger.info("c'tor() complete id: " + id);
 	}
 
@@ -38,17 +38,15 @@ public class WeirdPowder extends Item {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-		GameRegistry.registerItem(this, "weirdPowder");
+		GameRegistry.registerItem(this, "Pebble");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird powder");
+		LanguageRegistry.addName(this, "Pebble");
 
-		// Complex Recipe for weird Powder
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPowder), "sws", "ggg", "sws",
-				'w', new ItemStack(WeirdMain.weirdIngot), 
-				's', new ItemStack(Block.sand),
-				'g', new ItemStack(Item.gunpowder));
-		
+		// Complex Recipe for Pebbles
+		GameRegistry.addShapelessRecipe(new ItemStack(WeirdMain.pebble, 2), new ItemStack(Block.cobblestone));
+		GameRegistry.addShapelessRecipe(new ItemStack(WeirdMain.pebble, 4), new ItemStack(Block.cobblestoneMossy));
+
 		logger.info("postInit() complete newId: " + itemID);
 	}
 

@@ -58,10 +58,10 @@ public class WeirdPickaxe extends ItemPickaxe {
         return true;
     }
 
-     // Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if sword
+     //  Make weird Pickaxe 1.5 x more efficient than diamond.
     public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
     {
-        return super.getStrVsBlock(par1ItemStack, par2Block);
+        return super.getStrVsBlock(par1ItemStack, par2Block) * 1.5f;
     }
     
 	@Override

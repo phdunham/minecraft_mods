@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import pdunham.weird.common.core.handlers.ClientPacketHandler;
 import pdunham.weird.common.core.handlers.ServerPacketHandler;
+import pdunham.weird.objects.Pebble;
 import pdunham.weird.objects.WeirdAxe;
 import pdunham.weird.objects.WeirdBlock;
 import pdunham.weird.objects.WeirdHoe;
@@ -76,9 +77,12 @@ public class WeirdMain {
     @Instance("WeirdSword")
     public static WeirdSword weirdSword;
 
-    	@Instance("Logger")
+    @Instance("Pebble")
+  	public static Pebble pebble;
+
+    @Instance("Logger")
     	private static Logger logger;
-    
+    	
     // Tell Forge where the proxies are.
     @SidedProxy(clientSide="pdunham.weird.client.ClientProxy", 
                 serverSide="pdunham.weird.common.CommonProxy")

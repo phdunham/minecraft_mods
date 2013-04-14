@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemStack;
 import pdunham.weird.common.StandardLogger;
@@ -52,17 +53,10 @@ public class WeirdSword extends ItemSword {
 		logger.info("postInit() complete newId: " + itemID);
 	}
 
-	// Return true if the sword can harvest the block type.
-	public boolean canHarvestBlock(Block par1Block)
-    {
-        return true;
-    }
-
-     // Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if sword
-    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
-    {
-        return super.getStrVsBlock(par1ItemStack, par2Block);
-    }
+	// Do 1.5x more damage than Diamond
+    public int getDamageVsEntity(Entity par1Entity) {
+		return (int) (super.getDamageVsEntity(par1Entity) * 1.5f);
+	}
     
 	@Override
 	public String getTextureFile(){

@@ -3,6 +3,7 @@ package pdunham.weird.common;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import pdunham.weird.objects.Pebble;
 import pdunham.weird.objects.WeirdAxe;
 import pdunham.weird.objects.WeirdHoe;
 import pdunham.weird.objects.WeirdOre;
@@ -52,6 +53,7 @@ public class CommonProxy implements IGuiHandler {
         WeirdMain.weirdSlingShot = new WeirdSlingShot(7242);
         WeirdMain.weirdPowder = new WeirdPowder(7243);
         WeirdMain.weirdSword = new WeirdSword(7244);
+        WeirdMain.pebble = new Pebble(7245);
 		
 		logger.info("registerItems() complete");
 	}
@@ -89,5 +91,6 @@ public class CommonProxy implements IGuiHandler {
         ((WeirdPowder) WeirdMain.weirdPowder).postInit();
         ((WeirdTNT) WeirdMain.weirdTNT).postInit();
         ((WeirdSword) WeirdMain.weirdSword).postInit();
+        ((Pebble) WeirdMain.pebble).postInit();
 	}
 }

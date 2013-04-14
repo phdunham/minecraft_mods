@@ -3,6 +3,7 @@ package pdunham.weird.objects;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
@@ -14,13 +15,16 @@ import pdunham.weird.common.WeirdMain;
 public class WeirdAxe extends ItemAxe {
 
 	private static StandardLogger logger;
-
+	
  	// Standard c'tor
 	public WeirdAxe(int id) {
         super(id, EnumToolMaterial.EMERALD);
 
         // Limit the stack size to a weird number
         setMaxStackSize(2);
+        
+        // How many time you can use this tool
+        setMaxDamage(1561);
         
         // Put on the materials tab
         setCreativeTab(CreativeTabs.tabTools);
@@ -52,14 +56,23 @@ public class WeirdAxe extends ItemAxe {
 		logger.info("postInit() complete newId: " + itemID);
 	}
 
-     // Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if sword
+    // Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if sword
     public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
     {
-        return super.getStrVsBlock(par1ItemStack, par2Block);
-    }
+    		// Super efficient on these materials
+    		if (par2Block != null &&
+        		(par2Block.blockMaterial == Material.wood || 
+        		 par2Block.blockMaterial == Material.plants ||
+        		 par2Block.blockMaterial == Material.vine)) {
+    			return 12.0f;
+    		}
+    		
+    		// Default for the rest
+    		return super.getStrVsBlock(par1ItemStack, par2Block);
+	}
     
 	@Override
-	public String getTextureFile(){
+    public String getTextureFile(){
 		return WeirdMain.pathTexture;
 	}	
 }
