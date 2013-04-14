@@ -1,4 +1,4 @@
-package pdunham.weird.objects;
+package pdunham.weird.weapons;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import pdunham.weird.common.StandardLogger;

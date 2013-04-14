@@ -5,12 +5,12 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.client.MinecraftForgeClient;
+import pdunham.weird.achievements.WeirdAchievementOre;
 import pdunham.weird.common.WeirdCoProxy;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
-import pdunham.weird.objects.EntityPebble;
-import pdunham.weird.objects.RenderPebble;
-import pdunham.weird.objects.WeirdAchievementOre;
+import pdunham.weird.weapons.EntityPebble;
+import pdunham.weird.weapons.RenderPebble;
 
 public class WeirdClProxy extends WeirdCoProxy {
 

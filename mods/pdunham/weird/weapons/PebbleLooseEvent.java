@@ -1,4 +1,5 @@
-package pdunham.weird.objects;
+package pdunham.weird.weapons;
+
 import pdunham.weird.common.StandardLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -6,17 +7,19 @@ import net.minecraftforge.event.Cancelable;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 @Cancelable
-public class PebbleNockEvent extends PlayerEvent
+public class PebbleLooseEvent extends PlayerEvent
 {
-    public ItemStack result;
+    public final ItemStack sling;
+    public int charge;
 	private static StandardLogger logger;
     
-    public PebbleNockEvent(EntityPlayer player, ItemStack result)
+    public PebbleLooseEvent(EntityPlayer player, ItemStack sling, int charge)
     {
         super(player);
-        this.result = result;
+        this.sling= sling;
+        this.charge = charge;
 
         logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-        logger.info("c'tor() complete player: " + player + ", result " + result);
+        logger.info("c'tor() complete player: " + player + ", sling " + sling + ", charge " + charge);
     }
 }

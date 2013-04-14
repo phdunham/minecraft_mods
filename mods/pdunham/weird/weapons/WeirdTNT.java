@@ -1,4 +1,4 @@
-package pdunham.weird.objects;
+package pdunham.weird.weapons;
 
 import java.util.logging.Logger;
 

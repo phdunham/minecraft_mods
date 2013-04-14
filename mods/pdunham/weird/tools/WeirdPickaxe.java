@@ -1,39 +1,35 @@
-package pdunham.weird.objects;
+package pdunham.weird.tools;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
 
-public class WeirdAxe extends ItemAxe {
+public class WeirdPickaxe extends ItemPickaxe {
 
 	private static StandardLogger logger;
-	
+
  	// Standard c'tor
-	public WeirdAxe(int id) {
+	public WeirdPickaxe(int id) {
         super(id, EnumToolMaterial.EMERALD);
 
         // Limit the stack size to a weird number
         setMaxStackSize(2);
         
-        // How many time you can use this tool
-        setMaxDamage(1561);
-        
         // Put on the materials tab
         setCreativeTab(CreativeTabs.tabTools);
         
         // Set the internal name
-        setItemName("weirdAxe");
+        setItemName("weirdPickaxe");
         
         // Set the texture.
-        setIconCoord(6, 0);
+        setIconCoord(5, 0);
         
         logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
@@ -44,35 +40,32 @@ public class WeirdAxe extends ItemAxe {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-		GameRegistry.registerItem(this, "weirdAxe");
+		GameRegistry.registerItem(this, "weirdPickaxe");
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird axe");
+		LanguageRegistry.addName(this, "Weird pickaxe");
 
 		// A weird pickaxe is 3 weird ingots and 2 iron ingots
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdAxe), " ww", " iw", " i ",
-							'w', new ItemStack(WeirdMain.weirdIngot), 
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPickaxe), "www", " i ", " i ",
+							'w', new ItemStack(WeirdMain.weirdIngot),
 							'i', new ItemStack(Item.ingotIron));
 		
 		logger.info("postInit() complete newId: " + itemID);
 	}
 
-    // Returns the strength of the stack against a given block. 1.0F base, (Quality+1)*2 if correct blocktype, 1.5F if sword
+	// Return true if the pickaxe can harvest the block type.
+	public boolean canHarvestBlock(Block par1Block)
+    {
+        return true;
+    }
+
+     //  Make weird Pickaxe 1.5 x more efficient than diamond.
     public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
     {
-    		// Super efficient on these materials
-    		if (par2Block != null &&
-        		(par2Block.blockMaterial == Material.wood || 
-        		 par2Block.blockMaterial == Material.plants ||
-        		 par2Block.blockMaterial == Material.vine)) {
-    			return 12.0f;
-    		}
-    		
-    		// Default for the rest
-    		return super.getStrVsBlock(par1ItemStack, par2Block);
-	}
+        return super.getStrVsBlock(par1ItemStack, par2Block) * 1.5f;
+    }
     
 	@Override
-    public String getTextureFile(){
+	public String getTextureFile(){
 		return WeirdMain.pathTexture;
 	}	
 }

@@ -1,9 +1,7 @@
-package pdunham.weird.objects;
+package pdunham.weird.common;
 
 import java.util.Random;
 
-import pdunham.weird.common.StandardLogger;
-import pdunham.weird.common.WeirdMain;
 
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;

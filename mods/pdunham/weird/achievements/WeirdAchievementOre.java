@@ -1,4 +1,4 @@
-package pdunham.weird.objects;
+package pdunham.weird.achievements;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

@@ -1,4 +1,4 @@
-package pdunham.weird.objects;
+package pdunham.weird.weapons;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;

@@ -1,4 +1,4 @@
-package pdunham.weird.objects;
+package pdunham.weird.tools;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -6,17 +6,17 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSpade;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
 
-public class WeirdHoe extends ItemHoe {
+public class WeirdShovel extends ItemSpade {
 
 	private static StandardLogger logger;
 
  	// Standard c'tor
-	public WeirdHoe(int id) {
+	public WeirdShovel(int id) {
         super(id, EnumToolMaterial.EMERALD);
 
         // Limit the stack size to a weird number
@@ -26,10 +26,10 @@ public class WeirdHoe extends ItemHoe {
         setCreativeTab(CreativeTabs.tabTools);
         
         // Set the internal name
-        setItemName("weirdHoe");
+        setItemName("weirdShovel");
         
         // Set the texture.
-        setIconCoord(8, 0);
+        setIconCoord(7, 0);
         
         logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
@@ -40,19 +40,19 @@ public class WeirdHoe extends ItemHoe {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-		GameRegistry.registerItem(this, "weirdHoe");
+		GameRegistry.registerItem(this, "weirdShovel");
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird Hoe");
+		LanguageRegistry.addName(this, "Weird shovel");
 
-		// A weird hoe is 3 weird ingots and 2 iron ingots
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdHoe), " ww", " i ", " i ",
+		// A weird shovel is 1 weird ingots and 2 iron ingots
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdShovel), " w ", " i ", " i ",
 							'w', new ItemStack(WeirdMain.weirdIngot),
 							'i', new ItemStack(Item.ingotIron));
 		
 		logger.info("postInit() complete newId: " + itemID);
 	}
 
-	// Return true if the hoe can harvest the block type.
+	// Return true if the shovel can harvest the block type.
 	public boolean canHarvestBlock(Block par1Block)
     {
         return true;
