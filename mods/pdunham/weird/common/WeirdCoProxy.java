@@ -1,8 +1,14 @@
 package pdunham.weird.common;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.entity.player.EntityPlayer;
+
+import pdunham.weird.armor.WeirdBoots;
+import pdunham.weird.armor.WeirdChestPlate;
+import pdunham.weird.armor.WeirdHelmet;
+import pdunham.weird.armor.WeirdLeggins;
 import pdunham.weird.objects.WeirdOre;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdBlock;
@@ -12,12 +18,18 @@ import pdunham.weird.tools.WeirdHoe;
 import pdunham.weird.tools.WeirdPickaxe;
 import pdunham.weird.tools.WeirdShovel;
 import pdunham.weird.weapons.Pebble;
+import pdunham.weird.weapons.WeirdCasing;
+import pdunham.weird.weapons.WeirdGrenade;
 import pdunham.weird.weapons.WeirdSlingShot;
+import pdunham.weird.weapons.WeirdStickyCasing;
+import pdunham.weird.weapons.WeirdStrongCasing;
 import pdunham.weird.weapons.WeirdSword;
 import pdunham.weird.weapons.WeirdTNT;
+
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class WeirdCoProxy implements IGuiHandler {
 
@@ -42,16 +54,26 @@ public class WeirdCoProxy implements IGuiHandler {
 	// A helper function when we register items
 	// Don't change the IDs
 	public void registerItems(){
-		WeirdMain.weirdIngot = new WeirdIngot(7237);
-		WeirdMain.weirdPickaxe = new WeirdPickaxe(7238);
-		WeirdMain.weirdAxe = new WeirdAxe(7239);
-        WeirdMain.weirdShovel = new WeirdShovel(7240);
-        WeirdMain.weirdHoe = new WeirdHoe(7241);
-        WeirdMain.weirdSlingShot = new WeirdSlingShot(7242);
-        WeirdMain.weirdPowder = new WeirdPowder(7243);
-        WeirdMain.weirdSword = new WeirdSword(7244);
-        WeirdMain.pebble = new Pebble(7245);
-		logger.info("registerItems() complete");
+		int id = 7237;
+		// *** Do not change the order of these c'tors
+		WeirdMain.weirdIngot               = new WeirdIngot(id++);
+		WeirdMain.weirdPickaxe           = new WeirdPickaxe(id++);
+		WeirdMain.weirdAxe =                   new WeirdAxe(id++);
+        WeirdMain.weirdShovel =             new WeirdShovel(id++);
+        WeirdMain.weirdHoe =                   new WeirdHoe(id++);
+        WeirdMain.weirdSlingShot =       new WeirdSlingShot(id++);
+        WeirdMain.weirdPowder =             new WeirdPowder(id++);
+        WeirdMain.weirdSword =               new WeirdSword(id++);
+        WeirdMain.pebble =                       new Pebble(id++);
+        WeirdMain.weirdCasing =             new WeirdCasing(id++);
+        WeirdMain.weirdStrongCasing = new WeirdStrongCasing(id++);
+        WeirdMain.weirdStickyCasing = new WeirdStickyCasing(id++);
+        WeirdMain.weirdGrenade           = new WeirdGrenade(id++);
+        WeirdMain.weirdHelmet             = new WeirdHelmet(id++);
+        WeirdMain.weirdChestPlate     = new WeirdChestPlate(id++);
+        WeirdMain.weirdLeggins           = new WeirdLeggins(id++);
+        WeirdMain.weirdBoots               = new WeirdBoots(id++);
+        logger.info("registerItems() complete");
 	}
 
 	// A helper function when we register tiles
@@ -81,7 +103,16 @@ public class WeirdCoProxy implements IGuiHandler {
         ((WeirdTNT) WeirdMain.weirdTNT).postInit();
         ((WeirdSword) WeirdMain.weirdSword).postInit();
         ((Pebble) WeirdMain.pebble).postInit();
-        logger.info("postInit() complete");
+        ((WeirdCasing) WeirdMain.weirdCasing).postInit();
+        ((WeirdStrongCasing)WeirdMain.weirdStrongCasing).postInit();
+        ((WeirdStickyCasing)WeirdMain.weirdStickyCasing).postInit();
+        ((WeirdGrenade)WeirdMain.weirdGrenade).postInit();
+        ((WeirdHelmet)WeirdMain.weirdHelmet).postInit();
+        ((WeirdChestPlate)WeirdMain.weirdChestPlate).postInit();
+        ((WeirdLeggins)WeirdMain.weirdLeggins).postInit();
+        ((WeirdBoots)WeirdMain.weirdBoots).postInit();
+
+		logger.info("postInit() complete");
 	}
 
 	// A helper function when we register textures

@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 
 public class WeirdAxe extends ItemAxe {
@@ -73,6 +74,6 @@ public class WeirdAxe extends ItemAxe {
     
 	@Override
     public String getTextureFile(){
-		return WeirdMain.pathTexture;
+		return WeirdConstants.pathIcons;
 	}	
 }

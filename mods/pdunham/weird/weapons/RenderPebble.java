@@ -1,6 +1,7 @@
 package pdunham.weird.weapons;
 
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 
 import cpw.mods.fml.relauncher.Side;
@@ -35,7 +36,7 @@ public class RenderPebble extends Render {
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(0.5F, 0.5F, 0.5F);
-        this.loadTexture(WeirdMain.pathTexture);
+        this.loadTexture(WeirdConstants.pathIcons);
         Tessellator var10 = Tessellator.instance;
 
 //        if (this.itemIconIndex == 154)

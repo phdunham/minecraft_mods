@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -94,6 +95,6 @@ public class WeirdOre extends Block {
 
 	@Override
 	public String getTextureFile(){
-		return WeirdMain.pathTexture;
+		return WeirdConstants.pathIcons;
 	}	
 }

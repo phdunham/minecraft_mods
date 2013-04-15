@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 
 public class WeirdSlingShot extends Item {
@@ -81,6 +82,6 @@ public class WeirdSlingShot extends Item {
 	
 	@Override
 	public String getTextureFile(){
-		return WeirdMain.pathTexture;
+		return WeirdConstants.pathIcons;
 	}	
 }

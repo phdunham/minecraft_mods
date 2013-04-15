@@ -3,8 +3,16 @@ package pdunham.weird.common;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraftforge.common.EnumHelper;
+
 import pdunham.weird.achievements.WeirdAchievementOre;
+import pdunham.weird.armor.WeirdBoots;
+import pdunham.weird.armor.WeirdChestPlate;
+import pdunham.weird.armor.WeirdHelmet;
+import pdunham.weird.armor.WeirdLeggins;
 import pdunham.weird.common.core.handlers.ClientPacketHandler;
 import pdunham.weird.common.core.handlers.ServerPacketHandler;
 import pdunham.weird.objects.WeirdBlock;
@@ -18,7 +26,11 @@ import pdunham.weird.tools.WeirdShovel;
 import pdunham.weird.weapons.EntityPebble;
 import pdunham.weird.weapons.Pebble;
 import pdunham.weird.weapons.RenderPebble;
+import pdunham.weird.weapons.WeirdCasing;
+import pdunham.weird.weapons.WeirdGrenade;
 import pdunham.weird.weapons.WeirdSlingShot;
+import pdunham.weird.weapons.WeirdStickyCasing;
+import pdunham.weird.weapons.WeirdStrongCasing;
 import pdunham.weird.weapons.WeirdSword;
 import pdunham.weird.weapons.WeirdTNT;
 import cpw.mods.fml.common.FMLLog;
@@ -78,6 +90,18 @@ public class WeirdMain {
     @Instance("WeirdTNT")
     public static WeirdTNT weirdTNT;
 
+    @Instance("WeirdCasing")
+    public static WeirdCasing weirdCasing;
+    
+    @Instance("WeirdStrongCasing")
+    public static WeirdStrongCasing weirdStrongCasing;
+
+    @Instance("WeirdStickyCasing")
+    public static WeirdStickyCasing weirdStickyCasing;
+    
+    @Instance("WeirdGrenade")
+    public static WeirdGrenade weirdGrenade;
+
     @Instance("WeirdSword")
     public static WeirdSword weirdSword;
 
@@ -90,14 +114,26 @@ public class WeirdMain {
     @Instance("RenderPebble")
   	public static RenderPebble renderPebble;
     
+    @Instance("WeirdHelmet")
+    public static WeirdHelmet weirdHelmet;
+    
+    @Instance("WeirdChestPlate")
+    public static WeirdChestPlate weirdChestPlate;
+    
+    @Instance("WeirdLeggins")
+    public static WeirdLeggins weirdLeggins;
+    
+    @Instance("WeirdBoots")
+    public static WeirdBoots weirdBoots;
+    
     @Instance("WeirdAchievementOre")
     public static WeirdAchievementOre weirdAchievementOre;
 
-    @Instance("Logger")
-    	private static Logger logger;
-    
+    @Instance("WeirdWorldGenerator")
     public static WeirdWorldGenerator worldGen = new WeirdWorldGenerator();
-    	
+
+	private static StandardLogger logger;
+    
     // Tell Forge where the proxies are.
     @SidedProxy(clientSide="pdunham.weird.client.WeirdClProxy", 
                 serverSide="pdunham.weird.common.WeirdCoProxy")
@@ -105,18 +141,15 @@ public class WeirdMain {
 	@Instance("WeirdCoProxy")
     public static WeirdCoProxy proxy;
 
-    public static String pathTexture = "/pdunham/weird/weirdBlock.png";
-
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
-        logger = Logger.getLogger("WeirdMain");
-        logger.setParent(FMLLog.getLogger());        
-        logger.log(java.util.logging.Level.INFO, "preInit() complete");
+    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+        logger.info("preInit() complete");
     }
 
     @Init
     public void init(FMLInitializationEvent event) {
-        logger.log(java.util.logging.Level.INFO, "init()");
+        logger.info("init()");
 
         // Registers this class that deals with GUI data
         NetworkRegistry.instance().registerGuiHandler(this, proxy);
@@ -133,12 +166,12 @@ public class WeirdMain {
         // Register our self with the world generator so weird ore will be inserted into new worlds.
         GameRegistry.registerWorldGenerator(worldGen);
         
-        logger.log(java.util.logging.Level.INFO, "init() complete");
+        logger.info("init() complete");
     }
     
     @PostInit
     public static void postInit(FMLPostInitializationEvent event) {
     		proxy.postInit();
-        logger.log(java.util.logging.Level.INFO, "postInit() complete");
+        logger.info("postInit() complete");
     }
 }

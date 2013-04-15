@@ -1,34 +1,34 @@
-package pdunham.weird.objects;
+package pdunham.weird.weapons;
 
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 
-public class WeirdPowder extends Item {
+public class WeirdCasing extends Item {
 
 	private static StandardLogger logger;
 
  	// Standard c'tor
-	public WeirdPowder(int id) {
+	public WeirdCasing(int id) {
         super(id);
-     
-        // Limit the stack size to a weird number
-        setMaxStackSize(29);
+        
+        // Max Limit on stack size
+        setMaxStackSize(64);
         
         // Put on the materials tab
         setCreativeTab(CreativeTabs.tabMaterials);
         
         // Set the internal name
-        setItemName("weirdPowder");
+        setItemName("WeirdCasing");
         
         // Set the texture.
-        setIconCoord(10, 0);
+        setIconCoord(0, 1);
         
         logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
@@ -39,17 +39,17 @@ public class WeirdPowder extends Item {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-		GameRegistry.registerItem(this, "weirdPowder");
+		GameRegistry.registerItem(this, "WeirdCasing");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird powder");
+		LanguageRegistry.addName(this, "Weird casing");
 
-		// Complex Recipe for weird Powder
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPowder), "sws", "ggg", "sws",
+		// Recipe for make weirdCasing
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdStickyCasing), "gig", "w w", "gig",
 				'w', new ItemStack(WeirdMain.weirdIngot), 
-				's', new ItemStack(Block.sand),
-				'g', new ItemStack(Item.gunpowder));
-		
+				'i', new ItemStack(Item.ingotIron),
+				'g', new ItemStack(Item.ingotGold));
+
 		logger.info("postInit() complete newId: " + itemID);
 	}
 

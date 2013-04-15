@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 
 public class WeirdPickaxe extends ItemPickaxe {
@@ -66,6 +67,6 @@ public class WeirdPickaxe extends ItemPickaxe {
     
 	@Override
 	public String getTextureFile(){
-		return WeirdMain.pathTexture;
+		return WeirdConstants.pathIcons;
 	}	
 }

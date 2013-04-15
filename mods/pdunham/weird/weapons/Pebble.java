@@ -1,6 +1,7 @@
 package pdunham.weird.weapons;
 
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -53,6 +54,6 @@ public class Pebble extends Item {
 
 	@Override
 	public String getTextureFile(){
-		return WeirdMain.pathTexture;
+		return WeirdConstants.pathIcons;
 	}	
 }

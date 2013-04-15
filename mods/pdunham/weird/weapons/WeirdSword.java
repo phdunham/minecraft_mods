@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemStack;
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 
 public class WeirdSword extends ItemSword {
@@ -45,7 +46,7 @@ public class WeirdSword extends ItemSword {
 		// Set the external name
 		LanguageRegistry.addName(this, "Weird sword");
 
-		// A weird sword is 3 weird ingots and 2 iron ingots
+		// A weird sword is 2 weird ingots and 1 iron ingot
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdSword), " w ", " w ", " i ",
 							'w', new ItemStack(WeirdMain.weirdIngot), 
 							'i', new ItemStack(Item.ingotIron));
@@ -60,6 +61,6 @@ public class WeirdSword extends ItemSword {
     
 	@Override
 	public String getTextureFile(){
-		return WeirdMain.pathTexture;
+		return WeirdConstants.pathIcons;
 	}	
 }

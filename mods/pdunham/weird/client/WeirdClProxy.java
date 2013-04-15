@@ -8,6 +8,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import pdunham.weird.achievements.WeirdAchievementOre;
 import pdunham.weird.common.WeirdCoProxy;
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 import pdunham.weird.weapons.EntityPebble;
 import pdunham.weird.weapons.RenderPebble;
@@ -31,8 +32,9 @@ public class WeirdClProxy extends WeirdCoProxy {
 	
     @Override
 	public void registerTextures() {
-    		// Preload our texture palette so we have all of the icons before we need them.
-    		MinecraftForgeClient.preloadTexture(WeirdMain.pathTexture);
+    		// Preload our texture palettes so we have all of the icons and textures before we need them.
+    		MinecraftForgeClient.preloadTexture(WeirdConstants.pathIcons);
+    		MinecraftForgeClient.preloadTexture(WeirdConstants.pathArmor);
     		
     		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerTextures complete");

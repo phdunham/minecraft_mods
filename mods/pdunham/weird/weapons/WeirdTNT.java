@@ -3,6 +3,7 @@ package pdunham.weird.weapons;
 import java.util.logging.Logger;
 
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -71,6 +72,6 @@ public class WeirdTNT extends BlockTNT {
 
 	@Override
 	public String getTextureFile(){
-		return WeirdMain.pathTexture;
+		return WeirdConstants.pathIcons;
 	}	
 }
