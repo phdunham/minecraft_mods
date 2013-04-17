@@ -9,7 +9,11 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.EnumHelper;
 
+import pdunham.weird.achievements.CraftingHandler;
+import pdunham.weird.achievements.WeirdAchievementGrenadeCreeper;
 import pdunham.weird.achievements.WeirdAchievementOre;
+import pdunham.weird.achievements.WeirdAchievementPowder;
+import pdunham.weird.achievements.WeirdAchievementStartingOff;
 import pdunham.weird.armor.WeirdBoots;
 import pdunham.weird.armor.WeirdChestPlate;
 import pdunham.weird.armor.WeirdHelmet;
@@ -129,6 +133,18 @@ public class WeirdMain {
     
     @Instance("WeirdAchievementOre")
     public static WeirdAchievementOre weirdAchievementOre;
+
+    @Instance("WeirdAchievementGrenadeCreeper")
+    public static WeirdAchievementGrenadeCreeper weirdAchievementGrenadeCreeper;
+
+    @Instance("WeirdAchievementPowder")
+    public static WeirdAchievementStartingOff weirdAchievementStartingOff;
+
+    @Instance("WeirdAchievementPowder")
+    public static WeirdAchievementPowder weirdAchievementPowder;
+    
+    @Instance("CraftingHandler")
+    public static CraftingHandler craftingHandler = new CraftingHandler();
 
     @Instance("WeirdWorldGenerator")
     public static WeirdWorldGenerator worldGen = new WeirdWorldGenerator();

@@ -3,9 +3,14 @@ package pdunham.weird.client;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.client.MinecraftForgeClient;
+import pdunham.weird.achievements.CraftingHandler;
+import pdunham.weird.achievements.WeirdAchievementGrenadeCreeper;
 import pdunham.weird.achievements.WeirdAchievementOre;
+import pdunham.weird.achievements.WeirdAchievementPowder;
+import pdunham.weird.achievements.WeirdAchievementStartingOff;
 import pdunham.weird.common.WeirdCoProxy;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
@@ -69,7 +74,15 @@ public class WeirdClProxy extends WeirdCoProxy {
 
     @Override
 	public void registerAchievements() {
+    		// Order matters. You must have the dependent Achievements registered first.
     		WeirdMain.weirdAchievementOre = new WeirdAchievementOre();
+    		WeirdMain.weirdAchievementStartingOff = new WeirdAchievementStartingOff();
+    		WeirdMain.weirdAchievementPowder = new WeirdAchievementPowder();
+    		WeirdMain.weirdAchievementGrenadeCreeper = new WeirdAchievementGrenadeCreeper();
+    		
+    		// The Crafting handler let's us hook crafting and smelting to trigger achievements
+    		WeirdMain.craftingHandler = new CraftingHandler();
+    		GameRegistry.registerCraftingHandler(WeirdMain.craftingHandler);    		
     		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerAchievements complete");
 	}

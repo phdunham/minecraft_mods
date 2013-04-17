@@ -1,8 +1,12 @@
 package pdunham.weird.weapons;
 
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdMain;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
@@ -50,8 +54,24 @@ public class EntityGrenade extends EntityThrowable {
     @Override
     protected void onImpact(MovingObjectPosition par1MovingObjectPosition) {
     		explodes();
+    		
+    		// If we hit an entity
+    		if (par1MovingObjectPosition.entityHit != null) {
+        		
+        		// And that entity is a creeper
+    			if (par1MovingObjectPosition.entityHit.getEntityName().toLowerCase().indexOf("creeper") >= 0) {
+        			logger.info("Got '" + par1MovingObjectPosition.entityHit.getEntityName() + "'");
+
+            		// And the throw is a real player
+	    			EntityLiving el = getThrower();
+	    			if (el instanceof EntityPlayer) {
+	    				// Trigger Achievement
+	    				((EntityPlayer)el).triggerAchievement(WeirdMain.weirdAchievementGrenadeCreeper);
+	    			}
+    			}
+    		}
     }
-    
+ 
     // Override the onUpdate() so we can measure the time of the grenades existence
     public void onUpdate() {
     		super.onUpdate();

@@ -8,13 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 
-public class WeirdAchievementOre extends Achievement {
+public class WeirdAchievementGrenadeCreeper extends Achievement {
 	
 	private static StandardLogger logger;
 
-	public WeirdAchievementOre() {
+	public WeirdAchievementGrenadeCreeper() {
 		// id, name, x, y, item display, prerequisite
-		super(2001, "Weird ore", 1, 11, WeirdMain.weirdOre, AchievementList.acquireIron);
+		super(2002, "Weird Grenade Creeper", 7, 11, WeirdMain.weirdGrenade, WeirdMain.weirdAchievementPowder);
 		registerAchievement();
 
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
@@ -24,13 +24,12 @@ public class WeirdAchievementOre extends Achievement {
     @SideOnly(Side.CLIENT)
     @Override
     public String getName() {
-//		logger.info("getName");
-		return "Get weird!";
+		return "Returning the favor!";
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public String getDescription() {
-	    return "Mined weird ore!";
+	    return "Killed creeper with weird grenade!";
     }
 }

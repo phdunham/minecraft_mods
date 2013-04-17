@@ -8,13 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 
-public class WeirdAchievementOre extends Achievement {
+public class WeirdAchievementPowder extends Achievement {
 	
 	private static StandardLogger logger;
 
-	public WeirdAchievementOre() {
+	public WeirdAchievementPowder() {
 		// id, name, x, y, item display, prerequisite
-		super(2001, "Weird ore", 1, 11, WeirdMain.weirdOre, AchievementList.acquireIron);
+		super(2004, "Weird Powder", 5, 11, WeirdMain.weirdPowder, WeirdMain.weirdAchievementStartingOff);
 		registerAchievement();
 
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
@@ -24,13 +24,12 @@ public class WeirdAchievementOre extends Achievement {
     @SideOnly(Side.CLIENT)
     @Override
     public String getName() {
-//		logger.info("getName");
-		return "Get weird!";
+		return "Better than gun powder!";
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public String getDescription() {
-	    return "Mined weird ore!";
+	    return "Making weird powder!";
     }
 }

@@ -13,13 +13,13 @@ function do_cmd {
 # Clear the screen
 /usr/bin/osascript -e 'tell application "System Events" to tell process "Terminal" to keystroke "k" using command down'
 
-# Build and reobfuscate
-# do_cmd cd ~/work/forge/mcp
-# do_cmd ./recompile.sh
-# do_cmd ./reobfuscate.sh
-
-# copy the resources to the mod's directory
-#do_cmd cp ~/work/forge/mcp/src/minecraft/pdunham/weird/*.png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/
+# Any argument triggers skipping of actual build step (only do the copying)
+if [ -z $1 ]; then
+    # Build and reobfuscate
+    do_cmd cd ~/work/forge/mcp
+    do_cmd ./recompile.sh
+    do_cmd ./reobfuscate.sh
+fi
 
 # Make the zip file
 do_cmd cd ~/work/forge/mcp/reobf/minecraft/
@@ -29,6 +29,7 @@ do_cmd zip -r weirdBlock.zip pdunham
 do_cmd cp weirdBlock.zip ~/ftb/YogCraft/minecraft/mods/
 do_cmd cp weirdBlock.zip ~/Desktop/MineCraft/FeedTheBeast/MindCrack/minecraft/mods/
 do_cmd cp weirdBlock.zip ~/Desktop/MineCraft/ftb_server/mods/
+do_cmd cp weirdBlock.zip ~/Desktop
 
 # Copy the mod to Ian's machine
 # do_cmd rm /Volumes/Users/Ian/Desktop/FTB/Direwolf20/minecraft/mods/weirdBlock.zip
@@ -39,5 +40,5 @@ do_cmd cp weirdBlock.zip ~/Desktop/MineCraft/ftb_server/mods/
 # rm "$@"
 # cp "$@weirdBlock.zip"
 # 
-# echo "Successs"
-# echo
+echo "Successs"
+echo
