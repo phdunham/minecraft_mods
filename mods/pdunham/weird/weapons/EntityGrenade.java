@@ -32,21 +32,14 @@ public class EntityGrenade extends EntityThrowable {
         init();
     }
 
-    // Called when the grenage hits something.
+    // Called when the grenade hits something.
     @Override
     protected void onImpact(MovingObjectPosition par1MovingObjectPosition) {
-        if (par1MovingObjectPosition.entityHit != null) {
-            byte var2 = 0;
-
-            if (par1MovingObjectPosition.entityHit instanceof EntityBlaze) {
-                var2 = 3;
-            }
-            par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), var2);
-        }
-
         // createExplosion(Entity, posX, posY, posZ, radius, smokes on impact);
-        worldObj.createExplosion(this, posX, posY, posZ, 10.0f, true);
+    		// This causes all the damage
+        worldObj.createExplosion(this, posX, posY, posZ, 3.0f, true);
 
+        // Once it hits something, it disappears
         if (!this.worldObj.isRemote) {
             this.setDead();
         }

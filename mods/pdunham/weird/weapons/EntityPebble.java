@@ -5,56 +5,49 @@ import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityPebble extends EntityArrow {
+public class EntityPebble extends EntityThrowable {
 
 	private StandardLogger logger = null;
 	
 	private void init() {
-		canBePickedUp = 0;
-		setKnockbackStrength(2);
-		setDamage(0);
-		setIsCritical(true);
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 	    logger.info("C'tor() complete");
 	}
 	
-    public EntityPebble(World par1World) {
-       super(par1World);
-       init();
+	public EntityPebble(World par1World) {
+        super(par1World);
+        init();
     }
-    
-    public EntityPebble(World par1World, EntityLiving par2EntityLiving) {
-    		super(par1World, par2EntityLiving, 72000);
-    	       init();
+
+    public EntityPebble(World par1World, EntityLiving par2EntityLiving){
+        super(par1World, par2EntityLiving);
+        init();
     }
-    
-    public EntityPebble(World par1World, EntityLiving par2EntityLiving, float par3) {
-       super(par1World, par2EntityLiving, par3);
-       init();
-    }
-    
+
     public EntityPebble(World par1World, double par2, double par4, double par6) {
         super(par1World, par2, par4, par6);
         init();
     }
-    
-    public EntityPebble(World par1World, EntityLiving par2EntityLiving, EntityLiving par3EntityLiving, float par4, float par5) {
-	    super(par1World, par2EntityLiving, par3EntityLiving, par4, par5);
-	    init();
-    }
-    
-    @Override
-    // When true causes arrow to show particles in the air
-    public boolean getIsCritical() {
-    		return true;
-    }
 
+    // Called when the pebble hits something.
     @Override
-    public void setDamage(double par1) {
-    		super.setDamage(5.0D);
+    protected void onImpact(MovingObjectPosition par1MovingObjectPosition) {
+    		// If we hit something, do it damage.
+        if (par1MovingObjectPosition.entityHit != null) {
+            byte damageDone = 3;
+            par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damageDone);
+        }
+
+        // Once it hits something, it disappears
+        if (!this.worldObj.isRemote) {
+            this.setDead();
+        }
     }
 }

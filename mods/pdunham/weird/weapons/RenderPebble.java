@@ -26,8 +26,6 @@ public class RenderPebble extends Render {
 	}
 
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
-//        logger.info("doRender(par1Entity " + par1Entity + ", par2 " + par2 + ", par4 " + par4 + 
-//    		   					", par6 " + par6 + ", par8 " + par8 + ", par9 " + par9 + ")");
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -42,7 +40,6 @@ public class RenderPebble extends Render {
 
     private void drawIt(Tessellator par1Tessellator, int par2)
     {
-//        logger.info("drawIt(Tessellator " + par1Tessellator + ", par2 " + par2 + ")"); 
         float var3 = (float)(par2 % 16 * 16 + 0) / 256.0F;
         float var4 = (float)(par2 % 16 * 16 + 16) / 256.0F;
         float var5 = (float)(par2 / 16 * 16 + 0) / 256.0F;
