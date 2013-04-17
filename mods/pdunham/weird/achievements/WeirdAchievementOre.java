@@ -14,7 +14,7 @@ public class WeirdAchievementOre extends Achievement {
 
 	public WeirdAchievementOre() {
 		// id, name, x, y, item display, prerequisite
-		super(2001, "Weird ore", 5, 4, WeirdMain.weirdOre, null); //AchievementList.buildPickaxe);
+		super(2001, "Weird ore", 1, 6, WeirdMain.weirdOre, AchievementList.acquireIron);
 		registerAchievement();
 
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
