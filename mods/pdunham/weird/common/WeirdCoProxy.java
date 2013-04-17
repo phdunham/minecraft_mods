@@ -9,6 +9,7 @@ import pdunham.weird.armor.WeirdBoots;
 import pdunham.weird.armor.WeirdChestPlate;
 import pdunham.weird.armor.WeirdHelmet;
 import pdunham.weird.armor.WeirdLeggins;
+import pdunham.weird.armor.WeirdPlating;
 import pdunham.weird.objects.WeirdOre;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdBlock;
@@ -73,6 +74,7 @@ public class WeirdCoProxy implements IGuiHandler {
         WeirdMain.weirdChestPlate     = new WeirdChestPlate(id++);
         WeirdMain.weirdLeggins           = new WeirdLeggins(id++);
         WeirdMain.weirdBoots               = new WeirdBoots(id++);
+        WeirdMain.weirdPlating           = new WeirdPlating(id++);
         logger.info("registerItems() complete");
 	}
 
@@ -111,7 +113,7 @@ public class WeirdCoProxy implements IGuiHandler {
         ((WeirdChestPlate)WeirdMain.weirdChestPlate).postInit();
         ((WeirdLeggins)WeirdMain.weirdLeggins).postInit();
         ((WeirdBoots)WeirdMain.weirdBoots).postInit();
-
+        ((WeirdPlating)WeirdMain.weirdPlating).postInit();
 		logger.info("postInit() complete");
 	}
 
@@ -124,7 +126,7 @@ public class WeirdCoProxy implements IGuiHandler {
 	
     // Nothing here as the server doesn't render graphics!
 	// gets overridden by the clientProxy
-	public void registerRenderers() {
+	public void registerRenderers(WeirdMain wm) {
         logger.info("commonProxy.registerRenderers() complete");
 	}
 	

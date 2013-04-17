@@ -2,8 +2,10 @@ package pdunham.weird.weapons;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
@@ -52,7 +54,26 @@ public class WeirdGrenade extends Item {
 
 		logger.info("postInit() complete newId: " + itemID);
 	}
-
+	
+	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+		
+		if (par3EntityPlayer.capabilities.isCreativeMode || 
+			par3EntityPlayer.inventory.hasItem(WeirdMain.weirdGrenade.itemID)) {
+			par3EntityPlayer.inventory.consumeInventoryItem(WeirdMain.weirdGrenade.itemID);
+		} else {
+			return par1ItemStack;
+		}
+		
+		// Play a sound
+		par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		
+		// Create the pebble in the client.
+		if (!par2World.isRemote) {
+			par2World.spawnEntityInWorld(new EntityGrenade(par2World, par3EntityPlayer));
+		}
+		return par1ItemStack;
+	}
+	
 	@Override
 	public String getTextureFile(){
 		return WeirdConstants.pathIcons;

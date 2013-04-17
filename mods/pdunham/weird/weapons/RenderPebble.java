@@ -25,32 +25,15 @@ public class RenderPebble extends Render {
 	    logger.info("C'tor() complete");
 	}
 
-	public void postInit() {
-		logger.info("postInit() complete");
-	}	
-
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
-        logger.info("doRender(par1Entity " + par1Entity + ", par2 " + par2 + ", par4 " + par4 + 
-    		   					", par6 " + par6 + ", par8 " + par8 + ", par9 " + par9 + ")");
+//        logger.info("doRender(par1Entity " + par1Entity + ", par2 " + par2 + ", par4 " + par4 + 
+//    		   					", par6 " + par6 + ", par8 " + par8 + ", par9 " + par9 + ")");
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(0.5F, 0.5F, 0.5F);
         this.loadTexture(WeirdConstants.pathIcons);
         Tessellator var10 = Tessellator.instance;
-
-//        if (this.itemIconIndex == 154)
-//        {
-//            int var11 = PotionHelper.func_77915_a(((EntityPotion)par1Entity).getPotionDamage(), false);
-//            float var12 = (float)(var11 >> 16 & 255) / 255.0F;
-//            float var13 = (float)(var11 >> 8 & 255) / 255.0F;
-//            float var14 = (float)(var11 & 255) / 255.0F;
-//            GL11.glColor3f(var12, var13, var14);
-//            GL11.glPushMatrix();
-//            this.drawIt(var10, 141);
-//            GL11.glPopMatrix();
-//            GL11.glColor3f(1.0F, 1.0F, 1.0F);
-//        }
 
         this.drawIt(var10, this.itemIconIndex);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
@@ -59,7 +42,7 @@ public class RenderPebble extends Render {
 
     private void drawIt(Tessellator par1Tessellator, int par2)
     {
-        logger.info("drawIt(Tessellator " + par1Tessellator + ", par2 " + par2 + ")"); 
+//        logger.info("drawIt(Tessellator " + par1Tessellator + ", par2 " + par2 + ")"); 
         float var3 = (float)(par2 % 16 * 16 + 0) / 256.0F;
         float var4 = (float)(par2 % 16 * 16 + 16) / 256.0F;
         float var5 = (float)(par2 / 16 * 16 + 0) / 256.0F;

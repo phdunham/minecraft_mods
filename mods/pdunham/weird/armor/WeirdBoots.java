@@ -42,7 +42,7 @@ public class WeirdBoots extends ItemArmor implements IArmorTextureProvider {
 
 		// How to make a weird boots
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdBoots), "   ", "w w", "w w",
-							'w', new ItemStack(WeirdMain.weirdStrongCasing));
+							'w', new ItemStack(WeirdMain.weirdPlating));
 		
 		logger.info("postInit() complete newId: " + itemID);
 	}

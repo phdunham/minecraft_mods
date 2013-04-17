@@ -10,7 +10,9 @@ import pdunham.weird.common.WeirdCoProxy;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
+import pdunham.weird.weapons.EntityGrenade;
 import pdunham.weird.weapons.EntityPebble;
+import pdunham.weird.weapons.RenderGrenade;
 import pdunham.weird.weapons.RenderPebble;
 
 public class WeirdClProxy extends WeirdCoProxy {
@@ -26,7 +28,6 @@ public class WeirdClProxy extends WeirdCoProxy {
 	@Override
 	public void postInit() {
 		super.postInit();
-	    ((RenderPebble) WeirdMain.renderPebble).postInit();
 	}
 
 	
@@ -41,17 +42,28 @@ public class WeirdClProxy extends WeirdCoProxy {
 	}
 
     @Override
-	public void registerRenderers() {
-    		// Globally Register the EntityPebble so we render it in the air 
-      	WeirdMain.renderPebble = new RenderPebble();
-    		EntityRegistry.registerGlobalEntityID(EntityPebble.class, "Pebble", ModLoader.getUniqueEntityId());
-    		logger.info("registerGlobalEntityID " + EntityPebble.class + ", \"Pebble\", " + ModLoader.getUniqueEntityId());
-
-    		// register the render class for EntityPebble which renders Pebble.
-    		RenderingRegistry.registerEntityRenderingHandler(EntityPebble.class, WeirdMain.renderPebble);
-    		logger.info("registerEntityRenderingHandler " + EntityPebble.class + ", " + WeirdMain.renderPebble);
+	public void registerRenderers(WeirdMain wm) {
+    		// Get a unique entity id
+    		// Register the entity id so it doesn't duplicate
+		// Then register the mod entity type with FML
+			// @param entityClass The entity class
+			// @param entityName A unique name for the entity
+			// @param id A mod specific ID for the entity
+			// @param mod The 'this' for weird main.
+			// @param trackingRange The range at which MC will send tracking updates
+			// @param updateFrequency The frequency of tracking updates
+			// @param sendsVelocityUpdates Whether to send velocity information packets as well
+		// Lastly, map the Entity class to its associated Render class.
+    		int id = ModLoader.getUniqueEntityId();
+    		EntityRegistry.registerGlobalEntityID(EntityGrenade.class, "WeirdGrenade", id);
+		EntityRegistry.registerModEntity(EntityGrenade.class, "WeirdGrenade", id, wm, 100, 10, true);
+		RenderingRegistry.registerEntityRenderingHandler(EntityGrenade.class, new RenderGrenade());
+		
+		id = ModLoader.getUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityPebble.class, "Pebble", id);
+		EntityRegistry.registerModEntity(EntityPebble.class,	"Pebble", id	, wm, 100, 10, true);
+		RenderingRegistry.registerEntityRenderingHandler(EntityPebble.class, new RenderPebble());
     		
-    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerRenderers complete");
 	}
 

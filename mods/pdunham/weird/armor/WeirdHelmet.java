@@ -43,7 +43,7 @@ public class WeirdHelmet  extends ItemArmor implements IArmorTextureProvider {
 
 		// How to make a weird helmet
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdHelmet), "www", "wgw", "   ",
-							'w', new ItemStack(WeirdMain.weirdStrongCasing),
+							'w', new ItemStack(WeirdMain.weirdPlating),
 							'g', new ItemStack(Block.glass));
 		
 		logger.info("postInit() complete newId: " + itemID);

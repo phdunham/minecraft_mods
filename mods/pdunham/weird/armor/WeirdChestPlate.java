@@ -43,7 +43,7 @@ public class WeirdChestPlate extends ItemArmor implements IArmorTextureProvider 
 
 		// How to make a weird chest plate
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdChestPlate), "w w", "wdw", "www",
-							'w', new ItemStack(WeirdMain.weirdStrongCasing),
+							'w', new ItemStack(WeirdMain.weirdPlating),
 							'd', new ItemStack(Item.diamond));
 		
 		logger.info("postInit() complete newId: " + itemID);

@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.EnumHelper;
 
 import pdunham.weird.achievements.WeirdAchievementOre;
@@ -13,6 +14,7 @@ import pdunham.weird.armor.WeirdBoots;
 import pdunham.weird.armor.WeirdChestPlate;
 import pdunham.weird.armor.WeirdHelmet;
 import pdunham.weird.armor.WeirdLeggins;
+import pdunham.weird.armor.WeirdPlating;
 import pdunham.weird.common.core.handlers.ClientPacketHandler;
 import pdunham.weird.common.core.handlers.ServerPacketHandler;
 import pdunham.weird.objects.WeirdBlock;
@@ -23,6 +25,7 @@ import pdunham.weird.tools.WeirdAxe;
 import pdunham.weird.tools.WeirdHoe;
 import pdunham.weird.tools.WeirdPickaxe;
 import pdunham.weird.tools.WeirdShovel;
+import pdunham.weird.weapons.EntityGrenade;
 import pdunham.weird.weapons.EntityPebble;
 import pdunham.weird.weapons.Pebble;
 import pdunham.weird.weapons.RenderPebble;
@@ -46,6 +49,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, // Whether client side and server side are needed
@@ -57,7 +61,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class WeirdMain {
     
-    @Instance("WeirdMain")
+	@Instance("WeirdMain")
     public static WeirdMain instance = new WeirdMain();
 
     @Instance("WeirdOre")
@@ -99,6 +103,9 @@ public class WeirdMain {
     @Instance("WeirdStickyCasing")
     public static WeirdStickyCasing weirdStickyCasing;
     
+    @Instance("WeirdPlating")
+    public static WeirdPlating weirdPlating;
+    
     @Instance("WeirdGrenade")
     public static WeirdGrenade weirdGrenade;
 
@@ -107,12 +114,6 @@ public class WeirdMain {
 
     @Instance("Pebble")
   	public static Pebble pebble;
-
-    @Instance("EntityPebble")
-  	public static EntityPebble entityPebble;
-
-    @Instance("RenderPebble")
-  	public static RenderPebble renderPebble;
     
     @Instance("WeirdHelmet")
     public static WeirdHelmet weirdHelmet;
@@ -157,12 +158,12 @@ public class WeirdMain {
         // Call help functions in the common proxy to register all of the weird objects
         proxy.init();
         proxy.registerTextures();
-        proxy.registerRenderers();
+        proxy.registerRenderers(this);
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.registerItems();
         proxy.registerAchievements();
-        
+
         // Register our self with the world generator so weird ore will be inserted into new worlds.
         GameRegistry.registerWorldGenerator(worldGen);
         

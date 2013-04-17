@@ -42,7 +42,7 @@ public class WeirdLeggins extends ItemArmor implements IArmorTextureProvider {
 
 		// How to make a weird leggins
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdLeggins), "wiw", "w w", "w w",
-							'w', new ItemStack(WeirdMain.weirdStrongCasing),
+							'w', new ItemStack(WeirdMain.weirdPlating),
 							'i', new ItemStack(WeirdMain.weirdIngot));
 		
 		logger.info("postInit() complete newId: " + itemID);
