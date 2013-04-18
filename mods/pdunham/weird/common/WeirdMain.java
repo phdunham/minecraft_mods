@@ -10,10 +10,12 @@ import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.EnumHelper;
 
 import pdunham.weird.achievements.CraftingHandler;
+import pdunham.weird.achievements.WeirdAchievementBetterBoom;
 import pdunham.weird.achievements.WeirdAchievementGrenadeCreeper;
 import pdunham.weird.achievements.WeirdAchievementOre;
 import pdunham.weird.achievements.WeirdAchievementPowder;
 import pdunham.weird.achievements.WeirdAchievementStartingOff;
+import pdunham.weird.achievements.WeirdAchievementStickyToIt;
 import pdunham.weird.armor.WeirdBoots;
 import pdunham.weird.armor.WeirdChestPlate;
 import pdunham.weird.armor.WeirdHelmet;
@@ -112,6 +114,10 @@ public class WeirdMain {
     
     @Instance("WeirdGrenade")
     public static WeirdGrenade weirdGrenade;
+    @Instance("WeirdStickyGrenade")
+    public static WeirdGrenade weirdStickyGrenade;
+    @Instance("WeirdStrongGrenade")
+    public static WeirdGrenade weirdStrongGrenade;
 
     @Instance("WeirdSword")
     public static WeirdSword weirdSword;
@@ -142,7 +148,13 @@ public class WeirdMain {
 
     @Instance("WeirdAchievementPowder")
     public static WeirdAchievementPowder weirdAchievementPowder;
-    
+
+    @Instance("WeirdAchievementBetterBoom")
+    public static WeirdAchievementBetterBoom weirdAchievementBetterBoom;
+
+    @Instance("WeirdAchievementStickToIt")
+    public static WeirdAchievementStickyToIt weirdAchievementStickyToIt;
+
     @Instance("CraftingHandler")
     public static CraftingHandler craftingHandler = new CraftingHandler();
 

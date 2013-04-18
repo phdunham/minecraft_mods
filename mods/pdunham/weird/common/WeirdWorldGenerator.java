@@ -48,7 +48,7 @@ public class WeirdWorldGenerator implements IWorldGenerator{
 
 	        	logger.finest("generateMinable(x " + x + ", y " + y + ", z " + z + ", BlockID " + id);
 
-	        	WorldGenMinable wgm = new WorldGenMinable(id, random.nextInt(8) + 2); 
+	        	WorldGenMinable wgm = new WorldGenMinable(id, random.nextInt(8) + 4); 
 	        	wgm.generate(world, random, x, y, z);
         }
     

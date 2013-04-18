@@ -2,7 +2,6 @@ package pdunham.weird.achievements;
 
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;
-import pdunham.weird.tools.WeirdAxe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -27,9 +26,13 @@ public class CraftingHandler implements ICraftingHandler {
         		(item.itemID == WeirdMain.weirdHoe.itemID)     ||
         		(item.itemID == WeirdMain.weirdSword.itemID)   ||
         		(item.itemID == WeirdMain.weirdSlingShot.itemID)) {
-                player.triggerAchievement(WeirdMain.weirdAchievementStartingOff);
+        		player.triggerAchievement(WeirdMain.weirdAchievementStartingOff);
         } else if (item.itemID == WeirdMain.weirdPowder.itemID) {
-                player.triggerAchievement(WeirdMain.weirdAchievementPowder);
+            player.triggerAchievement(WeirdMain.weirdAchievementPowder);
+        } else if (item.itemID == WeirdMain.weirdTNT.blockID) {
+    			player.triggerAchievement(WeirdMain.weirdAchievementBetterBoom);
+        } else if (item.itemID == WeirdMain.weirdStickyGrenade.itemID) {
+    			player.triggerAchievement(WeirdMain.weirdAchievementStickyToIt);
         }
     }
 

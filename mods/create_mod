@@ -21,9 +21,13 @@ if [ -z $1 ]; then
     do_cmd ./reobfuscate.sh
 fi
 
+# Update the resources
+do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/*png
+do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/*png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/
+
 # Make the zip file
 do_cmd cd ~/work/forge/mcp/reobf/minecraft/
-do_cmd zip -r weirdBlock.zip pdunham
+do_cmd zip -r weirdBlock.zip pdunham/
 
 # Copy the mod to the client and server
 do_cmd cp weirdBlock.zip ~/ftb/YogCraft/minecraft/mods/

@@ -16,8 +16,10 @@ import pdunham.weird.common.WeirdConstants;
 @SideOnly(Side.CLIENT)
 public class RenderGrenade extends Render {
 	private static StandardLogger logger;
+	private int iconIndex = 19;
 
-    public RenderGrenade() {
+    public RenderGrenade(int x, int y) {
+    		iconIndex = x + (y * 16);
 	    logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
     }
@@ -35,7 +37,6 @@ public class RenderGrenade extends Render {
     }
 
     private void drawIt(Tessellator tessellator) {
-    		int iconIndex = 19;
         float var3 = (float)(iconIndex % 16 * 16 + 0) / 256.0F;
         float var4 = (float)(iconIndex % 16 * 16 + 16) / 256.0F;
         float var5 = (float)(iconIndex / 16 * 16 + 0) / 256.0F;

@@ -69,12 +69,14 @@ public class WeirdCoProxy implements IGuiHandler {
         WeirdMain.weirdCasing =             new WeirdCasing(id++);
         WeirdMain.weirdStrongCasing = new WeirdStrongCasing(id++);
         WeirdMain.weirdStickyCasing = new WeirdStickyCasing(id++);
-        WeirdMain.weirdGrenade           = new WeirdGrenade(id++);
+        WeirdMain.weirdGrenade           = new WeirdGrenade(id++, "WeirdGrenade", "Weird grenade", WeirdMain.weirdCasing, false, 3, 1, 2.0f);
         WeirdMain.weirdHelmet             = new WeirdHelmet(id++);
         WeirdMain.weirdChestPlate     = new WeirdChestPlate(id++);
         WeirdMain.weirdLeggins           = new WeirdLeggins(id++);
         WeirdMain.weirdBoots               = new WeirdBoots(id++);
         WeirdMain.weirdPlating           = new WeirdPlating(id++);
+        WeirdMain.weirdStickyGrenade           = new WeirdGrenade(id++, "WeirdStickyGrenade", "Weird sticky grenade", WeirdMain.weirdStickyCasing,  true,  9, 1, 2.0f);
+        WeirdMain.weirdStrongGrenade           = new WeirdGrenade(id++, "WeirdStrongGrenade", "Weird strong grenade", WeirdMain.weirdStrongCasing, false, 10, 1, 4.0f);
         logger.info("registerItems() complete");
 	}
 
@@ -114,6 +116,8 @@ public class WeirdCoProxy implements IGuiHandler {
         ((WeirdLeggins)WeirdMain.weirdLeggins).postInit();
         ((WeirdBoots)WeirdMain.weirdBoots).postInit();
         ((WeirdPlating)WeirdMain.weirdPlating).postInit();
+        ((WeirdGrenade)WeirdMain.weirdStickyGrenade).postInit();
+        ((WeirdGrenade)WeirdMain.weirdStrongGrenade).postInit();
 		logger.info("postInit() complete");
 	}
 

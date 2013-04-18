@@ -15,11 +15,33 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class WeirdGrenade extends Item {
 
 	private static StandardLogger logger;
+	
+	// Defaults are all for a basic weird grenade.
+	private String internalName = "WeirdGrenade";
+	private String externalName = "Weird grenade";
+	private Object casing = null;
+	private boolean sticky = false;
+	private int textureX = 3;
+	private int textureY = 1;
+	private float explosionRadius = 2.0f;
 
- 	// Standard c'tor
-	public WeirdGrenade(int id) {
+	public WeirdGrenade(int id, 
+						String internalNamePar, 
+						String externalNamePar, 
+						Object casingPar, 
+						boolean stickyPar, 
+						int textureXPar, 
+						int textureYPar,
+						float explosionRadiusPar) {
         super(id);
-        
+		internalName = internalNamePar;
+		externalName = externalNamePar;
+		casing = casingPar;
+		sticky = stickyPar;
+		textureX = textureXPar;
+		textureY = textureYPar;
+		explosionRadius = explosionRadiusPar;
+		
         // Max Limit on stack size
         setMaxStackSize(64);
         
@@ -27,13 +49,14 @@ public class WeirdGrenade extends Item {
         setCreativeTab(CreativeTabs.tabMaterials);
         
         // Set the internal name
-        setItemName("WeirdGrenade");
+        setItemName(internalName);
         
         // Set the texture.
-        setIconCoord(3, 1);
+        setIconCoord(textureX, textureY);
         
         logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-        logger.info("c'tor() complete id: " + id);
+        logger.info("c'tor() complete id: " + id + ", internal " + internalName + ", external " + externalName +
+        				", sticky " + sticky + ", X " + textureX + ", Y " + textureY + ", radius " + explosionRadius);
 	}
 
 	public void postInit() {
@@ -41,14 +64,14 @@ public class WeirdGrenade extends Item {
 		setTextureFile(getTextureFile());
 
 		// Register the block w/ MineCraft
-		GameRegistry.registerItem(this, "WeirdGrenade");
+		GameRegistry.registerItem(this, internalName);
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird grenage");
+		LanguageRegistry.addName(this, externalName);
 
 		// Recipe for make weirdGrenade
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdGrenade), " c ", "ipi", " i ",
-				'c', new ItemStack(WeirdMain.weirdCasing), 
+				'c', new ItemStack((Item)casing), 
 				'i', new ItemStack(Item.ingotIron),
 				'p', new ItemStack(WeirdMain.weirdPowder));
 
@@ -58,8 +81,8 @@ public class WeirdGrenade extends Item {
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
 		
 		if (par3EntityPlayer.capabilities.isCreativeMode || 
-			par3EntityPlayer.inventory.hasItem(WeirdMain.weirdGrenade.itemID)) {
-			par3EntityPlayer.inventory.consumeInventoryItem(WeirdMain.weirdGrenade.itemID);
+			par3EntityPlayer.inventory.hasItem(itemID)) {
+			par3EntityPlayer.inventory.consumeInventoryItem(itemID);
 		} else {
 			return par1ItemStack;
 		}
@@ -69,7 +92,15 @@ public class WeirdGrenade extends Item {
 		
 		// Create the pebble in the client.
 		if (!par2World.isRemote) {
-			par2World.spawnEntityInWorld(new EntityGrenade(par2World, par3EntityPlayer));
+			String name = getItemName();
+			logger.info("Spawning entity for " + name);
+			if (name.indexOf("WeirdStickyGrenade") >= 0) {
+				par2World.spawnEntityInWorld(new EntityStickyGrenade(par2World, par3EntityPlayer));
+			} else if (name.indexOf("WeirdStrongGrenade") >= 0) {
+				par2World.spawnEntityInWorld(new EntityStrongGrenade(par2World, par3EntityPlayer));
+			} else {
+				par2World.spawnEntityInWorld(new EntityGrenade(par2World, par3EntityPlayer));
+			}
 		}
 		return par1ItemStack;
 	}

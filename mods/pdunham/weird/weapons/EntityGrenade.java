@@ -17,32 +17,36 @@ public class EntityGrenade extends EntityThrowable {
 	private StandardLogger logger = null;
 	private int ticksAlive;
 	private int ticksLifetime = 40; // only lives for this long (in ticks - 1/10 sec?)
-
-	private void init() {
+	protected float explosionRadius = 2.0f;
+	protected boolean sticky = false;
+	
+	protected void init() {
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-	    logger.info("C'tor() complete");
 	    ticksAlive = 0;
 	}
 	
 	public EntityGrenade(World par1World) {
         super(par1World);
         init();
+	    logger.info("C'tor(1) complete");
     }
 
     public EntityGrenade(World par1World, EntityLiving par2EntityLiving){
         super(par1World, par2EntityLiving);
         init();
-    }
+        logger.info("C'to(2) complete sticky " + sticky + ", radius " + explosionRadius);
+    }   
 
     public EntityGrenade(World par1World, double par2, double par4, double par6) {
         super(par1World, par2, par4, par6);
         init();
+        logger.info("C'to(3) complete");
     }
     
     private void explodes() {
         // createExplosion(Entity, posX, posY, posZ, radius, smokes on impact);
 		// This causes all the damage
-    		worldObj.createExplosion(this, posX, posY, posZ, 2.0f, true);
+    		worldObj.createExplosion(this, posX, posY, posZ, explosionRadius, true);
 
 	    // Once it hits something, it disappears
 	    if (!this.worldObj.isRemote) {
@@ -53,22 +57,28 @@ public class EntityGrenade extends EntityThrowable {
     // Called when the grenade hits something.
     @Override
     protected void onImpact(MovingObjectPosition par1MovingObjectPosition) {
-    		explodes();
-    		
-    		// If we hit an entity
-    		if (par1MovingObjectPosition.entityHit != null) {
-        		
-        		// And that entity is a creeper
-    			if (par1MovingObjectPosition.entityHit.getEntityName().toLowerCase().indexOf("creeper") >= 0) {
-        			logger.info("Got '" + par1MovingObjectPosition.entityHit.getEntityName() + "'");
-
-            		// And the throw is a real player
-	    			EntityLiving el = getThrower();
-	    			if (el instanceof EntityPlayer) {
-	    				// Trigger Achievement
-	    				((EntityPlayer)el).triggerAchievement(WeirdMain.weirdAchievementGrenadeCreeper);
+    		// Sticky grenades don't explode on impact. They stick and explode by timer.
+    		logger.info("onImpact sticky " + sticky + ", inGround " + inGround + ", radius " + explosionRadius);
+    		if (!sticky) {
+	    		explodes();
+	    		
+	    		// If we hit an entity
+	    		if (par1MovingObjectPosition.entityHit != null) {
+	        		
+	        		// And that entity is a creeper
+	    			if (par1MovingObjectPosition.entityHit.getEntityName().toLowerCase().indexOf("creeper") >= 0) {
+	        			logger.info("Got '" + par1MovingObjectPosition.entityHit.getEntityName() + "'");
+	
+	            		// And the throw is a real player
+		    			EntityLiving el = getThrower();
+		    			if (el instanceof EntityPlayer) {
+		    				// Trigger Achievement
+		    				((EntityPlayer)el).triggerAchievement(WeirdMain.weirdAchievementGrenadeCreeper);
+		    			}
 	    			}
-    			}
+	    		}
+    		} else {
+    	        inGround = true;
     		}
     }
  

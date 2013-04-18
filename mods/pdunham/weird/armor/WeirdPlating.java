@@ -44,7 +44,7 @@ public class WeirdPlating extends Item {
 		LanguageRegistry.addName(this, "Weird plating");
 
 		// How to make a weird platin
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdBoots), "wiw", "g g", "wiw",
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPlating), "wiw", "g g", "wiw",
 							'w', new ItemStack(WeirdMain.weirdIngot),
 							'i', new ItemStack(Item.ingotIron),
 							'g', new ItemStack(Item.ingotGold));

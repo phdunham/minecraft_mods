@@ -45,7 +45,7 @@ public class WeirdStrongCasing extends Item {
 		LanguageRegistry.addName(this, "Weird strong casing");
 
 		// Recipe for make weirdStrongCasing
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdStickyCasing), "gdg", "w w", "gdg",
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdStrongCasing), "gdg", "w w", "gdg",
 				'w', new ItemStack(WeirdMain.weirdIngot), 
 				'd', new ItemStack(Item.diamond),
 				'g', new ItemStack(Item.ingotGold));
