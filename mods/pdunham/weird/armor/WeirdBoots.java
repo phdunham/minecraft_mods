@@ -6,6 +6,7 @@ import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -49,6 +50,7 @@ public class WeirdBoots extends ItemArmor implements IArmorTextureProvider {
 	
 	@Override
 	public String getArmorTextureFile(ItemStack itemstack) {
-		return WeirdConstants.pathArmor;
+		long index = (Minecraft.getSystemTime() / 250) % 16;
+		return WeirdConstants.pathArmorAnimated + index + ".png";
 	}
 }

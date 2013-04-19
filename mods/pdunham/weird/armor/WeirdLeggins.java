@@ -6,6 +6,7 @@ import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -50,6 +51,7 @@ public class WeirdLeggins extends ItemArmor implements IArmorTextureProvider {
 
 	@Override
 	public String getArmorTextureFile(ItemStack itemstack) {
-		return WeirdConstants.pathArmorLegs;
+		long index = (Minecraft.getSystemTime() / 250) % 16;
+		return WeirdConstants.pathArmorLegsAnimated + index + ".png";
 	}
 }
