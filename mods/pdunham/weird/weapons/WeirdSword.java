@@ -61,6 +61,6 @@ public class WeirdSword extends ItemSword {
     
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

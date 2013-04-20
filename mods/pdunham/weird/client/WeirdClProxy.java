@@ -50,8 +50,8 @@ public class WeirdClProxy extends WeirdCoProxy {
     @Override
 	public void registerTextures() {
     		// Preload our texture palettes so we have all of the icons and textures before we need them.
-    		MinecraftForgeClient.preloadTexture(WeirdConstants.pathIcons);
-    		MinecraftForgeClient.preloadTexture(WeirdConstants.pathArmor);
+    		MinecraftForgeClient.preloadTexture(WeirdConstants.pathTexturesIcons);
+    		MinecraftForgeClient.preloadTexture(WeirdConstants.pathTexturesArmor);
     		
     		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerTextures complete");

@@ -67,6 +67,6 @@ public class WeirdShovel extends ItemSpade {
     
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

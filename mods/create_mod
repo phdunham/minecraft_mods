@@ -21,9 +21,15 @@ if [ -z $1 ]; then
     do_cmd ./reobfuscate.sh
 fi
 
-# Update the resources
-do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/*png
-do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/*png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/
+# Update the Texture resources
+do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures
+do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/*png
+do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/
+
+# Update the Sound resources
+do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds
+do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/*ogg
+do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/sounds/*ogg ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/
 
 # Make the zip file
 do_cmd cd ~/work/forge/mcp/reobf/minecraft/

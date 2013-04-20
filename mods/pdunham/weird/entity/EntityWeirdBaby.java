@@ -37,8 +37,10 @@ public class EntityWeirdBaby extends EntityMob {
 	// Distance when the baby starts interacting w/ things
 	private static float rangeOfInterest = 40.0f;
 	private static float baseMoveSpeed = 0.25f;
-	private static String currentTexture = WeirdConstants.pathBaby;
-	private static float currentSpeedMultiplier = 1.0f;
+	private static float daySpeedMultiplier = 1.0f;
+	private static float nightSpeedMultiplier = 1.0f;
+	private static boolean isDay = false;  // not sure why this only works as static.
+	private boolean inDaylight = false;
 	
 	public EntityWeirdBaby(World par1World) {
         super(par1World);
@@ -98,7 +100,7 @@ public class EntityWeirdBaby extends EntityMob {
 	
 	@Override
 	public String getTexture() {
-		return currentTexture;
+		return (isDay ? WeirdConstants.pathTexturesBaby : WeirdConstants.pathTexturesBabyZombie);
 	}
 
 	// Periodic updates to the entitity. 
@@ -106,20 +108,15 @@ public class EntityWeirdBaby extends EntityMob {
 	// Bady is fast at night.
 	public void onLivingUpdate() {
 		if (!this.worldObj.isRemote) {
-			if (isDaytime()) {
-				currentTexture = WeirdConstants.pathBaby; 
-				currentSpeedMultiplier = 1.0f;
-			} else {
-				currentTexture = WeirdConstants.pathBabyZombie; 
-				currentSpeedMultiplier = 3.0f;
-			}
+			isDay = isDaytime();
+			inDaylight = isInSunlight();
 		}
 		super.onLivingUpdate();
     }
 	
 	// Check the sunlight on update. Babies move faster at night.
 	public float getSpeedModifier() {
-		return currentSpeedMultiplier * super.getSpeedModifier();
+		return ((isDay ? daySpeedMultiplier : nightSpeedMultiplier) * super.getSpeedModifier());
     }
 
 	public EnumCreatureAttribute getCreatureAttribute() {
@@ -159,15 +156,15 @@ public class EntityWeirdBaby extends EntityMob {
     }
 
     protected String getLivingSound() {
-        return "mob.zombie.say";
+        return (isDay ? "baby" : "babyZombie");
     }
 
     protected String getHurtSound() {
-        return "mob.zombie.say";
+        return (isDay ? "babyHurt" : "babyZombieHurt");
     }
 
     protected String getDeathSound()  {
-        return "mob.zombie.death";
+        return (isDay ? "babyDeath" : "babyZombieDeath");
     }
 
     protected void playStepSound(int par1, int par2, int par3, int par4)

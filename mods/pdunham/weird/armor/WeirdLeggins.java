@@ -21,13 +21,13 @@ public class WeirdLeggins extends ItemArmor implements IArmorTextureProvider {
 		super(i, WeirdConstants.armorWEIRD, 4, 2);
 
 		setIconCoord(6, 1);
-		setTextureFile(WeirdConstants.pathIcons);
+		setTextureFile(WeirdConstants.pathTexturesIcons);
 		setItemName("WeirdLeggins");
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabCombat);
 		
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-        logger.info("ArmorTextureFile " + WeirdConstants.pathArmorLegs);
+        logger.info("ArmorTextureFile " + WeirdConstants.pathTexturesArmorLegs);
         logger.info("c'tor() complete");
     }
 	
@@ -52,6 +52,6 @@ public class WeirdLeggins extends ItemArmor implements IArmorTextureProvider {
 	@Override
 	public String getArmorTextureFile(ItemStack itemstack) {
 		long index = (Minecraft.getSystemTime() / 250) % 16;
-		return WeirdConstants.pathArmorLegsAnimated + index + ".png";
+		return WeirdConstants.pathTexturesArmorLegsAnimated + index + ".png";
 	}
 }

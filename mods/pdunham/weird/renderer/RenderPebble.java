@@ -30,7 +30,7 @@ public class RenderPebble extends Render {
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(0.5F, 0.5F, 0.5F);
-        this.loadTexture(WeirdConstants.pathIcons);
+        this.loadTexture(WeirdConstants.pathTexturesIcons);
         Tessellator var10 = Tessellator.instance;
 
         this.drawIt(var10, this.itemIconIndex);

@@ -54,6 +54,6 @@ public class Pebble extends Item {
 
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

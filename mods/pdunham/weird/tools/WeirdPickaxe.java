@@ -67,6 +67,6 @@ public class WeirdPickaxe extends ItemPickaxe {
     
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

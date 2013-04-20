@@ -3,6 +3,8 @@ package pdunham.weird.common;
 import net.minecraft.world.World;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundManager;
 import net.minecraft.entity.player.EntityPlayer;
 
 import pdunham.weird.armor.WeirdBoots;
@@ -137,5 +139,31 @@ public class WeirdCoProxy implements IGuiHandler {
 	public void registerAchievements() {
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerAchievements complete");
+	}
+	
+	public void registerSounds() {
+		String [] soundFiles = {
+			"baby1.ogg",
+			"baby2.ogg",
+			"baby3.ogg",
+			"babyHurt1.ogg",
+			"babyHurt2.ogg",
+			"babyHurt3.ogg",
+			"babyDeath1.ogg",
+			"babyDeath2.ogg",
+			"babyZombie1.ogg",
+			"babyZombie2.ogg",
+			"babyZombie3.ogg",
+			"babyZombieHurt1.ogg",
+			"babyZombieHurt2.ogg",
+			"babyZombieHurt3.ogg",
+			"babyZombieDeath1.ogg",
+			"babyZombieDeath2.ogg"			
+		};
+		
+		for (int i = 0; i < soundFiles.length; i++) {
+			Minecraft.getMinecraft().sndManager.soundPoolSounds.addSound(soundFiles[i], 
+					this.getClass().getResource(WeirdConstants.baseSounds + soundFiles[i]));
+		}
 	}
 }

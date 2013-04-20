@@ -67,6 +67,6 @@ public class WeirdHoe extends ItemHoe {
     
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

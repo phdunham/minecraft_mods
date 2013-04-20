@@ -73,6 +73,6 @@ public class WeirdTNT extends BlockTNT {
 
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

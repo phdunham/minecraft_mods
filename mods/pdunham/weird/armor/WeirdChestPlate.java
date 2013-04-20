@@ -22,13 +22,13 @@ public class WeirdChestPlate extends ItemArmor implements IArmorTextureProvider 
 		super(i, WeirdConstants.armorWEIRD, 4, 1);
 
 		setIconCoord(5, 1);
-		setTextureFile(WeirdConstants.pathIcons);
+		setTextureFile(WeirdConstants.pathTexturesIcons);
 		setItemName("WeirdChestPlate");
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabCombat);
 
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-        logger.info("ArmorTextureFile " + WeirdConstants.pathArmor);
+        logger.info("ArmorTextureFile " + WeirdConstants.pathTexturesArmor);
         logger.info("c'tor() complete");
     }
 
@@ -53,6 +53,6 @@ public class WeirdChestPlate extends ItemArmor implements IArmorTextureProvider 
 	@Override
 	public String getArmorTextureFile(ItemStack itemstack) {
 		long index = (Minecraft.getSystemTime() / 250) % 16;
-		return WeirdConstants.pathArmorAnimated + index + ".png";
+		return WeirdConstants.pathTexturesArmorAnimated + index + ".png";
 	}
 }

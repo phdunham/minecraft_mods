@@ -56,6 +56,6 @@ public class RenderGrenade extends Render {
     }
 
 	public String getTextureFile() {
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

@@ -86,6 +86,6 @@ public class WeirdSlingShot extends Item {
 	
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

@@ -95,6 +95,6 @@ public class WeirdOre extends Block {
 
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

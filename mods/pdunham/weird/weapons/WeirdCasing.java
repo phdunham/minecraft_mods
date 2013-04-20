@@ -55,6 +55,6 @@ public class WeirdCasing extends Item {
 
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }

@@ -3,6 +3,7 @@ package pdunham.weird.common;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.audio.SoundManager;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
@@ -193,6 +194,7 @@ public class WeirdMain {
         proxy.registerBlocks();
         proxy.registerItems();
         proxy.registerAchievements();
+        proxy.registerSounds();
 
         // Register our self with the world generator so weird ore will be inserted into new worlds.
         GameRegistry.registerWorldGenerator(worldGen);

@@ -110,6 +110,6 @@ public class WeirdGrenade extends Item {
 	
 	@Override
 	public String getTextureFile(){
-		return WeirdConstants.pathIcons;
+		return WeirdConstants.pathTexturesIcons;
 	}	
 }
