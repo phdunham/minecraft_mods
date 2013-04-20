@@ -4,7 +4,10 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.src.ModLoader;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.MinecraftForgeClient;
 import pdunham.weird.achievements.CraftingHandler;
 import pdunham.weird.achievements.WeirdAchievementBetterBoom;
@@ -13,16 +16,19 @@ import pdunham.weird.achievements.WeirdAchievementOre;
 import pdunham.weird.achievements.WeirdAchievementPowder;
 import pdunham.weird.achievements.WeirdAchievementStartingOff;
 import pdunham.weird.achievements.WeirdAchievementStickyToIt;
+import pdunham.weird.client.model.ModelWeirdBaby;
 import pdunham.weird.common.WeirdCoProxy;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
-import pdunham.weird.weapons.EntityGrenade;
-import pdunham.weird.weapons.EntityPebble;
-import pdunham.weird.weapons.EntityStickyGrenade;
-import pdunham.weird.weapons.EntityStrongGrenade;
-import pdunham.weird.weapons.RenderGrenade;
-import pdunham.weird.weapons.RenderPebble;
+import pdunham.weird.entity.EntityGrenade;
+import pdunham.weird.entity.EntityPebble;
+import pdunham.weird.entity.EntityStickyGrenade;
+import pdunham.weird.entity.EntityStrongGrenade;
+import pdunham.weird.entity.EntityWeirdBaby;
+import pdunham.weird.renderer.RenderGrenade;
+import pdunham.weird.renderer.RenderPebble;
+import pdunham.weird.renderer.RenderWeirdBaby;
 
 public class WeirdClProxy extends WeirdCoProxy {
 
@@ -82,6 +88,31 @@ public class WeirdClProxy extends WeirdCoProxy {
 		EntityRegistry.registerModEntity(EntityStrongGrenade.class, "WeirdStrongGrenade", id, wm, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityStrongGrenade.class, new RenderGrenade(10, 1));
 
+		id = ModLoader.getUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityWeirdBaby.class, "WeirdBaby", id);
+		EntityRegistry.registerModEntity(EntityWeirdBaby.class, "WeirdBaby", id, wm, 100, 10, false);
+		RenderingRegistry.registerEntityRenderingHandler(EntityWeirdBaby.class, 
+						new RenderWeirdBaby(new ModelWeirdBaby(), 
+										    new ModelWeirdBaby(0.5F), 0.7F));
+		
+		EntityRegistry.addSpawn(EntityWeirdBaby.class, 10, 2, 4, 
+				EnumCreatureType.monster, 
+				BiomeGenBase.beach, 
+				BiomeGenBase.extremeHills, 
+				BiomeGenBase.extremeHillsEdge, 
+				BiomeGenBase.forest, 
+				BiomeGenBase.forestHills, 
+				BiomeGenBase.jungle, 
+				BiomeGenBase.jungleHills, 
+				BiomeGenBase.mushroomIsland, 
+				BiomeGenBase.mushroomIslandShore, 
+				BiomeGenBase.ocean, 
+				BiomeGenBase.plains, 
+				BiomeGenBase.river, 
+				BiomeGenBase.swampland);		
+		
+		LanguageRegistry.instance().addStringLocalization("entity.weird.WeirdBaby.name", "Baby");
+		
 		logger.info("registerRenderers complete");
 	}
 

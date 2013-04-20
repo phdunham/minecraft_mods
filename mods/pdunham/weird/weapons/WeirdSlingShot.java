@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
@@ -16,6 +17,8 @@ import net.minecraftforge.common.MinecraftForge;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
+import pdunham.weird.entity.EntityPebble;
+import pdunham.weird.entity.EntityWeirdBaby;
 
 public class WeirdSlingShot extends Item {
 
@@ -75,7 +78,8 @@ public class WeirdSlingShot extends Item {
 		
 		// Create the pebble in the client.
 		if (!par2World.isRemote) {
-			par2World.spawnEntityInWorld(new EntityPebble(par2World, par3EntityPlayer));
+			par2World.spawnEntityInWorld(new EntityWeirdBaby(par2World));
+//			par2World.spawnEntityInWorld(new EntityPebble(par2World, par3EntityPlayer));
 		}
 		return par1ItemStack;
 	}

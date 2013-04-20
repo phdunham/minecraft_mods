@@ -1,4 +1,4 @@
-package pdunham.weird.weapons;
+package pdunham.weird.renderer;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

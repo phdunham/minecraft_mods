@@ -54,9 +54,9 @@ public class WeirdSword extends ItemSword {
 		logger.info("postInit() complete newId: " + itemID);
 	}
 
-	// Do 1.5x more damage than Diamond
+	// Do 1.05x more damage than Diamond
     public int getDamageVsEntity(Entity par1Entity) {
-		return (int) (super.getDamageVsEntity(par1Entity) * 1.5f);
+		return (int) (super.getDamageVsEntity(par1Entity) * 1.05f);
 	}
     
 	@Override

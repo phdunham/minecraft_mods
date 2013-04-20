@@ -1,27 +1,27 @@
-package pdunham.weird.weapons;
+package pdunham.weird.entity;
 
 import pdunham.weird.common.StandardLogger;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.world.World;
 
-public class EntityStickyGrenade extends EntityGrenade {
+public class EntityStrongGrenade extends EntityGrenade {
 	
 	protected void init() {
 		super.init();
-		sticky = true;		
+		explosionRadius = 4.0f;		
 	}
 	
-	public EntityStickyGrenade(World par1World) {
+	public EntityStrongGrenade(World par1World) {
         super(par1World);
         init();
 	}
 	
-    public EntityStickyGrenade(World par1World, EntityLiving par2EntityLiving){
+    public EntityStrongGrenade(World par1World, EntityLiving par2EntityLiving){
         super(par1World, par2EntityLiving);
         init();
     }   
 
-    public EntityStickyGrenade(World par1World, double par2, double par4, double par6) {
+    public EntityStrongGrenade(World par1World, double par2, double par4, double par6) {
         super(par1World, par2, par4, par6);
         init();
     }	

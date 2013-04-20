@@ -1,4 +1,4 @@
-package pdunham.weird.weapons;
+package pdunham.weird.entity;
 
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdMain;

@@ -10,7 +10,6 @@ public class StandardLogger {
 	private StandardLogger(String name) {
         logger = Logger.getLogger(name);
         logger.setParent(FMLLog.getLogger());        
-        info("Logger created");		
 	}
 	
 	// A helper function to create the logger when you have multiple c'tors

@@ -9,6 +9,9 @@ import net.minecraft.world.World;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
+import pdunham.weird.entity.EntityGrenade;
+import pdunham.weird.entity.EntityStickyGrenade;
+import pdunham.weird.entity.EntityStrongGrenade;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
