@@ -3,6 +3,7 @@ package pdunham.weird.common;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityList;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -25,6 +26,7 @@ import pdunham.weird.common.core.handlers.ClientPacketHandler;
 import pdunham.weird.common.core.handlers.ServerPacketHandler;
 import pdunham.weird.entity.EntityGrenade;
 import pdunham.weird.entity.EntityPebble;
+import pdunham.weird.entity.EntityWeirdBaby;
 import pdunham.weird.objects.WeirdBlock;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdOre;

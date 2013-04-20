@@ -2,99 +2,153 @@ package pdunham.weird.entity;
 
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
+import pdunham.weird.common.WeirdMain;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIBreakDoor;
 import net.minecraft.entity.ai.EntityAIControlledByPlayer;
 import net.minecraft.entity.ai.EntityAIFollowParent;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
+import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.AchievementList;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityWeirdBaby extends EntityAnimal
-{
+public class EntityWeirdBaby extends EntityMob {
 	private static StandardLogger logger;
+	
+	// Distance when the baby starts interacting w/ things
+	private static float rangeOfInterest = 20.0f;
+	private static float baseMoveSpeed = 0.25f;
 
-	public EntityWeirdBaby(World par1World)
-    {
+	public EntityWeirdBaby(World par1World) {
         super(par1World);
         this.texture = WeirdConstants.pathBaby;
         this.setSize(0.9F, 0.9F);
         this.getNavigator().setAvoidsWater(true);
-        float var2 = 0.25F;
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIPanic(this, 0.38F));
-        this.tasks.addTask(6, new EntityAIWander(this, var2));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-    		logger.info("c'tor() complete");
-    }
+        this.moveSpeed = baseMoveSpeed;
+        int taskPriority = 0;
+        int targetPriority = 0;
 
-    /**
-     * Returns true if the newer Entity AI code should be run
-     */
-    public boolean isAIEnabled()
-    {
+        // Highest priority first. Not drowning is a good top priority
+        this.tasks.addTask(taskPriority++, new EntityAISwimming(this));
+        this.tasks.addTask(taskPriority++, new EntityAIBreakDoor(this));
+        this.tasks.addTask(taskPriority++, new EntityAIAttackOnCollide(this, EntityPlayer.class, this.moveSpeed, false));
+        this.tasks.addTask(taskPriority++, new EntityAIWatchClosest(this, EntityPlayer.class, this.rangeOfInterest));
+        this.tasks.addTask(taskPriority++, new EntityAIWander(this, this.moveSpeed));
+        this.tasks.addTask(taskPriority++, new EntityAILookIdle(this));
+        
+        // If the baby is attacked, fight back
+        this.targetTasks.addTask(targetPriority++, new EntityAIHurtByTarget(this, false));
+
+        // Make the baby aggressive
+        this.targetTasks.addTask(targetPriority++, new EntityAINearestAttackableTarget(this, EntityPlayer.class, this.rangeOfInterest, 0, true));        
+
+        // Move toward any target we find
+        this.targetTasks.addTask(targetPriority++, new EntityAIMoveTowardsTarget(this, this.moveSpeed, this.rangeOfInterest));
+
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+//    		logger.info("c'tor complete");
+    }
+	
+	protected boolean isAIEnabled() {
         return true;
     }
+	
+	public int getMaxHealth() {
+		return 20;
+	}
+	
+	public int getTotalArmorValue() {
+		// Each value is 1/2 an armor bar. So 20 is max armor.
+        return 2;
+    }
+	
+	// Check the sunlight on update. Babies move faster at night.
+	public float getSpeedModifier() {
+        float modifier = 3.0f;
 
-    public int getMaxHealth()
-    {
-        return 15;
+		// If it is light, move slower
+        if (this.worldObj.isDaytime() && !this.worldObj.isRemote) {
+            float brightness = this.getBrightness(1.0F);
+            boolean sky = this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
+            if (brightness > 0.5F && sky) { 
+            	modifier = 1.0f;
+            }
+        }
+        modifier *= super.getSpeedModifier();
+        logger.info("modifier " + modifier);
+        return modifier;
+    }
+	
+	public EnumCreatureAttribute getCreatureAttribute() {
+		// Sets up potion effects to be like zombies
+        return EnumCreatureAttribute.UNDEAD;
+    }
+	
+	public int getAttackStrength(Entity par1Entity) {
+		// Number of 1/2 hearts damage to do.
+		return 4;
     }
 
-    protected void updateAITasks()
-    {
+	protected void dropRareDrop(int par1) {
+        switch (this.rand.nextInt(2)) {
+            case 0:
+                this.dropItem(WeirdMain.weirdIngot.itemID, 1);
+                break;
+            case 1:
+                this.dropItem(WeirdMain.weirdHelmet.itemID, 1);
+                break;
+        }
+    }	
+	
+	protected void dropFewItems(boolean par1, int par2) {
+		if(this.rand.nextInt(3) == 0) {
+			this.dropItem(Item.bed.itemID, 1);
+		}
+	}
+	
+    protected void updateAITasks() {
         super.updateAITasks();
     }
 
-    protected void entityInit()
-    {
+    protected void entityInit() {
         super.entityInit();
         this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
     }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
-    protected String getLivingSound()
-    {
+    protected String getLivingSound() {
         return "mob.zombie.say";
     }
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
-    protected String getHurtSound()
-    {
+    protected String getHurtSound() {
         return "mob.zombie.say";
     }
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
-    protected String getDeathSound()
-    {
+    protected String getDeathSound()  {
         return "mob.zombie.death";
     }
 
-    /**
-     * Plays step sound at given x, y, z for the entity
-     */
     protected void playStepSound(int par1, int par2, int par3, int par4)
     {
-        this.playSound("mob.weirdBaby.step", 0.15F, 1.0F);
+        this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
 
     /**
@@ -118,27 +172,6 @@ public class EntityWeirdBaby extends EntityAnimal
     }
 
     /**
-     * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
-     * par2 - Level of Looting used to kill this mob.
-     */
-    protected void dropFewItems(boolean par1, int par2)
-    {
-        int var3 = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
-
-        for (int var4 = 0; var4 < var3; ++var4)
-        {
-            if (this.isBurning())
-            {
-                this.dropItem(Item.porkCooked.itemID, 1);
-            }
-            else
-            {
-                this.dropItem(Item.porkRaw.itemID, 1);
-            }
-        }
-    }
-
-    /**
      * Called when a lightning bolt hits the entity.
      */
     public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
@@ -151,10 +184,4 @@ public class EntityWeirdBaby extends EntityAnimal
 //            this.setDead();
 //        }
     }
-
-	@Override
-	public EntityAgeable createChild(EntityAgeable var1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

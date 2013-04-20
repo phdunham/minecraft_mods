@@ -5,6 +5,8 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.entity.EntityEggInfo;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -94,24 +96,34 @@ public class WeirdClProxy extends WeirdCoProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityWeirdBaby.class, 
 						new RenderWeirdBaby(new ModelWeirdBaby(), 
 										    new ModelWeirdBaby(0.5F), 0.7F));
+		EntityList.entityEggs.put(id, new EntityEggInfo(id, 0xffffff, 0x000000));
 		
-		EntityRegistry.addSpawn(EntityWeirdBaby.class, 10, 2, 4, 
+		EntityRegistry.addSpawn(EntityWeirdBaby.class, 20, 1, 2, 
 				EnumCreatureType.monster, 
 				BiomeGenBase.beach, 
+				BiomeGenBase.desert,
+				BiomeGenBase.desertHills,
 				BiomeGenBase.extremeHills, 
 				BiomeGenBase.extremeHillsEdge, 
 				BiomeGenBase.forest, 
 				BiomeGenBase.forestHills, 
+				BiomeGenBase.frozenOcean,
+				BiomeGenBase.frozenRiver,
+				BiomeGenBase.hell,
+				BiomeGenBase.iceMountains,
+				BiomeGenBase.icePlains,
 				BiomeGenBase.jungle, 
-				BiomeGenBase.jungleHills, 
+				BiomeGenBase.jungleHills,
 				BiomeGenBase.mushroomIsland, 
-				BiomeGenBase.mushroomIslandShore, 
+				BiomeGenBase.mushroomIslandShore,
 				BiomeGenBase.ocean, 
 				BiomeGenBase.plains, 
 				BiomeGenBase.river, 
-				BiomeGenBase.swampland);		
+				BiomeGenBase.swampland,
+				BiomeGenBase.taiga,
+				BiomeGenBase.taigaHills);		
 		
-		LanguageRegistry.instance().addStringLocalization("entity.weird.WeirdBaby.name", "Baby");
+		LanguageRegistry.instance().addStringLocalization("entity.WeirdBaby.name", "Baby");
 		
 		logger.info("registerRenderers complete");
 	}
