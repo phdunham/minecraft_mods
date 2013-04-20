@@ -35,12 +35,15 @@ public class EntityWeirdBaby extends EntityMob {
 	private static StandardLogger logger;
 	
 	// Distance when the baby starts interacting w/ things
-	private static float rangeOfInterest = 20.0f;
+	private static float rangeOfInterest = 40.0f;
 	private static float baseMoveSpeed = 0.25f;
-
+	private static String currentTexture = WeirdConstants.pathBaby;
+	private static float currentSpeedMultiplier = 1.0f;
+	
 	public EntityWeirdBaby(World par1World) {
         super(par1World);
-        this.texture = WeirdConstants.pathBaby;
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
+        this.texture = getTexture();
         this.setSize(0.9F, 0.9F);
         this.getNavigator().setAvoidsWater(true);
         this.moveSpeed = baseMoveSpeed;
@@ -63,9 +66,6 @@ public class EntityWeirdBaby extends EntityMob {
 
         // Move toward any target we find
         this.targetTasks.addTask(targetPriority++, new EntityAIMoveTowardsTarget(this, this.moveSpeed, this.rangeOfInterest));
-
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-//    		logger.info("c'tor complete");
     }
 	
 	protected boolean isAIEnabled() {
@@ -80,24 +80,48 @@ public class EntityWeirdBaby extends EntityMob {
 		// Each value is 1/2 an armor bar. So 20 is max armor.
         return 2;
     }
+	private boolean isDaytime() {
+		if (this.worldObj.isRemote) {
+			logger.info("isDaytime can only be called when !this.worldObj.isRemote");
+		}
+		// Only works when !this.worldObj.isRemote is true
+		return this.worldObj.isDaytime();
+	}
+	
+	private boolean isInSunlight() {
+		boolean isBrightEnough = this.getBrightness(1.0F) > 0.5F;
+        boolean isSkyVisible = this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
+        
+		// Return true is it is day, we can see the sky and the sun is bright enough.
+        return (isDaytime() && isSkyVisible && isBrightEnough);
+	}
+	
+	@Override
+	public String getTexture() {
+		return currentTexture;
+	}
+
+	// Periodic updates to the entitity. 
+	// Baby looks evil at night.
+	// Bady is fast at night.
+	public void onLivingUpdate() {
+		if (!this.worldObj.isRemote) {
+			if (isDaytime()) {
+				currentTexture = WeirdConstants.pathBaby; 
+				currentSpeedMultiplier = 1.0f;
+			} else {
+				currentTexture = WeirdConstants.pathBabyZombie; 
+				currentSpeedMultiplier = 3.0f;
+			}
+		}
+		super.onLivingUpdate();
+    }
 	
 	// Check the sunlight on update. Babies move faster at night.
 	public float getSpeedModifier() {
-        float modifier = 3.0f;
-
-		// If it is light, move slower
-        if (this.worldObj.isDaytime() && !this.worldObj.isRemote) {
-            float brightness = this.getBrightness(1.0F);
-            boolean sky = this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
-            if (brightness > 0.5F && sky) { 
-            	modifier = 1.0f;
-            }
-        }
-        modifier *= super.getSpeedModifier();
-        logger.info("modifier " + modifier);
-        return modifier;
+		return currentSpeedMultiplier * super.getSpeedModifier();
     }
-	
+
 	public EnumCreatureAttribute getCreatureAttribute() {
 		// Sets up potion effects to be like zombies
         return EnumCreatureAttribute.UNDEAD;
