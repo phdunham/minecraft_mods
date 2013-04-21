@@ -31,6 +31,7 @@ import pdunham.weird.entity.EntityWeirdBaby;
 import pdunham.weird.objects.WeirdBlock;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdOre;
+import pdunham.weird.objects.WeirdPoop;
 import pdunham.weird.objects.WeirdPowder;
 import pdunham.weird.renderer.RenderPebble;
 import pdunham.weird.tools.WeirdAxe;
@@ -139,6 +140,9 @@ public class WeirdMain {
     
     @Instance("WeirdBoots")
     public static WeirdBoots weirdBoots;
+
+    @Instance("WeirdPoop")
+    public static WeirdPoop weirdPoop;
     
     @Instance("WeirdAchievementOre")
     public static WeirdAchievementOre weirdAchievementOre;

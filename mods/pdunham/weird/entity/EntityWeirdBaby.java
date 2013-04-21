@@ -176,11 +176,14 @@ public class EntityWeirdBaby extends EntityMob {
     }	
 	
 	protected void dropFewItems(boolean par1, int par2) {
-		if(this.rand.nextInt(3) == 0) {
+		int random = this.rand.nextInt(10); 
+		if (random == 0) {
 			this.dropItem(Item.bed.itemID, 1);
+		} else if (random > 7) {
+			this.dropItem(WeirdMain.weirdPoop.itemID, 1);
 		}
 	}
-	
+
     protected void updateAITasks() {
         super.updateAITasks();
     }

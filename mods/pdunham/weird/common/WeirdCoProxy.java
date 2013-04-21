@@ -15,6 +15,7 @@ import pdunham.weird.armor.WeirdPlating;
 import pdunham.weird.objects.WeirdOre;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdBlock;
+import pdunham.weird.objects.WeirdPoop;
 import pdunham.weird.objects.WeirdPowder;
 import pdunham.weird.tools.WeirdAxe;
 import pdunham.weird.tools.WeirdHoe;
@@ -79,6 +80,7 @@ public class WeirdCoProxy implements IGuiHandler {
         WeirdMain.weirdPlating           = new WeirdPlating(id++);
         WeirdMain.weirdStickyGrenade           = new WeirdGrenade(id++, "WeirdStickyGrenade", "Weird sticky grenade", WeirdMain.weirdStickyCasing,  true,  9, 1, 2.0f);
         WeirdMain.weirdStrongGrenade           = new WeirdGrenade(id++, "WeirdStrongGrenade", "Weird strong grenade", WeirdMain.weirdStrongCasing, false, 10, 1, 4.0f);
+        WeirdMain.weirdPoop                    = new WeirdPoop(id++);
         logger.info("registerItems() complete");
 	}
 
@@ -120,6 +122,7 @@ public class WeirdCoProxy implements IGuiHandler {
         ((WeirdPlating)WeirdMain.weirdPlating).postInit();
         ((WeirdGrenade)WeirdMain.weirdStickyGrenade).postInit();
         ((WeirdGrenade)WeirdMain.weirdStrongGrenade).postInit();
+        ((WeirdPoop) WeirdMain.weirdPoop).postInit();
 		logger.info("postInit() complete");
 	}
 
