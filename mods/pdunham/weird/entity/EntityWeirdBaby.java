@@ -3,6 +3,7 @@ package pdunham.weird.entity;
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -27,6 +28,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.ModLoader;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -41,6 +43,7 @@ public class EntityWeirdBaby extends EntityMob {
 	private static float nightSpeedMultiplier = 1.0f;
 	private static boolean isDay = false;  // not sure why this only works as static.
 	private boolean inDaylight = false;
+	private int calebCounter = 0;
 	
 	public EntityWeirdBaby(World par1World) {
         super(par1World);
@@ -125,11 +128,40 @@ public class EntityWeirdBaby extends EntityMob {
     }
 	
 	public int getAttackStrength(Entity par1Entity) {
-		// Number of 1/2 hearts damage to do.
-		if (par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) {
-			return 40;
+		// For certain players, send a message
+		if (((calebCounter++ % 20) == 0) &&
+			(par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) ||
+			(par1Entity.getEntityName().toLowerCase().indexOf("arntemp") >= 0) ||
+			(par1Entity.getEntityName().toLowerCase().indexOf("pdunham") >= 0)) {
+			String [] msgs = { 
+					"I'm scared of babies!",
+					"Ooooh babies are soooo cute!",
+					"This is *not* a cute baby!",
+					"Babies are killing!",
+					"Seriously, babies?",
+					"I don't like babies!",
+					"Please stop baby. I will be nice to you.",
+					"Look baby, here is a nice cookie.",
+					"Are you serious, you don't know? Man, everyone knows babies never go full retard.",
+					"Babies hate me!",
+					"Does baby want burpies?",
+					"Hey look! A baby.",
+					"Baby, what are you doing? No baby! Bad baby! Aaaaaahhhhhhh....",
+					"Why baby? Why?",							
+					"Look out!! Babies!!!",
+					"I have had it with these m#$@^#f^#*$in' babies on this m#$@^#f^#*$in' plane!",
+					"When I am older I want lots of babies."
+			};
+			ModLoader.getMinecraftInstance().thePlayer.addChatMessage(msgs[this.rand.nextInt(msgs.length)]);
+			
+			// For Calebs, do a lot of damage.
+			if (par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) {
+				return 50;
+			}
 		}
-		return 4;
+
+		// Number of 1/2 hearts damage to do.
+		return 3;
     }
 
 	protected void dropRareDrop(int par1) {
