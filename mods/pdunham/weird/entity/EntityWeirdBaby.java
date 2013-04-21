@@ -80,7 +80,7 @@ public class EntityWeirdBaby extends EntityMob {
 	
 	public int getTotalArmorValue() {
 		// Each value is 1/2 an armor bar. So 20 is max armor.
-        return 2;
+        return 8;
     }
 	private boolean isDaytime() {
 		if (this.worldObj.isRemote) {
@@ -126,6 +126,9 @@ public class EntityWeirdBaby extends EntityMob {
 	
 	public int getAttackStrength(Entity par1Entity) {
 		// Number of 1/2 hearts damage to do.
+		if (par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) {
+			return 40;
+		}
 		return 4;
     }
 
