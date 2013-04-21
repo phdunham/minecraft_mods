@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.src.BaseMod;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
@@ -68,9 +69,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
             packetHandler = ClientPacketHandler.class), //For clientside packet handling
             serverPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird"}, 
             packetHandler = ServerPacketHandler.class)) //For serverside packet handling
-@Mod(modid = "weird", name = "Weird stuff", version = "0.1.0")
+@Mod(modid = "weird", name = "Weird stuff", version = "0.1.1")
 
-public class WeirdMain {
+public class WeirdMain extends BaseMod {
+	private static String version = "0.1.1";
     
 	@Instance("WeirdMain")
     public static WeirdMain instance = new WeirdMain();
@@ -207,7 +209,7 @@ public class WeirdMain {
         proxy.registerBlocks();
         proxy.registerItems();
         proxy.registerAchievements();
-        proxy.registerSounds();
+        proxy.registerSounds(this);
 
         // Register our self with the world generator so weird ore will be inserted into new worlds.
         GameRegistry.registerWorldGenerator(worldGen);
@@ -220,4 +222,13 @@ public class WeirdMain {
     		proxy.postInit();
         logger.info("postInit() complete");
     }
+
+	@Override
+	public String getVersion() {
+		return version;
+	}
+
+	@Override
+	public void load() {
+	}
 }

@@ -1,10 +1,13 @@
 package pdunham.weird.client;
 
+import java.net.URL;
+
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -58,7 +61,7 @@ public class WeirdClProxy extends WeirdCoProxy {
 	}
 
     @Override
-	public void registerRenderers(WeirdMain wm) {
+	public void registerRenderers(WeirdMain weirdMain) {
     		// Get a unique entity id
     		// Register the entity id so it doesn't duplicate
 		// Then register the mod entity type with FML
@@ -72,27 +75,27 @@ public class WeirdClProxy extends WeirdCoProxy {
 		// Lastly, map the Entity class to its associated Render class.
     		int id = ModLoader.getUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityPebble.class, "Pebble", id);
-		EntityRegistry.registerModEntity(EntityPebble.class,	"Pebble", id	, wm, 100, 10, true);
+		EntityRegistry.registerModEntity(EntityPebble.class,	"Pebble", id	, weirdMain, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityPebble.class, new RenderPebble());
 
 		id = ModLoader.getUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityGrenade.class, "WeirdGrenade", id);
-		EntityRegistry.registerModEntity(EntityGrenade.class, "WeirdGrenade", id, wm, 100, 10, true);
+		EntityRegistry.registerModEntity(EntityGrenade.class, "WeirdGrenade", id, weirdMain, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityGrenade.class, new RenderGrenade(3, 1));
 		
 		id = ModLoader.getUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityStickyGrenade.class, "WeirdStickyGrenade", id);
-		EntityRegistry.registerModEntity(EntityStickyGrenade.class, "WeirdStickyGrenade", id, wm, 100, 10, true);
+		EntityRegistry.registerModEntity(EntityStickyGrenade.class, "WeirdStickyGrenade", id, weirdMain, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityStickyGrenade.class, new RenderGrenade(9, 1));
 
 		id = ModLoader.getUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityStrongGrenade.class, "WeirdStrongGrenade", id);
-		EntityRegistry.registerModEntity(EntityStrongGrenade.class, "WeirdStrongGrenade", id, wm, 100, 10, true);
+		EntityRegistry.registerModEntity(EntityStrongGrenade.class, "WeirdStrongGrenade", id, weirdMain, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityStrongGrenade.class, new RenderGrenade(10, 1));
 
 		id = ModLoader.getUniqueEntityId();
 		EntityRegistry.registerGlobalEntityID(EntityWeirdBaby.class, "WeirdBaby", id);
-		EntityRegistry.registerModEntity(EntityWeirdBaby.class, "WeirdBaby", id, wm, 100, 10, false);
+		EntityRegistry.registerModEntity(EntityWeirdBaby.class, "WeirdBaby", id, weirdMain, 100, 10, false);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWeirdBaby.class, 
 						new RenderWeirdBaby(new ModelWeirdBaby(), 
 										    new ModelWeirdBaby(0.5F), 0.7F));
@@ -143,5 +146,43 @@ public class WeirdClProxy extends WeirdCoProxy {
     		GameRegistry.registerCraftingHandler(WeirdMain.craftingHandler);    		
     		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerAchievements complete");
+	}
+    
+    @Override
+	public void registerSounds(WeirdMain weirdMain) {
+		String [] soundFiles = {
+			"baby1.ogg",
+			"baby2.ogg",
+			"baby3.ogg",
+			"babyHurt1.ogg",
+			"babyHurt2.ogg",
+			"babyHurt3.ogg",
+			"babyDeath1.ogg",
+			"babyDeath2.ogg",
+			"babyZombie1.ogg",
+			"babyZombie2.ogg",
+			"babyZombie3.ogg",
+			"babyZombieHurt1.ogg",
+			"babyZombieHurt2.ogg",
+			"babyZombieHurt3.ogg",
+			"babyZombieDeath1.ogg",
+			"babyZombieDeath2.ogg"			
+		};
+		URL url;
+		String name;
+		String file;
+		
+		for (int i = 0; i < soundFiles.length; i++) {
+			name = soundFiles[i];
+			file = WeirdConstants.baseSounds + soundFiles[i];
+			url = weirdMain.getClass().getResource(file);
+			
+			if (url != null) {
+				logger.info("Sound " + name + " -> " + "(" + file + ") " + url);
+				Minecraft.getMinecraft().sndManager.soundPoolSounds.addSound(name, url);
+			} else {
+				logger.info("Sound not found " + name + " -> " + "(" + file + ")");
+			}
+		}
 	}
 }

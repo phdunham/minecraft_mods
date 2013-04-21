@@ -1,5 +1,9 @@
 package pdunham.weird.common;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import net.minecraft.world.World;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
@@ -57,7 +61,7 @@ public class WeirdCoProxy implements IGuiHandler {
 
 	// A helper function when we register items
 	// Don't change the IDs
-	public void registerItems(){
+	public void registerItems() {
 		int id = WeirdMain.configFirstItemID;
 		// *** Do not change the order of these c'tors
 		WeirdMain.weirdIngot               = new WeirdIngot(id++);
@@ -129,45 +133,21 @@ public class WeirdCoProxy implements IGuiHandler {
 
 	// A helper function when we register textures
 	// gets overridden by the clientProxy
-	public void registerTextures()
-	{
-        logger.info("commonProxy.registerTextures() complete");
+	public void registerTextures() {
+        logger.info("registerTextures() complete");
 	}
 	
     // Nothing here as the server doesn't render graphics!
 	// gets overridden by the clientProxy
-	public void registerRenderers(WeirdMain wm) {
-        logger.info("commonProxy.registerRenderers() complete");
+	public void registerRenderers(WeirdMain weirdMain) {
+        logger.info("registerRenderers() complete");
 	}
 	
 	public void registerAchievements() {
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerAchievements complete");
 	}
 	
-	public void registerSounds() {
-		String [] soundFiles = {
-			"baby1.ogg",
-			"baby2.ogg",
-			"baby3.ogg",
-			"babyHurt1.ogg",
-			"babyHurt2.ogg",
-			"babyHurt3.ogg",
-			"babyDeath1.ogg",
-			"babyDeath2.ogg",
-			"babyZombie1.ogg",
-			"babyZombie2.ogg",
-			"babyZombie3.ogg",
-			"babyZombieHurt1.ogg",
-			"babyZombieHurt2.ogg",
-			"babyZombieHurt3.ogg",
-			"babyZombieDeath1.ogg",
-			"babyZombieDeath2.ogg"			
-		};
-		
-		for (int i = 0; i < soundFiles.length; i++) {
-			Minecraft.getMinecraft().sndManager.soundPoolSounds.addSound(soundFiles[i], 
-					this.getClass().getResource(WeirdConstants.baseSounds + soundFiles[i]));
-		}
+	public void registerSounds(WeirdMain weirdMain) {
+        logger.info("registerSounds() complete");
 	}
 }

@@ -19,7 +19,7 @@ public class WeirdConstants {
     public static String pathTexturesBaby 				= baseTextures + "weirdBaby.png";
     public static String pathTexturesBabyZombie 			= baseTextures + "weirdBabyZombie.png";
 
-    public static String pathSoundsBaby 					= baseTextures + "baby"; // the #.ogg is added by the class
+    public static String pathSoundsBaby 					= baseSounds + "baby"; // the #.ogg is added by the class
 
     
 	// Make private so we never actuall make one.

@@ -18,7 +18,6 @@ public class EntityPebble extends EntityThrowable {
 	
 	private void init() {
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
-	    logger.info("C'tor() complete");
 	}
 	
 	public EntityPebble(World par1World) {
@@ -49,5 +48,9 @@ public class EntityPebble extends EntityThrowable {
         if (!this.worldObj.isRemote) {
             this.setDead();
         }
+    }
+    protected float getGravityVelocity() {
+    		// Pebbles are barely effected by gravity
+        return 0.003F;
     }
 }

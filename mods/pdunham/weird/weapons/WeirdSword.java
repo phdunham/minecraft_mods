@@ -25,7 +25,7 @@ public class WeirdSword extends ItemSword {
         setMaxStackSize(2);
         
         // Put on the materials tab
-        setCreativeTab(CreativeTabs.tabTools);
+        setCreativeTab(CreativeTabs.tabCombat);
         
         // Set the internal name
         setItemName("weirdSword");
