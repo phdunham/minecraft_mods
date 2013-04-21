@@ -179,7 +179,7 @@ public class WeirdMain {
     public static WeirdCoProxy proxy;
 
 	public static int configFirstBlockID = 3125;
-	public static int configFirstItemID = 7237;
+	public static int configFirstItemID = 7238; // 7237 is taken
     
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -187,7 +187,7 @@ public class WeirdMain {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		configFirstBlockID = config.getBlock("FirstBlockID", 3125, "This first Block ID to use for this mod. Blocks assign sequentially starting from this ID").getInt();
-		configFirstItemID = config.getItem("FirstItemID", 7237, "This first Item ID to use for this mod. Items assign sequentially starting from this ID").getInt();
+		configFirstItemID = config.getItem("FirstItemID", 7238, "This first Item ID to use for this mod. Items assign sequentially starting from this ID").getInt();
 		config.save();    
         logger.info("configuration file loaded.  1st Block ID " + configFirstBlockID + ", 1st item ID " + configFirstBlockID);
 	}
