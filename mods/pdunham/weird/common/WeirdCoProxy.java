@@ -58,7 +58,7 @@ public class WeirdCoProxy implements IGuiHandler {
 	// A helper function when we register items
 	// Don't change the IDs
 	public void registerItems(){
-		int id = 7237;
+		int id = WeirdMain.configFirstItemID;
 		// *** Do not change the order of these c'tors
 		WeirdMain.weirdIngot               = new WeirdIngot(id++);
 		WeirdMain.weirdPickaxe           = new WeirdPickaxe(id++);
@@ -92,12 +92,13 @@ public class WeirdCoProxy implements IGuiHandler {
 	// A helper function when we register blocks
 	// Don't change the IDs
 	public void registerBlocks(){
-        WeirdMain.weirdOre = (new WeirdOre(3125));
-		WeirdMain.weirdBlock = new WeirdBlock(3126);
-        WeirdMain.weirdTNT= new WeirdTNT(3127);
+		int id = WeirdMain.configFirstBlockID;
+        WeirdMain.weirdOre = (new WeirdOre(id++));
+		WeirdMain.weirdBlock = new WeirdBlock(id++);
+        WeirdMain.weirdTNT= new WeirdTNT(id++);
         logger.info("registerBlocks() complete");
 	}
-	
+
 	public void postInit() {
         ((WeirdOre) WeirdMain.weirdOre).postInit();
         ((WeirdBlock) WeirdMain.weirdBlock).postInit();
