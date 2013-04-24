@@ -1,15 +1,7 @@
 package pdunham.weird.common;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import net.minecraft.world.World;
-import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -38,8 +30,6 @@ import pdunham.weird.weapons.WeirdTNT;
 
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class WeirdCoProxy implements IGuiHandler {
 
@@ -139,6 +129,7 @@ public class WeirdCoProxy implements IGuiHandler {
 	}
 
 	public void registerSounds() {
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("registerSounds() complete");
 	}
 	
@@ -151,6 +142,7 @@ public class WeirdCoProxy implements IGuiHandler {
     // Nothing here as the server doesn't render graphics!
 	// gets overridden by the clientProxy
 	public void registerRenderers(WeirdMain weirdMain) {
+        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("registerRenderers() complete");
 	}
 	

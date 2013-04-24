@@ -2,6 +2,9 @@ package pdunham.weird.client;
 
 import java.net.URL;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import pdunham.weird.common.StandardLogger;
 import pdunham.weird.common.WeirdConstants;
 import net.minecraft.client.Minecraft;
@@ -9,6 +12,7 @@ import net.minecraft.client.audio.SoundManager;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 
+@SideOnly(Side.CLIENT)
 public class WeirdEventSounds {
 
 	private static StandardLogger logger;
@@ -19,6 +23,7 @@ public class WeirdEventSounds {
 	}
 	
 	// Called when it is time to register our custom sounds w/ the system.
+	@SideOnly(Side.CLIENT)
 	@ForgeSubscribe
 	public void onSoundLoad(SoundLoadEvent event) {
 		String [] soundFiles = {

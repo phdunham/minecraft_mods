@@ -4,6 +4,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -32,6 +34,7 @@ import pdunham.weird.renderer.RenderGrenade;
 import pdunham.weird.renderer.RenderPebble;
 import pdunham.weird.renderer.RenderWeirdBaby;
 
+@SideOnly(Side.CLIENT)
 public class WeirdClProxy extends WeirdCoProxy {
 
 	private static StandardLogger logger;
@@ -48,8 +51,10 @@ public class WeirdClProxy extends WeirdCoProxy {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerSounds() {
-	    	MinecraftForge.EVENT_BUS.register(new WeirdEventSounds());
+		this.
+//	    	MinecraftForge.EVENT_BUS.register(new WeirdEventSounds());
 		logger.info("registerSounds complete");
 	}
 	
