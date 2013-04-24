@@ -1,9 +1,10 @@
 package pdunham.weird.common;
 
+import java.net.URL;
 import java.util.logging.Logger;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.audio.SoundManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
@@ -12,6 +13,8 @@ import net.minecraft.src.BaseMod;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 
 import pdunham.weird.achievements.CraftingHandler;
 import pdunham.weird.achievements.WeirdAchievementBetterBoom;
@@ -64,16 +67,22 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, // Whether client side and server side are needed
-            clientPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird" }, 
-            packetHandler = ClientPacketHandler.class), //For clientside packet handling
-            serverPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird"}, 
-            packetHandler = ServerPacketHandler.class)) //For serverside packet handling
-@Mod(modid = "weird", name = "Weird stuff", version = "0.1.1")
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+//, // Whether client side and server side are needed
+//            clientPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird" }, 
+//            packetHandler = ClientPacketHandler.class), //For clientside packet handling
+//            serverPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird"}, 
+//            packetHandler = ServerPacketHandler.class)) //For serverside packet handling
+
+@Mod(   modid   = WeirdMain.modid, 
+		name    = WeirdMain.name, 
+		version = WeirdMain.version)
 
 public class WeirdMain extends BaseMod {
-	private static String version = "0.1.1";
-    
+	public static final String version = "0.1.1";
+	public static final String modid = "weird";
+	public static final String name = "Weird stuff";
+	
 	@Instance("WeirdMain")
     public static WeirdMain instance = new WeirdMain();
 
@@ -191,6 +200,8 @@ public class WeirdMain extends BaseMod {
 		configFirstBlockID = config.getBlock("FirstBlockID", 3125, "This first Block ID to use for this mod. Blocks assign sequentially starting from this ID").getInt();
 		configFirstItemID = config.getItem("FirstItemID", 7238, "This first Item ID to use for this mod. Items assign sequentially starting from this ID").getInt();
 		config.save();    
+        proxy.registerSounds();
+        proxy.registerRenderers(this);
         logger.info("configuration file loaded.  1st Block ID " + configFirstBlockID + ", 1st item ID " + configFirstBlockID);
 	}
 
@@ -204,16 +215,13 @@ public class WeirdMain extends BaseMod {
         // Call help functions in the common proxy to register all of the weird objects
         proxy.init();
         proxy.registerTextures();
-        proxy.registerRenderers(this);
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.registerItems();
         proxy.registerAchievements();
-        proxy.registerSounds(this);
 
         // Register our self with the world generator so weird ore will be inserted into new worlds.
         GameRegistry.registerWorldGenerator(worldGen);
-        
         logger.info("init() complete");
     }
     
@@ -225,7 +233,7 @@ public class WeirdMain extends BaseMod {
 
 	@Override
 	public String getVersion() {
-		return version;
+		return WeirdMain.version;
 	}
 
 	@Override

@@ -129,30 +129,32 @@ public class EntityWeirdBaby extends EntityMob {
 	
 	public int getAttackStrength(Entity par1Entity) {
 		// For certain players, send a message
-		if (((calebCounter++ % 20) == 0) &&
-			(par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) ||
+		if ((par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) ||
 			(par1Entity.getEntityName().toLowerCase().indexOf("arntemp") >= 0) ||
-			(par1Entity.getEntityName().toLowerCase().indexOf("pdunham") >= 0)) {
-			String [] msgs = { 
-					"I'm scared of babies!",
-					"Ooooh babies are soooo cute!",
-					"This is *not* a cute baby!",
-					"Babies are killing!",
-					"Seriously, babies?",
-					"I don't like babies!",
-					"Please stop baby. I will be nice to you.",
-					"Look baby, here is a nice cookie.",
-					"Are you serious, you don't know? Man, everyone knows babies never go full retard.",
-					"Babies hate me!",
-					"Does baby want burpies?",
-					"Hey look! A baby.",
-					"Baby, what are you doing? No baby! Bad baby! Aaaaaahhhhhhh....",
-					"Why baby? Why?",							
-					"Look out!! Babies!!!",
-					"I have had it with these m#$@^#f^#*$in' babies on this m#$@^#f^#*$in' plane!",
-					"When I am older I want lots of babies."
-			};
-			ModLoader.getMinecraftInstance().thePlayer.addChatMessage(msgs[this.rand.nextInt(msgs.length)]);
+			(par1Entity.getEntityName().toLowerCase().indexOf("dunham") >= 0)) {
+			if ((calebCounter % 20) == 0) {
+				String [] msgs = { 
+						"I'm scared of babies!",
+						"Ooooh babies are soooo cute!",
+						"This is *not* a cute baby!",
+						"Babies are killing!",
+						"Seriously, babies?",
+						"I don't like babies!",
+						"Please stop baby. I will be nice to you.",
+						"Look baby, here is a nice cookie.",
+						"Are you serious, you don't know? Man, everyone knows babies never go full retard.",
+						"Babies hate me!",
+						"Does baby want burpies?",
+						"Hey look! A baby.",
+						"Baby, what are you doing? No baby! Bad baby! Aaaaaahhhhhhh....",
+						"Why baby? Why?",							
+						"Look out!! Babies!!!",
+						"I have had it with these m#$@^#f^#*$in' babies on this m#$@^#f^#*$in' plane!",
+						"When I am older I want lots of babies."
+				};
+				ModLoader.getMinecraftInstance().thePlayer.addChatMessage(msgs[this.rand.nextInt(msgs.length)]);
+			}
+			calebCounter++;
 			
 			// For Calebs, do a lot of damage.
 			if (par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) {
@@ -161,7 +163,7 @@ public class EntityWeirdBaby extends EntityMob {
 		}
 
 		// Number of 1/2 hearts damage to do.
-		return 3;
+		return isDay ? 1 : 4;
     }
 
 	protected void dropRareDrop(int par1) {
@@ -194,15 +196,15 @@ public class EntityWeirdBaby extends EntityMob {
     }
 
     protected String getLivingSound() {
-        return (isDay ? "baby" : "babyZombie");
+        return (isDay ? "baby.baby" : "baby.babyZombie");
     }
 
     protected String getHurtSound() {
-        return (isDay ? "babyHurt" : "babyZombieHurt");
+        return (isDay ? "baby.babyHurt" : "baby.babyZombieHurt");
     }
 
     protected String getDeathSound()  {
-        return (isDay ? "babyDeath" : "babyZombieDeath");
+        return (isDay ? "baby.babyDeath" : "baby.babyZombieDeath");
     }
 
     protected void playStepSound(int par1, int par2, int par3, int par4)

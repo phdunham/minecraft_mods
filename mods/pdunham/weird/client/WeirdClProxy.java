@@ -1,19 +1,16 @@
 package pdunham.weird.client;
 
-import java.net.URL;
-
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 import pdunham.weird.achievements.CraftingHandler;
 import pdunham.weird.achievements.WeirdAchievementBetterBoom;
 import pdunham.weird.achievements.WeirdAchievementGrenadeCreeper;
@@ -22,8 +19,8 @@ import pdunham.weird.achievements.WeirdAchievementPowder;
 import pdunham.weird.achievements.WeirdAchievementStartingOff;
 import pdunham.weird.achievements.WeirdAchievementStickyToIt;
 import pdunham.weird.client.model.ModelWeirdBaby;
-import pdunham.weird.common.WeirdCoProxy;
 import pdunham.weird.common.StandardLogger;
+import pdunham.weird.common.WeirdCoProxy;
 import pdunham.weird.common.WeirdConstants;
 import pdunham.weird.common.WeirdMain;
 import pdunham.weird.entity.EntityGrenade;
@@ -44,12 +41,18 @@ public class WeirdClProxy extends WeirdCoProxy {
 		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
-	
+	 
 	@Override
 	public void postInit() {
 		super.postInit();
 	}
 
+	@Override
+	public void registerSounds() {
+	    	MinecraftForge.EVENT_BUS.register(new WeirdEventSounds());
+		logger.info("registerSounds complete");
+	}
+	
     @Override
 	public void registerTextures() {
     		// Preload our texture palettes so we have all of the icons and textures before we need them.
@@ -105,26 +108,27 @@ public class WeirdClProxy extends WeirdCoProxy {
 				EnumCreatureType.monster, 
 				BiomeGenBase.beach, 
 				BiomeGenBase.desert,
-				BiomeGenBase.desertHills,
-				BiomeGenBase.extremeHills, 
-				BiomeGenBase.extremeHillsEdge, 
+//				BiomeGenBase.desertHills,
+//				BiomeGenBase.extremeHills, 
+//				BiomeGenBase.extremeHillsEdge, 
 				BiomeGenBase.forest, 
-				BiomeGenBase.forestHills, 
-				BiomeGenBase.frozenOcean,
-				BiomeGenBase.frozenRiver,
+//				BiomeGenBase.forestHills, 
+//				BiomeGenBase.frozenOcean,
+//				BiomeGenBase.frozenRiver,
 				BiomeGenBase.hell,
-				BiomeGenBase.iceMountains,
+//				BiomeGenBase.iceMountains,
 				BiomeGenBase.icePlains,
 				BiomeGenBase.jungle, 
-				BiomeGenBase.jungleHills,
+//				BiomeGenBase.jungleHills,
 				BiomeGenBase.mushroomIsland, 
-				BiomeGenBase.mushroomIslandShore,
-				BiomeGenBase.ocean, 
+//				BiomeGenBase.mushroomIslandShore,
+//				BiomeGenBase.ocean, 
 				BiomeGenBase.plains, 
-				BiomeGenBase.river, 
+//				BiomeGenBase.river, 
 				BiomeGenBase.swampland,
-				BiomeGenBase.taiga,
-				BiomeGenBase.taigaHills);		
+				BiomeGenBase.taiga
+//				BiomeGenBase.taigaHills
+				);		
 		
 		LanguageRegistry.instance().addStringLocalization("entity.WeirdBaby.name", "Baby");
 		
@@ -146,43 +150,5 @@ public class WeirdClProxy extends WeirdCoProxy {
     		GameRegistry.registerCraftingHandler(WeirdMain.craftingHandler);    		
     		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerAchievements complete");
-	}
-    
-    @Override
-	public void registerSounds(WeirdMain weirdMain) {
-		String [] soundFiles = {
-			"baby1.ogg",
-			"baby2.ogg",
-			"baby3.ogg",
-			"babyHurt1.ogg",
-			"babyHurt2.ogg",
-			"babyHurt3.ogg",
-			"babyDeath1.ogg",
-			"babyDeath2.ogg",
-			"babyZombie1.ogg",
-			"babyZombie2.ogg",
-			"babyZombie3.ogg",
-			"babyZombieHurt1.ogg",
-			"babyZombieHurt2.ogg",
-			"babyZombieHurt3.ogg",
-			"babyZombieDeath1.ogg",
-			"babyZombieDeath2.ogg"			
-		};
-		URL url;
-		String name;
-		String file;
-		
-		for (int i = 0; i < soundFiles.length; i++) {
-			name = soundFiles[i];
-			file = WeirdConstants.baseSounds + soundFiles[i];
-			url = weirdMain.getClass().getResource(file);
-			
-			if (url != null) {
-				logger.info("Sound " + name + " -> " + "(" + file + ") " + url);
-				Minecraft.getMinecraft().sndManager.soundPoolSounds.addSound(name, url);
-			} else {
-				logger.info("Sound not found " + name + " -> " + "(" + file + ")");
-			}
-		}
 	}
 }

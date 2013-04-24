@@ -6,10 +6,12 @@ import java.net.URL;
 
 import net.minecraft.world.World;
 import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
 
 import pdunham.weird.armor.WeirdBoots;
 import pdunham.weird.armor.WeirdChestPlate;
@@ -105,6 +107,11 @@ public class WeirdCoProxy implements IGuiHandler {
 
 	public void postInit() {
         ((WeirdOre) WeirdMain.weirdOre).postInit();
+		for (int i = 0; i < Item.itemsList.length; i++) {
+			if (Item.itemsList[i] != null) {
+				logger.info(i + " " + Item.itemsList[i].getItemName());
+			}
+		}
         ((WeirdBlock) WeirdMain.weirdBlock).postInit();
         ((WeirdIngot) WeirdMain.weirdIngot).postInit();
         ((WeirdPickaxe) WeirdMain.weirdPickaxe).postInit();
@@ -131,6 +138,10 @@ public class WeirdCoProxy implements IGuiHandler {
 		logger.info("postInit() complete");
 	}
 
+	public void registerSounds() {
+        logger.info("registerSounds() complete");
+	}
+	
 	// A helper function when we register textures
 	// gets overridden by the clientProxy
 	public void registerTextures() {
@@ -145,9 +156,5 @@ public class WeirdCoProxy implements IGuiHandler {
 	
 	public void registerAchievements() {
 		logger.info("registerAchievements complete");
-	}
-	
-	public void registerSounds(WeirdMain weirdMain) {
-        logger.info("registerSounds() complete");
 	}
 }

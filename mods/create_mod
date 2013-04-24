@@ -27,9 +27,9 @@ do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/*png
 do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/
 
 # Update the Sound resources
-do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds
-do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/*ogg
-do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/sounds/*ogg ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/
+do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby
+do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby/*ogg
+do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/sounds/baby/*ogg ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby/
 
 # Make the zip file
 do_cmd cd ~/work/forge/mcp/reobf/minecraft/
