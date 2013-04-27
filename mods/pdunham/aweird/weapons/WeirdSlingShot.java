@@ -20,7 +20,7 @@ import pdunham.aweird.entity.EntityPebble;
 
 public class WeirdSlingShot extends Item {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdSlingShot(int id) {
@@ -38,7 +38,6 @@ public class WeirdSlingShot extends Item {
         // Set the texture.
         setIconCoord(9, 0);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

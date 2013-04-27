@@ -16,12 +16,11 @@ import org.lwjgl.opengl.GL12;
 @SideOnly(Side.CLIENT)
 public class RenderPebble extends Render {
 
-	private StandardLogger logger = null;
+	private static StandardLogger logger = new StandardLogger();
 	
 	private int itemIconIndex = 15;
 	
 	public RenderPebble() {
-	    logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 	    logger.info("C'tor() complete");
 	}
 

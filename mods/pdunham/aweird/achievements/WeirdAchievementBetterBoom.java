@@ -10,14 +10,13 @@ import net.minecraft.stats.AchievementList;
 
 public class WeirdAchievementBetterBoom extends Achievement {
 	
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public WeirdAchievementBetterBoom() {
 		// id, name, x, y, item display, prerequisite
 		super(2005, "Weird Better Boom", 7, 13, WeirdMain.weirdTNT, WeirdMain.weirdAchievementPowder);
 		registerAchievement();
 
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
 

@@ -15,12 +15,12 @@ import pdunham.aweird.common.WeirdConstants;
 
 @SideOnly(Side.CLIENT)
 public class RenderGrenade extends Render {
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
+
 	private int iconIndex = 19;
 
     public RenderGrenade(int x, int y) {
     		iconIndex = x + (y * 16);
-	    logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
     }
 

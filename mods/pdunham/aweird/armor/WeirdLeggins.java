@@ -14,7 +14,7 @@ import net.minecraftforge.common.IArmorTextureProvider;
 
 public class WeirdLeggins extends ItemArmor implements IArmorTextureProvider {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
 	public WeirdLeggins(int i) {
 		// super(id, material, subset, leggins=2);
@@ -26,7 +26,6 @@ public class WeirdLeggins extends ItemArmor implements IArmorTextureProvider {
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabCombat);
 		
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("ArmorTextureFile " + WeirdConstants.pathTexturesArmorLegs);
         logger.info("c'tor() complete");
     }

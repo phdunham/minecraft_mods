@@ -14,7 +14,7 @@ import pdunham.aweird.common.WeirdMain;
 
 public class WeirdHoe extends ItemHoe {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdHoe(int id) {
@@ -32,7 +32,6 @@ public class WeirdHoe extends ItemHoe {
         // Set the texture.
         setIconCoord(8, 0);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

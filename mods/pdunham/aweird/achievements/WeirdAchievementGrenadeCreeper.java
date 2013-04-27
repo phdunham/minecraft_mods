@@ -10,14 +10,13 @@ import net.minecraft.stats.AchievementList;
 
 public class WeirdAchievementGrenadeCreeper extends Achievement {
 	
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public WeirdAchievementGrenadeCreeper() {
 		// id, name, x, y, item display, prerequisite
 		super(2002, "Weird Grenade Creeper", 7, 11, WeirdMain.weirdGrenade, WeirdMain.weirdAchievementPowder);
 		registerAchievement();
 
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
 

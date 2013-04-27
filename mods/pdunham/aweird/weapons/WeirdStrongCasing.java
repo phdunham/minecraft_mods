@@ -12,7 +12,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class WeirdStrongCasing extends Item {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdStrongCasing(int id) {
@@ -30,7 +30,6 @@ public class WeirdStrongCasing extends Item {
         // Set the texture.
         setIconCoord(1, 1);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

@@ -14,7 +14,7 @@ import pdunham.aweird.common.WeirdMain;
 
 public class WeirdPickaxe extends ItemPickaxe {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdPickaxe(int id) {
@@ -32,7 +32,6 @@ public class WeirdPickaxe extends ItemPickaxe {
         // Set the texture.
         setIconCoord(5, 0);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

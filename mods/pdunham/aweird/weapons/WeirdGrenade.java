@@ -17,7 +17,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class WeirdGrenade extends Item {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
 	// Defaults are all for a basic weird grenade.
 	private String internalName = "WeirdGrenade";
@@ -57,7 +57,6 @@ public class WeirdGrenade extends Item {
         // Set the texture.
         setIconCoord(textureX, textureY);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id + ", internal " + internalName + ", external " + externalName +
         				", sticky " + sticky + ", X " + textureX + ", Y " + textureY + ", radius " + explosionRadius);
 	}

@@ -14,14 +14,14 @@ import net.minecraft.world.World;
 
 public class EntityGrenade extends EntityThrowable {
 
-	private StandardLogger logger = null;
+	private static StandardLogger logger = new StandardLogger();
+
 	private int ticksAlive;
 	private int ticksLifetime = 40; // only lives for this long (in ticks - 1/10 sec?)
 	protected float explosionRadius = 2.0f;
 	protected boolean sticky = false;
 	
 	protected void init() {
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 	    ticksAlive = 0;
 	}
 	

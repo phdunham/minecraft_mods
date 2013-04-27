@@ -12,14 +12,13 @@ import cpw.mods.fml.common.network.Player;
 
 public class ClientPacketHandler implements IPacketHandler {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		// Handles incoming data
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 		
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("OnPacketData recieved");
 	}
 }

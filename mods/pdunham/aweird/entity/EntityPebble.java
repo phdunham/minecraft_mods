@@ -14,10 +14,9 @@ import net.minecraft.world.World;
 
 public class EntityPebble extends EntityThrowable {
 
-	private StandardLogger logger = null;
+	private static StandardLogger logger = new StandardLogger();
 	
 	private void init() {
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 	}
 	
 	public EntityPebble(World par1World) {

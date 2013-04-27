@@ -34,7 +34,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityWeirdBaby extends EntityMob {
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
 	// Distance when the baby starts interacting w/ things
 	private static float rangeOfInterest = 40.0f;
@@ -47,7 +47,6 @@ public class EntityWeirdBaby extends EntityMob {
 	
 	public EntityWeirdBaby(World par1World) {
         super(par1World);
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         this.texture = getTexture();
         this.setSize(0.9F, 0.9F);
         this.getNavigator().setAvoidsWater(true);

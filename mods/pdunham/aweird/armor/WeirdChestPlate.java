@@ -15,7 +15,7 @@ import net.minecraftforge.common.IArmorTextureProvider;
 
 public class WeirdChestPlate extends ItemArmor implements IArmorTextureProvider {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
 	public WeirdChestPlate(int i) {
 		// super(id, material, subset, chest=1);
@@ -27,7 +27,6 @@ public class WeirdChestPlate extends ItemArmor implements IArmorTextureProvider 
         setMaxStackSize(1);
         setCreativeTab(CreativeTabs.tabCombat);
 
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("ArmorTextureFile " + WeirdConstants.pathTexturesArmor);
         logger.info("c'tor() complete");
     }

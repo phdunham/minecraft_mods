@@ -9,10 +9,9 @@ import cpw.mods.fml.common.ICraftingHandler;
 
 public class CraftingHandler implements ICraftingHandler {
 	
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public CraftingHandler() {
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
 

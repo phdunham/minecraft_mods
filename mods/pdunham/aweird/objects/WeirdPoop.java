@@ -23,7 +23,7 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 
 public class WeirdPoop extends Item {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdPoop(int id) {
@@ -41,7 +41,6 @@ public class WeirdPoop extends Item {
         // Set the texture.
         setIconCoord(11, 1);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 	

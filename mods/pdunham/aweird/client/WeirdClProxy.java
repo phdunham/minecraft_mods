@@ -38,11 +38,10 @@ import pdunham.aweird.renderer.RenderWeirdBaby;
 @SideOnly(Side.CLIENT)
 public class WeirdClProxy extends WeirdCoProxy {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
 	public WeirdClProxy() {
 		super();
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
 	 
@@ -64,7 +63,6 @@ public class WeirdClProxy extends WeirdCoProxy {
     		MinecraftForgeClient.preloadTexture(WeirdConstants.pathTexturesIcons);
     		MinecraftForgeClient.preloadTexture(WeirdConstants.pathTexturesArmor);
     		
-    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerTextures complete");
 	}
 
@@ -153,7 +151,6 @@ public class WeirdClProxy extends WeirdCoProxy {
     		// The Crafting handler let's us hook crafting and smelting to trigger achievements
     		WeirdMain.craftingHandler = new CraftingHandler();
     		GameRegistry.registerCraftingHandler(WeirdMain.craftingHandler);    		
-    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("registerAchievements complete");
 	}
 }

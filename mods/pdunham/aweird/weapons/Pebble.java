@@ -13,7 +13,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class Pebble extends Item {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public Pebble(int id) {
@@ -31,7 +31,6 @@ public class Pebble extends Item {
         // Set the texture.
         setIconCoord(15, 0);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

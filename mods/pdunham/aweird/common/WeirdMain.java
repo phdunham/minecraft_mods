@@ -180,7 +180,7 @@ public class WeirdMain extends BaseMod {
     @Instance("WeirdWorldGenerator")
     public static WeirdWorldGenerator worldGen = new WeirdWorldGenerator();
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
     
     // Tell Forge where the proxies are.
     @SidedProxy(clientSide="pdunham.aweird.client.WeirdClProxy", 
@@ -194,7 +194,6 @@ public class WeirdMain extends BaseMod {
     
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
-    		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		configFirstBlockID = config.getBlock("FirstBlockID", 3125, "This first Block ID to use for this mod. Blocks assign sequentially starting from this ID").getInt();

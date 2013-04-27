@@ -14,7 +14,7 @@ import pdunham.aweird.common.WeirdMain;
 
 public class WeirdShovel extends ItemSpade {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdShovel(int id) {
@@ -32,7 +32,6 @@ public class WeirdShovel extends ItemSpade {
         // Set the texture.
         setIconCoord(7, 0);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

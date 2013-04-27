@@ -15,10 +15,9 @@ import net.minecraftforge.event.ForgeSubscribe;
 @SideOnly(Side.CLIENT)
 public class WeirdEventSounds {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public WeirdEventSounds() {
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
 	

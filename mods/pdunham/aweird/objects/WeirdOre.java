@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class WeirdOre extends Block {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public WeirdOre(int id) {
 		
@@ -46,7 +46,6 @@ public class WeirdOre extends Block {
 		// Pick the correct icon from the .png file.
 		blockIndexInTexture = 2;
 		
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

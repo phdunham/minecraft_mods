@@ -15,7 +15,7 @@ import pdunham.aweird.common.WeirdMain;
 
 public class WeirdAxe extends ItemAxe {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
  	// Standard c'tor
 	public WeirdAxe(int id) {
@@ -36,7 +36,6 @@ public class WeirdAxe extends ItemAxe {
         // Set the texture.
         setIconCoord(6, 0);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

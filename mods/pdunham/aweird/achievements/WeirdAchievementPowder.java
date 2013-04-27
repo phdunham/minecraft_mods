@@ -10,14 +10,13 @@ import net.minecraft.stats.AchievementList;
 
 public class WeirdAchievementPowder extends Achievement {
 	
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public WeirdAchievementPowder() {
 		// id, name, x, y, item display, prerequisite
 		super(2004, "Weird Powder", 5, 11, WeirdMain.weirdPowder, WeirdMain.weirdAchievementStartingOff);
 		registerAchievement();
 
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
 

@@ -12,13 +12,12 @@ import pdunham.aweird.entity.EntityWeirdBaby;
 @SideOnly(Side.CLIENT)
 public class RenderWeirdBaby extends RenderLiving
 {
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
     public RenderWeirdBaby(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)
     {
         super(par1ModelBase, par3);
         this.setRenderPassModel(par2ModelBase);
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
     }
 

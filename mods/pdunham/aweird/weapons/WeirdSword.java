@@ -15,7 +15,7 @@ import pdunham.aweird.common.WeirdMain;
 
 public class WeirdSword extends ItemSword {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdSword(int id) {
@@ -33,7 +33,6 @@ public class WeirdSword extends ItemSword {
         // Set the texture.
         setIconCoord(14, 0);
         
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

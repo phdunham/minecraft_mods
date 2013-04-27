@@ -33,11 +33,10 @@ import cpw.mods.fml.common.network.IGuiHandler;
 
 public class WeirdCoProxy implements IGuiHandler {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 	
     @Init
     public void init() {
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("init() complete");
     }
     
@@ -129,7 +128,6 @@ public class WeirdCoProxy implements IGuiHandler {
 	}
 
 	public void registerSounds() {
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("registerSounds() complete");
 	}
 	
@@ -142,7 +140,6 @@ public class WeirdCoProxy implements IGuiHandler {
     // Nothing here as the server doesn't render graphics!
 	// gets overridden by the clientProxy
 	public void registerRenderers(WeirdMain weirdMain) {
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("registerRenderers() complete");
 	}
 	

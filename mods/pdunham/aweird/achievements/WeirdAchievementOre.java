@@ -10,14 +10,13 @@ import net.minecraft.stats.AchievementList;
 
 public class WeirdAchievementOre extends Achievement {
 	
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public WeirdAchievementOre() {
 		// id, name, x, y, item display, prerequisite
 		super(2001, "Weird ore", 1, 11, WeirdMain.weirdOre, AchievementList.acquireIron); 
 		registerAchievement();
 
-		logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("c'tor() complete");
 	}
 

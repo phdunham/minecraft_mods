@@ -13,7 +13,7 @@ import cpw.mods.fml.common.network.Player;
 
 public class ServerPacketHandler implements IPacketHandler {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload payload, Player player){
@@ -21,7 +21,6 @@ public class ServerPacketHandler implements IPacketHandler {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(payload.data));
 		EntityPlayer sender = (EntityPlayer) player;
 
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
 		logger.info("OnPacketData recieved");		
 	}
 }

@@ -13,8 +13,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ModelWeirdBaby extends ModelQuadruped
 {
-	private static StandardLogger logger;
-    public ModelRenderer calf1;
+	private static StandardLogger logger = new StandardLogger();
+
+	public ModelRenderer calf1;
     public ModelRenderer calf2;
 
 	public ModelWeirdBaby()
@@ -28,7 +29,6 @@ public class ModelWeirdBaby extends ModelQuadruped
         int legLength = 6;
         int calfLength = 3;
         int armLength = 12;
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         
         // This is a modified version of ModelQuadraped. 
         // I have tweaked the head and body sizes

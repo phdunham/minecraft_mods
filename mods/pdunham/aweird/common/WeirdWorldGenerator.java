@@ -10,10 +10,9 @@ import cpw.mods.fml.common.IWorldGenerator;
 
 public class WeirdWorldGenerator implements IWorldGenerator{
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
 	public WeirdWorldGenerator() {
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete");
 	}
 

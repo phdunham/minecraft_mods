@@ -16,7 +16,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class WeirdBlock extends Block {
 
-	private static StandardLogger logger;
+	private static StandardLogger logger = new StandardLogger();
 
  	// Standard c'tor
 	public WeirdBlock(int id) {
@@ -45,7 +45,6 @@ public class WeirdBlock extends Block {
 		// Pick the correct icon from the .png file.
 		blockIndexInTexture = 4;
 
-        logger = StandardLogger.getLogger(logger, this.getClass().getSimpleName());
         logger.info("c'tor() complete id: " + id);
 	}
 

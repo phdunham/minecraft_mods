@@ -7,39 +7,51 @@ import cpw.mods.fml.common.FMLLog;
 public class StandardLogger {
 	private Logger logger = null;
 	
-	private StandardLogger(String name) {
-        logger = Logger.getLogger(name);
-        logger.setParent(FMLLog.getLogger());        
+	public StandardLogger() {
 	}
 	
-	// A helper function to create the logger when you have multiple c'tors
-	public static StandardLogger getLogger(StandardLogger callerLogger, String name) {
-		if (callerLogger == null) {
-			callerLogger = new StandardLogger(name);
+	private boolean init() {
+		if (logger == null) {
+			try {
+				// Go up 3 on the stack to get the name of the class calling StandardLogger
+				String name = new Exception().getStackTrace()[2].getClassName();
+				name = name.substring(name.lastIndexOf('.')+1);
+		        logger = Logger.getLogger(name);
+		        logger.setParent(FMLLog.getLogger());
+			} catch (Exception e) {
+				return false;
+			}
 		}
-		return callerLogger;
+		return true;
 	}
-
+	
 	public void info(String str) {
-		if (logger != null) {
+		if (init()) {
 			logger.log(java.util.logging.Level.INFO, str);
 		}
     }
 
 	public void fine(String str) {
-		if (logger != null) {
+		if (init()) {
 			logger.log(java.util.logging.Level.FINE, str);
 		}
     }
 	
-	public void debug(String str) {
-		fine(str);
+	public void warn(String str) {
+		if (init()) {
+			logger.log(java.util.logging.Level.WARNING, str);
+		}
+	}
+
+	public void error(String str) {
+		if (init()) {
+			logger.log(java.util.logging.Level.SEVERE, str);
+		}
 	}
 
 	public void finest(String str) {
-		if (logger != null) {
+		if (init()) {
 			logger.log(java.util.logging.Level.FINEST, str);
 		}
     }
-	
 }
