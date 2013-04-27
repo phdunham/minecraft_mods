@@ -79,6 +79,11 @@ public class EntityGrenade extends EntityThrowable {
 	    		}
     		} else {
     	        inGround = true;
+    			EntityLiving el = getThrower();
+    			if (el instanceof EntityPlayer) {
+    				// Trigger Achievement
+    				((EntityPlayer)el).triggerAchievement(WeirdMain.weirdAchievementStickyToIt);
+    			}
     		}
     }
  

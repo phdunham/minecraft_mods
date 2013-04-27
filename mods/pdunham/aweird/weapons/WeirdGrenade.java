@@ -73,10 +73,22 @@ public class WeirdGrenade extends Item {
 		LanguageRegistry.addName(this, externalName);
 
 		// Recipe for make weirdGrenade
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdGrenade), " c ", "ipi", " i ",
-				'c', new ItemStack((Item)casing), 
-				'i', new ItemStack(Item.ingotIron),
-				'p', new ItemStack(WeirdMain.weirdPowder));
+		if (getItemName() == WeirdMain.weirdStrongGrenade.getItemName()) {
+			GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdStrongGrenade), " c ", "ipi", " i ",
+					'c', new ItemStack((Item)casing), 
+					'i', new ItemStack(Item.ingotIron),
+					'p', new ItemStack(WeirdMain.weirdPowder));
+		} else if (getItemName() == WeirdMain.weirdStickyGrenade.getItemName()) {
+			GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdStickyGrenade), " c ", "ipi", " i ",
+					'c', new ItemStack((Item)casing), 
+					'i', new ItemStack(Item.ingotIron),
+					'p', new ItemStack(WeirdMain.weirdPowder));
+		} else {
+			GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdGrenade), " c ", "ipi", " i ",
+					'c', new ItemStack((Item)casing), 
+					'i', new ItemStack(Item.ingotIron),
+					'p', new ItemStack(WeirdMain.weirdPowder));
+		}
 
 		logger.info("postInit() complete newId: " + itemID);
 	}

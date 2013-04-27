@@ -1,10 +1,10 @@
 {
   "modinfoversion": 2,
   "modlist": [{
-    "modid": "weirdBlock",
+    "modid": "aWeirdMod",
     "name": "A Weird Mod",
     "description": "This mod add numerous weird items to MineCraft.",
-    "version": "0.2.0",
+    "version": "0.1.1",
     "mcversion": "1.4.5",
     "url": "https://github.com/rv-pdunham/minecraft_mods",
     "updateUrl": "",

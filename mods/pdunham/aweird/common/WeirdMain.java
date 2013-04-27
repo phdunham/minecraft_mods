@@ -80,8 +80,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class WeirdMain extends BaseMod {
 	public static final String version = "0.1.1";
-	public static final String modid = "weird";
-	public static final String name = "Weird stuff";
+	public static final String modid = "aWeirdMod";
+	public static final String name = "A Weird Mod";
 	
 	@Instance("WeirdMain")
     public static WeirdMain instance = new WeirdMain();
