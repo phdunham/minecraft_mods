@@ -1,10 +1,15 @@
 package pdunham.aweird.common;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+
 import net.minecraft.world.World;
 import net.minecraft.item.Item;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
+import pdunham.aweird.common.core.handlers.ConnectionHandler;
 import pdunham.aweird.armor.WeirdBoots;
 import pdunham.aweird.armor.WeirdChestPlate;
 import pdunham.aweird.armor.WeirdHelmet;
@@ -28,8 +33,13 @@ import pdunham.aweird.weapons.WeirdStrongCasing;
 import pdunham.aweird.weapons.WeirdSword;
 import pdunham.aweird.weapons.WeirdTNT;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.relauncher.Side;
 
 public class WeirdCoProxy implements IGuiHandler {
 
@@ -143,7 +153,32 @@ public class WeirdCoProxy implements IGuiHandler {
         logger.info("registerRenderers() complete");
 	}
 	
+	public void registerHandlers() {
+		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());		
+	}
+	
 	public void registerAchievements() {
 		logger.info("registerAchievements complete");
+	}
+
+	public void sendTextToServer(String msg) {
+		logger.info("sendTextToServer " + msg);
+	}
+
+	public void sendTextToClient(String msg, Player toPlayer) {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
+		DataOutputStream outputStream = new DataOutputStream(bos);
+		try {
+			outputStream.writeBytes(msg);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			packet.channel = WeirdConstants.packetChannelName;
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			PacketDispatcher.sendPacketToPlayer(packet, toPlayer);
+			logger.info("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToClient to " + toPlayer + ", " + msg);
+		} catch (Exception ex) {
+			logger.warn("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToClient failed to " + toPlayer + ", " + msg);
+		    ex.printStackTrace();
+		}
 	}
 }

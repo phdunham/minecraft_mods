@@ -67,12 +67,15 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
-//, // Whether client side and server side are needed
-//            clientPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird" }, 
-//            packetHandler = ClientPacketHandler.class), //For clientside packet handling
-//            serverPacketHandlerSpec = @SidedPacketHandler(channels = {"pdunhamWeird"}, 
-//            packetHandler = ServerPacketHandler.class)) //For serverside packet handling
+@NetworkMod(
+			// For client side creation and packet handling
+			clientSideRequired = true, 
+            clientPacketHandlerSpec = @SidedPacketHandler(channels = { WeirdConstants.packetChannelName }, 
+            											packetHandler = ClientPacketHandler.class),
+			// For Server side creation and packet handling
+            serverSideRequired = false,
+            serverPacketHandlerSpec = @SidedPacketHandler(channels = { WeirdConstants.packetChannelName }, 
+            											packetHandler = ServerPacketHandler.class))
 
 @Mod(   modid   = WeirdMain.modid, 
 		name    = WeirdMain.name, 
@@ -201,6 +204,7 @@ public class WeirdMain extends BaseMod {
 		config.save();    
         proxy.registerSounds();
         proxy.registerRenderers(this);
+        proxy.registerHandlers();
         logger.info("configuration file loaded.  1st Block ID " + configFirstBlockID + ", 1st item ID " + configFirstBlockID);
 	}
 

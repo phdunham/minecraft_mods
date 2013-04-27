@@ -157,6 +157,7 @@ public class EntityWeirdBaby extends EntityMob {
 			
 			// For Calebs, do a lot of damage.
 			if (par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) {
+				ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Die! Ben! Die!");
 				return 50;
 			}
 		}

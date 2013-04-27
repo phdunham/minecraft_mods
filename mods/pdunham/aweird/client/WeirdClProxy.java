@@ -1,6 +1,11 @@
 package pdunham.aweird.client;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -9,6 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -152,5 +158,23 @@ public class WeirdClProxy extends WeirdCoProxy {
     		WeirdMain.craftingHandler = new CraftingHandler();
     		GameRegistry.registerCraftingHandler(WeirdMain.craftingHandler);    		
 		logger.info("registerAchievements complete");
+	}
+
+	@Override
+	public void sendTextToServer(String msg) {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
+		DataOutputStream outputStream = new DataOutputStream(bos);
+		try {
+			outputStream.writeBytes(msg);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			packet.channel = WeirdConstants.packetChannelName;
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			PacketDispatcher.sendPacketToServer(packet);
+			logger.info("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToServer " + msg);
+		} catch (Exception ex) {
+			logger.warn("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToServer failed " + msg);
+		    ex.printStackTrace();
+		}
 	}
 }
