@@ -19,12 +19,7 @@ public class WeirdConnectionHandler implements IConnectionHandler {
 	
 	@Override
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-		logger.info("playerLoggedIn " + player + " -- " + player.getClass() + ", " + player.getClass().toString() + " start");
-		if (player.getClass().toString().indexOf("EntityPlayerMP") >= 0) {
-			logger.info("playerLoggedIn " + player + " -- " + player.getClass() + " send chat");
-			((EntityPlayerMP)player).addChatMessage("Welcome to " + WeirdMain.name + " v" + WeirdMain.version);
-			logger.info("playerLoggedIn " + player + " -- " + player.getClass() + " complete");
-		}
+		((EntityPlayerMP)player).addChatMessage("Welcome to " + WeirdMain.name + " v" + WeirdMain.version);
 	}
 
 	@Override

@@ -22,39 +22,29 @@ public class WeirdWorldGenerator implements IWorldGenerator{
 		
 		switch(world.provider.dimensionId){
 		case -1:
-		    generateNether(world, random, chunkX * 16, chunkZ * 16);
-		    generateSurface(world, random, chunkX * 16, chunkZ * 16);
+		    generate("Nether", world, random, chunkX * 16, chunkZ * 16);
 		    break;
 		case 0:
-		    generateSurface(world, random, chunkX * 16, chunkZ * 16);
+		    generate("Surface", world, random, chunkX * 16, chunkZ * 16);
 		    break;
 		case 1:
-		    generateEnd(world, random, chunkX * 16, chunkZ * 16);
+//		    generate("End", world, random, chunkX * 16, chunkZ * 16);
 		    break;
 		}		
 	}
 
-    private void generateEnd(World world, Random random, int i, int j) {
-    	
-    }
-
-	private void generateSurface(World world, Random random, int chunkX, int chunkZ) {
+	private void generate(String name, World world, Random random, int chunkX, int chunkZ) {
         for(int k = 0; k < 2; k++) {
 	        	int x = chunkX + random.nextInt(16);
 	        	int y = random.nextInt(20);
 	        	int z = chunkZ + random.nextInt(16);
 	        	int id = WeirdMain.weirdOre.blockID;
 
-	        	logger.finest("generateMinable(x " + x + ", y " + y + ", z " + z + ", BlockID " + id);
+	        	logger.finest("generateMinable(" + name + ", x " + x + ", y " + y + ", z " + z + ", BlockID " + id);
 
 	        	WorldGenMinable wgm = new WorldGenMinable(id, random.nextInt(8) + 4); 
 	        	wgm.generate(world, random, x, y, z);
         }
     
 	}
-
-	private void generateNether(World world, Random random, int i, int j) {
-		
-	}     
-
 }
