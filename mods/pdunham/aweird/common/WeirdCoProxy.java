@@ -3,13 +3,24 @@ package pdunham.aweird.common;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.entity.EntityEggInfo;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
-import pdunham.aweird.common.core.handlers.ConnectionHandler;
+import pdunham.aweird.client.model.ModelWeirdBaby;
+import pdunham.aweird.common.core.handlers.WeirdConnectionHandler;
+import pdunham.aweird.entity.EntityGrenade;
+import pdunham.aweird.entity.EntityPebble;
+import pdunham.aweird.entity.EntityStickyGrenade;
+import pdunham.aweird.entity.EntityStrongGrenade;
+import pdunham.aweird.entity.EntityWeirdBaby;
 import pdunham.aweird.armor.WeirdBoots;
 import pdunham.aweird.armor.WeirdChestPlate;
 import pdunham.aweird.armor.WeirdHelmet;
@@ -20,6 +31,9 @@ import pdunham.aweird.objects.WeirdIngot;
 import pdunham.aweird.objects.WeirdOre;
 import pdunham.aweird.objects.WeirdPoop;
 import pdunham.aweird.objects.WeirdPowder;
+import pdunham.aweird.renderer.RenderGrenade;
+import pdunham.aweird.renderer.RenderPebble;
+import pdunham.aweird.renderer.RenderWeirdBaby;
 import pdunham.aweird.tools.WeirdAxe;
 import pdunham.aweird.tools.WeirdHoe;
 import pdunham.aweird.tools.WeirdPickaxe;
@@ -33,36 +47,40 @@ import pdunham.aweird.weapons.WeirdStrongCasing;
 import pdunham.aweird.weapons.WeirdSword;
 import pdunham.aweird.weapons.WeirdTNT;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-public class WeirdCoProxy implements IGuiHandler {
+public class WeirdCoProxy { // implements IGuiHandler {
 
 	private static StandardLogger logger = new StandardLogger();
 	
     @Init
     public void init() {
+        logger.info("init() start");
         logger.info("init() complete");
     }
     
-	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) { //For GUI's
-		return null;
-	}
-
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) { //For GUI's
-		return null;
-	}
+//	@Override
+//	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) { //For GUI's
+//		return null;
+//	}
+//
+//	@Override
+//	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) { //For GUI's
+//		return null;
+//	}
 
 	// A helper function when we register items
 	// Don't change the IDs
 	public void registerItems() {
+        logger.info("registerItems() start");
 		int id = WeirdMain.configFirstItemID;
 		// *** Do not change the order of these c'tors
 		WeirdMain.weirdIngot               = new WeirdIngot(id++);
@@ -91,12 +109,14 @@ public class WeirdCoProxy implements IGuiHandler {
 
 	// A helper function when we register tiles
 	public void registerTiles(){
+        logger.info("registerTiles() start");
         logger.info("registerTiles() complete");
 	}
 
 	// A helper function when we register blocks
 	// Don't change the IDs
 	public void registerBlocks(){
+        logger.info("registerBlocks() start");
 		int id = WeirdMain.configFirstBlockID;
         WeirdMain.weirdOre = (new WeirdOre(id++));
 		WeirdMain.weirdBlock = new WeirdBlock(id++);
@@ -105,12 +125,14 @@ public class WeirdCoProxy implements IGuiHandler {
 	}
 
 	public void postInit() {
+        logger.info("postInit() start");
+
         ((WeirdOre) WeirdMain.weirdOre).postInit();
-		for (int i = 0; i < Item.itemsList.length; i++) {
-			if (Item.itemsList[i] != null) {
-				logger.info(i + " " + Item.itemsList[i].getItemName());
-			}
-		}
+//		for (int i = 0; i < Item.itemsList.length; i++) {
+//			if (Item.itemsList[i] != null) {
+//				logger.finest(i + " " + Item.itemsList[i].getItemName());
+//			}
+//		}
         ((WeirdBlock) WeirdMain.weirdBlock).postInit();
         ((WeirdIngot) WeirdMain.weirdIngot).postInit();
         ((WeirdPickaxe) WeirdMain.weirdPickaxe).postInit();
@@ -138,34 +160,98 @@ public class WeirdCoProxy implements IGuiHandler {
 	}
 
 	public void registerSounds() {
+        logger.info("registerSounds() start");
         logger.info("registerSounds() complete");
 	}
 	
 	// A helper function when we register textures
 	// gets overridden by the clientProxy
 	public void registerTextures() {
+        logger.info("registerTextures() start");
         logger.info("registerTextures() complete");
 	}
 	
-    // Nothing here as the server doesn't render graphics!
-	// gets overridden by the clientProxy
+    // Handle registering Entities (common), Renderers (client) and Models (client)
 	public void registerRenderers(WeirdMain weirdMain) {
-        logger.info("registerRenderers() complete");
+        logger.info("registerRenderers() start");
+		// Get a unique entity id
+		// Register the entity id so it doesn't duplicate
+		// Then register the mod entity type with FML
+			// @param entityClass The entity class
+			// @param entityName A unique name for the entity
+			// @param id A mod specific ID for the entity
+			// @param mod The 'this' for weird main.
+			// @param trackingRange The range at which MC will send tracking updates
+			// @param updateFrequency The frequency of tracking updates
+			// @param sendsVelocityUpdates Whether to send velocity information packets as well
+		// Lastly, map the Entity class to its associated Render class.
+		int id = ModLoader.getUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityPebble.class, "Pebble", id);
+		EntityRegistry.registerModEntity(EntityPebble.class,	"Pebble", id	, weirdMain, 100, 10, true);
+		
+		id = ModLoader.getUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityGrenade.class, "WeirdGrenade", id);
+		EntityRegistry.registerModEntity(EntityGrenade.class, "WeirdGrenade", id, weirdMain, 100, 10, true);
+		
+		id = ModLoader.getUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityStickyGrenade.class, "WeirdStickyGrenade", id);
+		EntityRegistry.registerModEntity(EntityStickyGrenade.class, "WeirdStickyGrenade", id, weirdMain, 100, 10, true);
+	
+		id = ModLoader.getUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityStrongGrenade.class, "WeirdStrongGrenade", id);
+		EntityRegistry.registerModEntity(EntityStrongGrenade.class, "WeirdStrongGrenade", id, weirdMain, 100, 10, true);
+	
+		id = ModLoader.getUniqueEntityId();
+		EntityRegistry.registerGlobalEntityID(EntityWeirdBaby.class, "WeirdBaby", id);
+		EntityRegistry.registerModEntity(EntityWeirdBaby.class, "WeirdBaby", id, weirdMain, 100, 10, false);
+		EntityList.entityEggs.put(id, new EntityEggInfo(id, 0xffffff, 0x000000));
+		
+		EntityRegistry.addSpawn(EntityWeirdBaby.class, 20, 1, 2, 
+				EnumCreatureType.monster, 
+				BiomeGenBase.beach, 
+				BiomeGenBase.desert,
+				BiomeGenBase.desertHills,
+	//			BiomeGenBase.extremeHills, 
+	//			BiomeGenBase.extremeHillsEdge, 
+				BiomeGenBase.forest, 
+				BiomeGenBase.forestHills, 
+	//			BiomeGenBase.frozenOcean,
+	//			BiomeGenBase.frozenRiver,
+				BiomeGenBase.hell,
+	//			BiomeGenBase.iceMountains,
+				BiomeGenBase.icePlains,
+				BiomeGenBase.jungle, 
+				BiomeGenBase.jungleHills,
+				BiomeGenBase.mushroomIsland, 
+				BiomeGenBase.mushroomIslandShore,
+	//			BiomeGenBase.ocean, 
+				BiomeGenBase.plains, 
+				BiomeGenBase.river, 
+				BiomeGenBase.swampland,
+				BiomeGenBase.taiga,
+				BiomeGenBase.taigaHills
+				);		
+	    logger.info("registerRenderers() complete");
 	}
 	
 	public void registerHandlers() {
-		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());		
+		logger.info("registerConnectionHandler() " + FMLCommonHandler.instance().getEffectiveSide() + " start");
+		NetworkRegistry.instance().registerConnectionHandler(new WeirdConnectionHandler());
+		logger.info("registerConnectionHandler() " + FMLCommonHandler.instance().getEffectiveSide() + " compelte");
 	}
 	
 	public void registerAchievements() {
-		logger.info("registerAchievements complete");
+		logger.info("registerAchievements() start");
+		logger.info("registerAchievements() complete");
 	}
 
 	public void sendTextToServer(String msg) {
-		logger.info("sendTextToServer " + msg);
+		logger.info("sendTextToServer(" + FMLCommonHandler.instance().getEffectiveSide() + ") start " + msg);
+		logger.info("sendTextToServer(" + FMLCommonHandler.instance().getEffectiveSide() + ") compelte " + msg);
 	}
 
 	public void sendTextToClient(String msg, Player toPlayer) {
+		logger.info("sendTextToClient(" + FMLCommonHandler.instance().getEffectiveSide() + ") start to " + toPlayer + ", " + msg);
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
 		DataOutputStream outputStream = new DataOutputStream(bos);
 		try {
@@ -175,9 +261,9 @@ public class WeirdCoProxy implements IGuiHandler {
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			PacketDispatcher.sendPacketToPlayer(packet, toPlayer);
-			logger.info("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToClient to " + toPlayer + ", " + msg);
+			logger.info("sendTextToClient(" + FMLCommonHandler.instance().getEffectiveSide() + ") complete to " + toPlayer + ", " + msg);
 		} catch (Exception ex) {
-			logger.warn("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToClient failed to " + toPlayer + ", " + msg);
+			logger.warn("sendTextToClient(" + FMLCommonHandler.instance().getEffectiveSide() + ") failed to " + toPlayer + ", " + msg);
 		    ex.printStackTrace();
 		}
 	}

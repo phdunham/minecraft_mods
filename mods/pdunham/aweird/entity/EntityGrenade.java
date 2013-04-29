@@ -17,7 +17,7 @@ public class EntityGrenade extends EntityThrowable {
 	private static StandardLogger logger = new StandardLogger();
 
 	private int ticksAlive;
-	private int ticksLifetime = 40; // only lives for this long (in ticks - 1/10 sec?)
+	private int ticksLifetime = 100; // only lives for this long (in ticks - 1/10 sec?)
 	protected float explosionRadius = 2.0f;
 	protected boolean sticky = false;
 	

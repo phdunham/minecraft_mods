@@ -50,103 +50,59 @@ public class WeirdClProxy extends WeirdCoProxy {
 		super();
 		logger.info("c'tor() complete");
 	}
+
+	@Override
+	public void init() {
+        logger.info("init() start");
+		super.init();
+        logger.info("init() complete");
+	}
 	 
 	@Override
 	public void postInit() {
+        logger.info("postInit() start");
 		super.postInit();
+        logger.info("postInit() complete");
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void registerSounds() {
+        logger.info("registerSounds() start");
+        super.registerSounds();
 		MinecraftForge.EVENT_BUS.register(new WeirdEventSounds());
 		logger.info("registerSounds complete");
 	}
 	
     @Override
 	public void registerTextures() {
+		logger.info("registerTextures start");
+		super.registerTextures();
     		// Preload our texture palettes so we have all of the icons and textures before we need them.
     		MinecraftForgeClient.preloadTexture(WeirdConstants.pathTexturesIcons);
     		MinecraftForgeClient.preloadTexture(WeirdConstants.pathTexturesArmor);
-    		
 		logger.info("registerTextures complete");
 	}
 
     @Override
 	public void registerRenderers(WeirdMain weirdMain) {
-    		// Get a unique entity id
-    		// Register the entity id so it doesn't duplicate
-		// Then register the mod entity type with FML
-			// @param entityClass The entity class
-			// @param entityName A unique name for the entity
-			// @param id A mod specific ID for the entity
-			// @param mod The 'this' for weird main.
-			// @param trackingRange The range at which MC will send tracking updates
-			// @param updateFrequency The frequency of tracking updates
-			// @param sendsVelocityUpdates Whether to send velocity information packets as well
-		// Lastly, map the Entity class to its associated Render class.
-    		int id = ModLoader.getUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityPebble.class, "Pebble", id);
-		EntityRegistry.registerModEntity(EntityPebble.class,	"Pebble", id	, weirdMain, 100, 10, true);
+        logger.info("registerRenderers() start");
+        super.registerRenderers(weirdMain);
 		RenderingRegistry.registerEntityRenderingHandler(EntityPebble.class, new RenderPebble());
-
-		id = ModLoader.getUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityGrenade.class, "WeirdGrenade", id);
-		EntityRegistry.registerModEntity(EntityGrenade.class, "WeirdGrenade", id, weirdMain, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityGrenade.class, new RenderGrenade(3, 1));
-		
-		id = ModLoader.getUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityStickyGrenade.class, "WeirdStickyGrenade", id);
-		EntityRegistry.registerModEntity(EntityStickyGrenade.class, "WeirdStickyGrenade", id, weirdMain, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityStickyGrenade.class, new RenderGrenade(9, 1));
-
-		id = ModLoader.getUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityStrongGrenade.class, "WeirdStrongGrenade", id);
-		EntityRegistry.registerModEntity(EntityStrongGrenade.class, "WeirdStrongGrenade", id, weirdMain, 100, 10, true);
 		RenderingRegistry.registerEntityRenderingHandler(EntityStrongGrenade.class, new RenderGrenade(10, 1));
-
-		id = ModLoader.getUniqueEntityId();
-		EntityRegistry.registerGlobalEntityID(EntityWeirdBaby.class, "WeirdBaby", id);
-		EntityRegistry.registerModEntity(EntityWeirdBaby.class, "WeirdBaby", id, weirdMain, 100, 10, false);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWeirdBaby.class, 
 						new RenderWeirdBaby(new ModelWeirdBaby(), 
 										    new ModelWeirdBaby(0.5F), 0.7F));
-		EntityList.entityEggs.put(id, new EntityEggInfo(id, 0xffffff, 0x000000));
-		
-		EntityRegistry.addSpawn(EntityWeirdBaby.class, 20, 1, 2, 
-				EnumCreatureType.monster, 
-				BiomeGenBase.beach, 
-				BiomeGenBase.desert,
-//				BiomeGenBase.desertHills,
-//				BiomeGenBase.extremeHills, 
-//				BiomeGenBase.extremeHillsEdge, 
-				BiomeGenBase.forest, 
-//				BiomeGenBase.forestHills, 
-//				BiomeGenBase.frozenOcean,
-//				BiomeGenBase.frozenRiver,
-				BiomeGenBase.hell,
-//				BiomeGenBase.iceMountains,
-				BiomeGenBase.icePlains,
-				BiomeGenBase.jungle, 
-//				BiomeGenBase.jungleHills,
-				BiomeGenBase.mushroomIsland, 
-//				BiomeGenBase.mushroomIslandShore,
-//				BiomeGenBase.ocean, 
-				BiomeGenBase.plains, 
-//				BiomeGenBase.river, 
-				BiomeGenBase.swampland,
-				BiomeGenBase.taiga
-//				BiomeGenBase.taigaHills
-				);		
-		
-		LanguageRegistry.instance().addStringLocalization("entity.WeirdBaby.name", "Baby");
-		
-		logger.info("registerRenderers complete");
+        logger.info("registerRenderers() complete");
 	}
-
+	
     @Override
 	public void registerAchievements() {
-    		// Order matters. You must have the dependent Achievements registered first.
+		logger.info("registerAchievements start");
+		super.registerAchievements();
+
+		// Order matters. You must have the dependent Achievements registered first.
     		WeirdMain.weirdAchievementOre = new WeirdAchievementOre();
     		WeirdMain.weirdAchievementStartingOff = new WeirdAchievementStartingOff();
     		WeirdMain.weirdAchievementPowder = new WeirdAchievementPowder();
@@ -162,6 +118,8 @@ public class WeirdClProxy extends WeirdCoProxy {
 
 	@Override
 	public void sendTextToServer(String msg) {
+		logger.info("sendTextToServer(" + FMLCommonHandler.instance().getEffectiveSide() + ") start " + msg);
+		super.sendTextToServer(msg);
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
 		DataOutputStream outputStream = new DataOutputStream(bos);
 		try {
@@ -171,9 +129,9 @@ public class WeirdClProxy extends WeirdCoProxy {
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			PacketDispatcher.sendPacketToServer(packet);
-			logger.info("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToServer " + msg);
+			logger.info("sendTextToServer(" + FMLCommonHandler.instance().getEffectiveSide() + ") complete " + msg);
 		} catch (Exception ex) {
-			logger.warn("(" + FMLCommonHandler.instance().getEffectiveSide() + ") sendTextToServer failed " + msg);
+			logger.warn("sendTextToServer(" + FMLCommonHandler.instance().getEffectiveSide() + ") failed " + msg);
 		    ex.printStackTrace();
 		}
 	}

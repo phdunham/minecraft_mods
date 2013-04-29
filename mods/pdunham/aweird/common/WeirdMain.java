@@ -28,8 +28,8 @@ import pdunham.aweird.armor.WeirdChestPlate;
 import pdunham.aweird.armor.WeirdHelmet;
 import pdunham.aweird.armor.WeirdLeggins;
 import pdunham.aweird.armor.WeirdPlating;
-import pdunham.aweird.common.core.handlers.ClientPacketHandler;
-import pdunham.aweird.common.core.handlers.ServerPacketHandler;
+import pdunham.aweird.common.core.handlers.WeirdClientPacketHandler;
+import pdunham.aweird.common.core.handlers.WeirdServerPacketHandler;
 import pdunham.aweird.entity.EntityGrenade;
 import pdunham.aweird.entity.EntityPebble;
 import pdunham.aweird.entity.EntityWeirdBaby;
@@ -71,17 +71,17 @@ import cpw.mods.fml.common.registry.GameRegistry;
 			// For client side creation and packet handling
 			clientSideRequired = true, 
             clientPacketHandlerSpec = @SidedPacketHandler(channels = { WeirdConstants.packetChannelName }, 
-            											packetHandler = ClientPacketHandler.class),
+            											packetHandler = WeirdClientPacketHandler.class),
 			// For Server side creation and packet handling
             serverSideRequired = false,
             serverPacketHandlerSpec = @SidedPacketHandler(channels = { WeirdConstants.packetChannelName }, 
-            											packetHandler = ServerPacketHandler.class))
+            											packetHandler = WeirdServerPacketHandler.class))
 
 @Mod(   modid   = WeirdMain.modid, 
 		name    = WeirdMain.name, 
 		version = WeirdMain.version)
 
-public class WeirdMain extends BaseMod {
+public class WeirdMain /* extends BaseMod */ {
 	public static final String version = "0.1.1";
 	public static final String modid = "aWeirdMod";
 	public static final String name = "A Weird Mod";
@@ -197,30 +197,31 @@ public class WeirdMain extends BaseMod {
     
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
+    		logger.info("preInit start " + event);
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		configFirstBlockID = config.getBlock("FirstBlockID", 3125, "This first Block ID to use for this mod. Blocks assign sequentially starting from this ID").getInt();
 		configFirstItemID = config.getItem("FirstItemID", 7238, "This first Item ID to use for this mod. Items assign sequentially starting from this ID").getInt();
 		config.save();    
         proxy.registerSounds();
-        proxy.registerRenderers(this);
-        proxy.registerHandlers();
-        logger.info("configuration file loaded.  1st Block ID " + configFirstBlockID + ", 1st item ID " + configFirstBlockID);
+        logger.info("preInit complete. Configuration file loaded.  1st Block ID " + configFirstBlockID + ", 1st item ID " + configFirstBlockID);
 	}
 
     @Init
     public void init(FMLInitializationEvent event) {
-        logger.info("init()");
+        logger.info("init() start");
 
         // Registers this class that deals with GUI data
-        NetworkRegistry.instance().registerGuiHandler(this, proxy);
+        // NetworkRegistry.instance().registerGuiHandler(this, proxy);
         
         // Call help functions in the common proxy to register all of the weird objects
         proxy.init();
+        proxy.registerHandlers();
         proxy.registerTextures();
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.registerItems();
+        proxy.registerRenderers(this);
         proxy.registerAchievements();
 
         // Register our self with the world generator so weird ore will be inserted into new worlds.
@@ -230,16 +231,18 @@ public class WeirdMain extends BaseMod {
     
     @PostInit
     public static void postInit(FMLPostInitializationEvent event) {
+        logger.info("postInit() start");
     		proxy.postInit();
         logger.info("postInit() complete");
     }
 
-	@Override
 	public String getVersion() {
+        logger.info("getVersion()");
 		return WeirdMain.version;
 	}
 
-	@Override
 	public void load() {
+        logger.info("*********************************************load() start");
+        logger.info("*********************************************load() complete");
 	}
 }

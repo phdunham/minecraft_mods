@@ -49,7 +49,7 @@ public class WeirdGrenade extends Item {
         setMaxStackSize(64);
         
         // Put on the materials tab
-        setCreativeTab(CreativeTabs.tabMaterials);
+        setCreativeTab(CreativeTabs.tabCombat);
         
         // Set the internal name
         setItemName(internalName);

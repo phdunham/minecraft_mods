@@ -4,7 +4,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.potion.PotionHelper;
 import org.lwjgl.opengl.GL11;
@@ -14,12 +16,13 @@ import pdunham.aweird.common.StandardLogger;
 import pdunham.aweird.common.WeirdConstants;
 
 @SideOnly(Side.CLIENT)
-public class RenderGrenade extends Render {
+public class RenderGrenade extends RenderItem {
 	private static StandardLogger logger = new StandardLogger();
 
 	private int iconIndex = 19;
 
     public RenderGrenade(int x, int y) {
+    		super();
     		iconIndex = x + (y * 16);
 		logger.info("c'tor() complete");
     }

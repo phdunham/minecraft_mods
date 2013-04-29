@@ -1,8 +1,10 @@
 package pdunham.aweird.entity;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import pdunham.aweird.common.StandardLogger;
 import pdunham.aweird.common.WeirdConstants;
 import pdunham.aweird.common.WeirdMain;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -41,8 +43,7 @@ public class EntityWeirdBaby extends EntityMob {
 	private static float baseMoveSpeed = 0.25f;
 	private static float daySpeedMultiplier = 1.0f;
 	private static float nightSpeedMultiplier = 1.0f;
-	private static boolean isDay = false;  // not sure why this only works as static.
-	private boolean inDaylight = false;
+	private boolean isDay = true;
 	private int calebCounter = 0;
 	
 	public EntityWeirdBaby(World par1World) {
@@ -84,35 +85,27 @@ public class EntityWeirdBaby extends EntityMob {
 		// Each value is 1/2 an armor bar. So 20 is max armor.
         return 8;
     }
-	private boolean isDaytime() {
-		if (this.worldObj.isRemote) {
-			logger.info("isDaytime can only be called when !this.worldObj.isRemote");
-		}
-		// Only works when !this.worldObj.isRemote is true
-		return this.worldObj.isDaytime();
-	}
-	
-	private boolean isInSunlight() {
-		boolean isBrightEnough = this.getBrightness(1.0F) > 0.5F;
-        boolean isSkyVisible = this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
-        
-		// Return true is it is day, we can see the sky and the sun is bright enough.
-        return (isDaytime() && isSkyVisible && isBrightEnough);
-	}
-	
+
 	@Override
 	public String getTexture() {
 		return (isDay ? WeirdConstants.pathTexturesBaby : WeirdConstants.pathTexturesBabyZombie);
 	}
+	
+	// This is used on the client side to keep track of day vs night.
+	private void updateDayNight() {
+		// boolean old = isDay;
+		// The .isDayTime() only works on the server, so on the client we need to actually check the time.
+		isDay = ((this.worldObj.getWorldTime() % 24000) < 12500);
+		// if (old != isDay) {
+		// 	logger.info("isDay " + old + " -> " + isDay + " time = " + this.worldObj.getWorldTime());
+		// }
+	}
 
 	// Periodic updates to the entitity. 
 	// Baby looks evil at night.
-	// Bady is fast at night.
+	// Baby is fast at night.
 	public void onLivingUpdate() {
-		if (!this.worldObj.isRemote) {
-			isDay = isDaytime();
-			inDaylight = isInSunlight();
-		}
+		updateDayNight();
 		super.onLivingUpdate();
     }
 	
@@ -151,13 +144,13 @@ public class EntityWeirdBaby extends EntityMob {
 						"I have had it with these m#$@^#f^#*$in' babies on this m#$@^#f^#*$in' plane!",
 						"When I am older I want lots of babies."
 				};
-				ModLoader.getMinecraftInstance().thePlayer.addChatMessage(msgs[this.rand.nextInt(msgs.length)]);
+				Minecraft.getMinecraft().thePlayer.addChatMessage(msgs[this.rand.nextInt(msgs.length)]);
 			}
 			calebCounter++;
 			
 			// For Calebs, do a lot of damage.
 			if (par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) {
-				ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Die! Ben! Die!");
+				Minecraft.getMinecraft().thePlayer.addChatMessage("Die! Ben! Die!");
 				return 50;
 			}
 		}
@@ -181,7 +174,7 @@ public class EntityWeirdBaby extends EntityMob {
 		int random = this.rand.nextInt(10); 
 		if (random == 0) {
 			this.dropItem(Item.bed.itemID, 1);
-		} else if (random > 7) {
+		} else if (random > 6) {
 			this.dropItem(WeirdMain.weirdPoop.itemID, 1);
 		}
 	}
@@ -207,42 +200,16 @@ public class EntityWeirdBaby extends EntityMob {
         return (isDay ? "baby.babyDeath" : "baby.babyZombieDeath");
     }
 
-    protected void playStepSound(int par1, int par2, int par3, int par4)
-    {
+    protected void playStepSound(int par1, int par2, int par3, int par4) {
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
 
-    /**
-     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a weirdBaby.
-     */
-    public boolean interact(EntityPlayer par1EntityPlayer)
-    {
+    // Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a weirdBaby.
+    public boolean interact(EntityPlayer par1EntityPlayer) {
         if (super.interact(par1EntityPlayer))
         {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Returns the item ID for the item the mob drops on death.
-     */
-    protected int getDropItemId()
-    {
-        return this.isBurning() ? Item.porkCooked.itemID : Item.porkRaw.itemID;
-    }
-
-    /**
-     * Called when a lightning bolt hits the entity.
-     */
-    public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
-    {
-//        if (!this.worldObj.isRemote)
-//        {
-//            EntityWeirdBabyZombie var2 = new EntityWeirdBabyZombie(this.worldObj);
-//            var2.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
-//            this.worldObj.spawnEntityInWorld(var2);
-//            this.setDead();
-//        }
     }
 }
