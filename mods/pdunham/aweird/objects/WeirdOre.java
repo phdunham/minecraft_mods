@@ -34,8 +34,8 @@ public class WeirdOre extends Block {
 		// The one for dirt is 0.5F. The one for obsidian is 50.0F
 		setHardness(5.6F);
 		
-		// Resistance to explosions. The resistance for bedrock is 6000000.0F
-		setResistance(56.34F);
+		// Resistance to explosions. The resistance for bedrock is 6000000.0F. 10.0f is the same as Stone Blocks
+		setResistance(11.0F);
 		
 		// The sound we make when walked on it and when we break it.
 		setStepSound(this.soundMetalFootstep);
