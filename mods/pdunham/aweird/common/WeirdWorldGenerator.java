@@ -40,7 +40,7 @@ public class WeirdWorldGenerator implements IWorldGenerator{
 	        	int z = chunkZ + random.nextInt(16);
 	        	int id = WeirdMain.weirdOre.blockID;
 
-	        	logger.finest("generateMinable(" + name + ", x " + x + ", y " + y + ", z " + z + ", BlockID " + id);
+//	        	logger.finest("generateMinable(" + name + ", x " + x + ", y " + y + ", z " + z + ", BlockID " + id);
 
 	        	WorldGenMinable wgm = new WorldGenMinable(id, random.nextInt(8) + 4); 
 	        	wgm.generate(world, random, x, y, z);

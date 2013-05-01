@@ -26,6 +26,7 @@ import pdunham.aweird.armor.WeirdChestPlate;
 import pdunham.aweird.armor.WeirdHelmet;
 import pdunham.aweird.armor.WeirdLeggins;
 import pdunham.aweird.armor.WeirdPlating;
+import pdunham.aweird.common.WeirdConfig;
 import pdunham.aweird.objects.WeirdBlock;
 import pdunham.aweird.objects.WeirdIngot;
 import pdunham.aweird.objects.WeirdOre;
@@ -81,29 +82,28 @@ public class WeirdCoProxy { // implements IGuiHandler {
 	// Don't change the IDs
 	public void registerItems() {
         logger.info("registerItems() start");
-		int id = WeirdMain.configFirstItemID;
-		// *** Do not change the order of these c'tors
-		WeirdMain.weirdIngot               = new WeirdIngot(id++);
-		WeirdMain.weirdPickaxe           = new WeirdPickaxe(id++);
-		WeirdMain.weirdAxe =                   new WeirdAxe(id++);
-        WeirdMain.weirdShovel =             new WeirdShovel(id++);
-        WeirdMain.weirdHoe =                   new WeirdHoe(id++);
-        WeirdMain.weirdSlingShot =       new WeirdSlingShot(id++);
-        WeirdMain.weirdPowder =             new WeirdPowder(id++);
-        WeirdMain.weirdSword =               new WeirdSword(id++);
-        WeirdMain.pebble =                       new Pebble(id++);
-        WeirdMain.weirdCasing =             new WeirdCasing(id++);
-        WeirdMain.weirdStrongCasing = new WeirdStrongCasing(id++);
-        WeirdMain.weirdStickyCasing = new WeirdStickyCasing(id++);
-        WeirdMain.weirdGrenade           = new WeirdGrenade(id++, "WeirdGrenade", "Weird grenade", WeirdMain.weirdCasing, false, 3, 1, 2.0f);
-        WeirdMain.weirdHelmet             = new WeirdHelmet(id++);
-        WeirdMain.weirdChestPlate     = new WeirdChestPlate(id++);
-        WeirdMain.weirdLeggins           = new WeirdLeggins(id++);
-        WeirdMain.weirdBoots               = new WeirdBoots(id++);
-        WeirdMain.weirdPlating           = new WeirdPlating(id++);
-        WeirdMain.weirdStickyGrenade           = new WeirdGrenade(id++, "WeirdStickyGrenade", "Weird sticky grenade", WeirdMain.weirdStickyCasing,  true,  9, 1, 2.0f);
-        WeirdMain.weirdStrongGrenade           = new WeirdGrenade(id++, "WeirdStrongGrenade", "Weird strong grenade", WeirdMain.weirdStrongCasing, false, 10, 1, 4.0f);
-        WeirdMain.weirdPoop                    = new WeirdPoop(id++);
+
+		WeirdMain.weirdIngot        	= new WeirdIngot(WeirdConfig.weirdIngotID);
+		WeirdMain.weirdPickaxe      	= new WeirdPickaxe(WeirdConfig.weirdPickaxeID);
+		WeirdMain.weirdAxe 			= new WeirdAxe(WeirdConfig.weirdAxeID);
+        WeirdMain.weirdShovel 		= new WeirdShovel(WeirdConfig.weirdShovelID);
+        WeirdMain.weirdHoe 			= new WeirdHoe(WeirdConfig.weirdHoeID);
+        WeirdMain.weirdSlingShot 	= new WeirdSlingShot(WeirdConfig.weirdSlingShotID);
+        WeirdMain.weirdPowder 		= new WeirdPowder(WeirdConfig.weirdPowderID);
+        WeirdMain.weirdSword 		= new WeirdSword(WeirdConfig.weirdSwordID);
+        WeirdMain.pebble 			= new Pebble(WeirdConfig.pebbleID);
+        WeirdMain.weirdCasing 		= new WeirdCasing(WeirdConfig.weirdCasingID);
+        WeirdMain.weirdStrongCasing 	= new WeirdStrongCasing(WeirdConfig.weirdStrongCasingID);
+        WeirdMain.weirdStickyCasing 	= new WeirdStickyCasing(WeirdConfig.weirdStickyCasingID);
+        WeirdMain.weirdGrenade      	= new WeirdGrenade(WeirdConfig.weirdGrenadeID, "WeirdGrenade", "Weird grenade", WeirdMain.weirdCasing, false, 3, 1, 2.0f);
+        WeirdMain.weirdHelmet       	= new WeirdHelmet(WeirdConfig.weirdHelmetID);
+        WeirdMain.weirdChestPlate   	= new WeirdChestPlate(WeirdConfig.weirdChestPlateID);
+        WeirdMain.weirdLeggins      	= new WeirdLeggins(WeirdConfig.weirdLegginsID);
+        WeirdMain.weirdBoots        	= new WeirdBoots(WeirdConfig.weirdBootsID);
+        WeirdMain.weirdPlating      	= new WeirdPlating(WeirdConfig.weirdPlatingID);
+        WeirdMain.weirdStickyGrenade	= new WeirdGrenade(WeirdConfig.weirdStickyGrenadeID, "WeirdStickyGrenade", "Weird sticky grenade", WeirdMain.weirdStickyCasing,  true,  9, 1, 2.0f);
+        WeirdMain.weirdStrongGrenade	= new WeirdGrenade(WeirdConfig.weirdStrongGrenadeID, "WeirdStrongGrenade", "Weird strong grenade", WeirdMain.weirdStrongCasing, false, 10, 1, 4.0f);
+        WeirdMain.weirdPoop         	= new WeirdPoop(WeirdConfig.weirdPoopID);
         logger.info("registerItems() complete");
 	}
 
@@ -117,10 +117,9 @@ public class WeirdCoProxy { // implements IGuiHandler {
 	// Don't change the IDs
 	public void registerBlocks(){
         logger.info("registerBlocks() start");
-		int id = WeirdMain.configFirstBlockID;
-        WeirdMain.weirdOre = (new WeirdOre(id++));
-		WeirdMain.weirdBlock = new WeirdBlock(id++);
-        WeirdMain.weirdTNT= new WeirdTNT(id++);
+        WeirdMain.weirdOre = (new WeirdOre(WeirdConfig.weirdOreID));
+		WeirdMain.weirdBlock = new WeirdBlock(WeirdConfig.weirdBlockID);
+        WeirdMain.weirdTNT= new WeirdTNT(WeirdConfig.weirdTNTID);
         logger.info("registerBlocks() complete");
 	}
 

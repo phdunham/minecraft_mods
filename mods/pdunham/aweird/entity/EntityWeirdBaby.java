@@ -1,39 +1,27 @@
 package pdunham.aweird.entity;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import pdunham.aweird.common.StandardLogger;
-import pdunham.aweird.common.WeirdConstants;
-import pdunham.aweird.common.WeirdMain;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAIControlledByPlayer;
-import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.src.ModLoader;
-import net.minecraft.stats.AchievementList;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import pdunham.aweird.common.StandardLogger;
+import pdunham.aweird.common.WeirdConstants;
+import pdunham.aweird.common.WeirdMain;
 
 public class EntityWeirdBaby extends EntityMob {
 	private static StandardLogger logger = new StandardLogger();
@@ -44,7 +32,31 @@ public class EntityWeirdBaby extends EntityMob {
 	private static float daySpeedMultiplier = 1.0f;
 	private static float nightSpeedMultiplier = 1.0f;
 	private boolean isDay = true;
-	private int calebCounter = 0;
+	private int trashTalkCounter = 0;
+	protected static final String [] trashTalkMsgs = { 
+		"I'm scared of babies!",
+		"Ooooh babies are soooo cute!",
+		"This is *not* a cute baby!",
+		"Babies are killing!",
+		"Seriously, babies?",
+		"I don't like babies!",
+		"Please stop baby. I will be nice to you.",
+		"Look baby, here is a nice cookie.",
+		"Are you serious, you don't know? Man, everyone knows babies never go full retard.",
+		"Babies hate me!",
+		"Does baby want burpies?",
+		"Hey look! A baby.",
+		"Baby, what are you doing? No baby! Bad baby! Aaaaaahhhhhhh....",
+		"Why baby? Why?",							
+		"Look out!! Babies!!!",
+		"I have had it with these m#$@^#f^#*$in' babies on this m#$@^#f^#*$in' plane!",
+		"When I am older I want lots of babies."
+	};
+	protected static final String [] calebTrashMsgs = { 
+		"I'm scared of babies!",
+		"Ooooh babies are soooo cute!",
+	};
+	
 	
 	public EntityWeirdBaby(World par1World) {
         super(par1World);
@@ -93,12 +105,8 @@ public class EntityWeirdBaby extends EntityMob {
 	
 	// This is used on the client side to keep track of day vs night.
 	private void updateDayNight() {
-		// boolean old = isDay;
 		// The .isDayTime() only works on the server, so on the client we need to actually check the time.
 		isDay = ((this.worldObj.getWorldTime() % 24000) < 12500);
-		// if (old != isDay) {
-		// 	logger.info("isDay " + old + " -> " + isDay + " time = " + this.worldObj.getWorldTime());
-		// }
 	}
 
 	// Periodic updates to the entitity. 
@@ -108,7 +116,7 @@ public class EntityWeirdBaby extends EntityMob {
 		updateDayNight();
 		super.onLivingUpdate();
     }
-	
+
 	// Check the sunlight on update. Babies move faster at night.
 	public float getSpeedModifier() {
 		return ((isDay ? daySpeedMultiplier : nightSpeedMultiplier) * super.getSpeedModifier());
@@ -119,45 +127,7 @@ public class EntityWeirdBaby extends EntityMob {
         return EnumCreatureAttribute.UNDEAD;
     }
 	
-	public int getAttackStrength(Entity par1Entity) {
-		// For certain players, send a message
-		if ((par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) ||
-			(par1Entity.getEntityName().toLowerCase().indexOf("arntemp") >= 0) ||
-			(par1Entity.getEntityName().toLowerCase().indexOf("dunham") >= 0)) {
-			if ((calebCounter % 20) == 0) {
-				String [] msgs = { 
-						"I'm scared of babies!",
-						"Ooooh babies are soooo cute!",
-						"This is *not* a cute baby!",
-						"Babies are killing!",
-						"Seriously, babies?",
-						"I don't like babies!",
-						"Please stop baby. I will be nice to you.",
-						"Look baby, here is a nice cookie.",
-						"Are you serious, you don't know? Man, everyone knows babies never go full retard.",
-						"Babies hate me!",
-						"Does baby want burpies?",
-						"Hey look! A baby.",
-						"Baby, what are you doing? No baby! Bad baby! Aaaaaahhhhhhh....",
-						"Why baby? Why?",							
-						"Look out!! Babies!!!",
-						"I have had it with these m#$@^#f^#*$in' babies on this m#$@^#f^#*$in' plane!",
-						"When I am older I want lots of babies."
-				};
-				Minecraft.getMinecraft().thePlayer.addChatMessage(msgs[this.rand.nextInt(msgs.length)]);
-			}
-			calebCounter++;
-			
-			// For Calebs, do a lot of damage.
-			if (par1Entity.getEntityName().toLowerCase().indexOf("caleb") >= 0) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage("Die! Ben! Die!");
-				return 50;
-			}
-		}
-
-		// Number of 1/2 hearts damage to do.
-		return isDay ? 1 : 4;
-    }
+	
 
 	protected void dropRareDrop(int par1) {
         switch (this.rand.nextInt(2)) {
@@ -205,11 +175,73 @@ public class EntityWeirdBaby extends EntityMob {
     }
 
     // Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a weirdBaby.
-    public boolean interact(EntityPlayer par1EntityPlayer) {
-        if (super.interact(par1EntityPlayer))
-        {
-            return true;
-        }
-        return false;
+//    public boolean interact(EntityPlayer par1EntityPlayer) {
+//    		logger.info("Interact with Baby,");
+//        if (super.interact(par1EntityPlayer))
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+
+    public int getAttackStrength(Entity par1Entity) {
+		int damage = isDay ? 1 : 4; // 4x damage at night
+	
+		// For Calebs, do a lot of damage.
+//		if (isCaleb(par1Entity)) {
+//			damage = 50;
+//		}
+
+		// Number of 1/2 hearts damage to do.
+		return damage;
     }
+    
+	@Override
+    public void handleHealthUpdate(byte par1) {
+		EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
+		logger.info("handleHealthUpdate thePlayer " + player);
+		trashTalk(player);
+		super.handleHealthUpdate(par1);
+    }
+    
+	protected boolean isPersonOfInterest(EntityClientPlayerMP player) {
+		if (isCaleb(player) ||
+			(player.getEntityName().toLowerCase().indexOf("arn") >= 0) ||
+			(player.getEntityName().toLowerCase().indexOf("dun") >= 0) ||
+			(player.getEntityName().toLowerCase().indexOf("player") >= 0)) {
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean isCaleb(EntityClientPlayerMP player) {
+		return (player.getEntityName().toLowerCase().indexOf("caleb") >= 0);
+	}
+
+	protected void damageDealtEvent(EntityClientPlayerMP player) {
+		if (isPersonOfInterest(player)) {
+		}
+	}
+
+	protected void trashTalk(EntityClientPlayerMP player) {
+		// For certain players, send a message
+		// Trash talk on the client side only.
+		if (!isPersonOfInterest(player)) {
+			return;
+		}
+		if ((trashTalkCounter % 10) == 0) {
+			logger.info("Trash talk start cnt " + trashTalkCounter + ", " + player.getEntityName());
+	
+			// We need to be careful here because getClass().getName() returns "iq",
+			// but we are hoping for an EntityClientPlayerMP
+			if (isCaleb(player)) {
+				player.addChatMessage(calebTrashMsgs[this.rand.nextInt(calebTrashMsgs.length)]);
+			} else {
+				player.addChatMessage(trashTalkMsgs[this.rand.nextInt(trashTalkMsgs.length)]);
+			}
+			logger.info("Trash talk happened " + player.getEntityName());
+		}
+		trashTalkCounter++;
+		logger.info("trashTalk cnt++ " + trashTalkCounter + ", " + player.getEntityName());
+	}
 }
