@@ -22,14 +22,14 @@ if [ -z $1 ]; then
 fi
 
 # Update the Texture resources
-do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/aweird/textures
-do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/aweird/textures/*png
-do_cmd cp    ~/work/minecraft_mods/mods/pdunham/aweird/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/aweird/textures/
+do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures
+do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/*png
+do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/
 
 # Update the Sound resources
-do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/aweird/sounds/baby
-do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/aweird/sounds/baby/*ogg
-do_cmd cp    ~/work/minecraft_mods/mods/pdunham/aweird/sounds/baby/*ogg ~/work/forge/mcp/reobf/minecraft/pdunham/aweird/sounds/baby/
+do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby
+do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby/*ogg
+do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/sounds/baby/*ogg ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby/
 
 # Make the zip file
 zip=weirdBlock.zip
