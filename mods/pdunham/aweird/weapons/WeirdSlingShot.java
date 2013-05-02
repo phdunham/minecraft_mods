@@ -49,7 +49,7 @@ public class WeirdSlingShot extends Item {
 		GameRegistry.registerItem(this, "weirdSlingShot");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird sling shot");
+		LanguageRegistry.addName(this, "Weird Slingshot");
 
 		// A weird slingShot is 3 weird ingots and 2 iron ingots
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdSlingShot), "wsw", "k k", " i ",

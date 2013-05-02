@@ -42,7 +42,7 @@ public class WeirdShovel extends ItemSpade {
 		// Register the block w/ MineCraft
 		GameRegistry.registerItem(this, "weirdShovel");
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird shovel");
+		LanguageRegistry.addName(this, "Weird Shovel");
 
 		// A weird shovel is 1 weird ingots and 2 iron ingots
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdShovel), " w ", " i ", " i ",

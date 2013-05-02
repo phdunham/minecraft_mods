@@ -40,7 +40,7 @@ public class WeirdPlating extends Item {
 		GameRegistry.registerItem(this, "weirdPlating");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird plating");
+		LanguageRegistry.addName(this, "Weird Plating");
 
 		// How to make a weird platin
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPlating), "wiw", "g g", "wiw",

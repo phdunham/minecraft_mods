@@ -56,7 +56,7 @@ public class WeirdBlock extends Block {
 		GameRegistry.registerBlock(this, "weirdBlock");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "A block of weird");
+		LanguageRegistry.addName(this, "A Block of Weird");
 
 		// A solid block is crafted from 9 weirdIngots in the crafting table
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdBlock), "www", "www", "www",

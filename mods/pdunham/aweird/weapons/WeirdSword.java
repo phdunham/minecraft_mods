@@ -43,7 +43,7 @@ public class WeirdSword extends ItemSword {
 		// Register the block w/ MineCraft
 		GameRegistry.registerItem(this, "weirdSword");
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird sword");
+		LanguageRegistry.addName(this, "Weird Sword");
 
 		// A weird sword is 2 weird ingots and 1 iron ingot
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdSword), " w ", " w ", " i ",

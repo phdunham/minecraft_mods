@@ -42,7 +42,7 @@ public class WeirdPickaxe extends ItemPickaxe {
 		// Register the block w/ MineCraft
 		GameRegistry.registerItem(this, "weirdPickaxe");
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird pickaxe");
+		LanguageRegistry.addName(this, "Weird Pickaxe");
 
 		// A weird pickaxe is 3 weird ingots and 2 iron ingots
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPickaxe), "www", " i ", " i ",

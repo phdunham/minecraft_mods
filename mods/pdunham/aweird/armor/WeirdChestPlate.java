@@ -39,7 +39,7 @@ public class WeirdChestPlate extends ItemArmor implements IArmorTextureProvider 
 		GameRegistry.registerItem(this, "WeirdChestPlate");
 		
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird chest plate");
+		LanguageRegistry.addName(this, "Weird Chestplate");
 
 		// How to make a weird chest plate
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdChestPlate), "w w", "wdw", "www",

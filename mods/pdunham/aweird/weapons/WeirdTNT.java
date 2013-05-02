@@ -58,7 +58,7 @@ public class WeirdTNT extends BlockTNT {
 		GameRegistry.registerBlock(this, "weirdTNT");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "A weird TNT");
+		LanguageRegistry.addName(this, "Weird TNT");
 
 		// A recipe for weird TNT!
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdTNT), "wfw", "gtg", "wfw",

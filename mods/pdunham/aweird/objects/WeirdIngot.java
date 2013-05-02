@@ -40,7 +40,7 @@ public class WeirdIngot extends Item {
 		GameRegistry.registerItem(this, "weirdIngot");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird ingot");
+		LanguageRegistry.addName(this, "Weird Ingot");
 
 		// Smelting 1 ore produces 1 ingot and 1 experience
 		GameRegistry.addSmelting(WeirdMain.weirdOre.blockID, new ItemStack(WeirdMain.weirdIngot, 1), 1.0f);

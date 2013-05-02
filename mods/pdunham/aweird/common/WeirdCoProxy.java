@@ -56,6 +56,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 public class WeirdCoProxy { // implements IGuiHandler {
@@ -95,14 +96,14 @@ public class WeirdCoProxy { // implements IGuiHandler {
         WeirdMain.weirdCasing 		= new WeirdCasing(WeirdConfig.weirdCasingID);
         WeirdMain.weirdStrongCasing 	= new WeirdStrongCasing(WeirdConfig.weirdStrongCasingID);
         WeirdMain.weirdStickyCasing 	= new WeirdStickyCasing(WeirdConfig.weirdStickyCasingID);
-        WeirdMain.weirdGrenade      	= new WeirdGrenade(WeirdConfig.weirdGrenadeID, "WeirdGrenade", "Weird grenade", WeirdMain.weirdCasing, false, 3, 1, 2.0f);
+        WeirdMain.weirdGrenade      	= new WeirdGrenade(WeirdConfig.weirdGrenadeID, "WeirdGrenade", "Weird Grenade", WeirdMain.weirdCasing, false, 3, 1, 2.0f);
         WeirdMain.weirdHelmet       	= new WeirdHelmet(WeirdConfig.weirdHelmetID);
         WeirdMain.weirdChestPlate   	= new WeirdChestPlate(WeirdConfig.weirdChestPlateID);
         WeirdMain.weirdLeggins      	= new WeirdLeggins(WeirdConfig.weirdLegginsID);
         WeirdMain.weirdBoots        	= new WeirdBoots(WeirdConfig.weirdBootsID);
         WeirdMain.weirdPlating      	= new WeirdPlating(WeirdConfig.weirdPlatingID);
-        WeirdMain.weirdStickyGrenade	= new WeirdGrenade(WeirdConfig.weirdStickyGrenadeID, "WeirdStickyGrenade", "Weird sticky grenade", WeirdMain.weirdStickyCasing,  true,  9, 1, 2.0f);
-        WeirdMain.weirdStrongGrenade	= new WeirdGrenade(WeirdConfig.weirdStrongGrenadeID, "WeirdStrongGrenade", "Weird strong grenade", WeirdMain.weirdStrongCasing, false, 10, 1, 4.0f);
+        WeirdMain.weirdStickyGrenade	= new WeirdGrenade(WeirdConfig.weirdStickyGrenadeID, "WeirdStickyGrenade", "Weird Sticky Grenade", WeirdMain.weirdStickyCasing,  true,  9, 1, 2.0f);
+        WeirdMain.weirdStrongGrenade	= new WeirdGrenade(WeirdConfig.weirdStrongGrenadeID, "WeirdStrongGrenade", "Weird Strong Grenade", WeirdMain.weirdStrongCasing, false, 10, 1, 4.0f);
         WeirdMain.weirdPoop         	= new WeirdPoop(WeirdConfig.weirdPoopID);
         logger.info("registerItems() complete");
 	}
@@ -204,6 +205,8 @@ public class WeirdCoProxy { // implements IGuiHandler {
 		EntityRegistry.registerGlobalEntityID(EntityWeirdBaby.class, "WeirdBaby", id);
 		EntityRegistry.registerModEntity(EntityWeirdBaby.class, "WeirdBaby", id, weirdMain, 100, 10, false);
 		EntityList.entityEggs.put(id, new EntityEggInfo(id, 0xffffff, 0x000000));
+		// Set the external name
+		LanguageRegistry.instance().addStringLocalization("entity.WeirdBaby.name",  "Baby");
 		
 		EntityRegistry.addSpawn(EntityWeirdBaby.class, 20, 1, 2, 
 				EnumCreatureType.monster, 

@@ -39,7 +39,7 @@ public class WeirdHelmet  extends ItemArmor implements IArmorTextureProvider {
 		GameRegistry.registerItem(this, "WeirdHelmet");
 		
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird helmet");
+		LanguageRegistry.addName(this, "Weird Helmet");
 
 		// How to make a weird helmet
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdHelmet), "www", "wgw", "   ",

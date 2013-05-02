@@ -52,7 +52,7 @@ public class WeirdPoop extends Item {
 		GameRegistry.registerItem(this, "weirdPoop");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Poop");
+		LanguageRegistry.addName(this, "Baby Poop");
 
 		logger.info("postInit() complete newId: " + itemID);
 	}

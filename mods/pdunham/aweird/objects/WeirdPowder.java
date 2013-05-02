@@ -41,7 +41,7 @@ public class WeirdPowder extends Item {
 		GameRegistry.registerItem(this, "weirdPowder");
 
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird powder");
+		LanguageRegistry.addName(this, "Weird Powder");
 
 		// Complex Recipe for weird Powder
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdPowder), "sws", "ggg", "sws",

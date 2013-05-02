@@ -46,7 +46,7 @@ public class WeirdAxe extends ItemAxe {
 		// Register the block w/ MineCraft
 		GameRegistry.registerItem(this, "weirdAxe");
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird axe");
+		LanguageRegistry.addName(this, "Weird Axe");
 
 		// A weird pickaxe is 3 weird ingots and 2 iron ingots
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdAxe), " ww", " iw", " i ",

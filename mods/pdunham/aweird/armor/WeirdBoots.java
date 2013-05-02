@@ -38,7 +38,7 @@ public class WeirdBoots extends ItemArmor implements IArmorTextureProvider {
 		GameRegistry.registerItem(this, "WeirdBoots");
 		
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird boots");
+		LanguageRegistry.addName(this, "Weird Boots");
 
 		// How to make a weird boots
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdBoots), "   ", "w w", "w w",

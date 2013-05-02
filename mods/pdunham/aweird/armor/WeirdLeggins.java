@@ -38,7 +38,7 @@ public class WeirdLeggins extends ItemArmor implements IArmorTextureProvider {
 		GameRegistry.registerItem(this, "WeirdLeggins");
 		
 		// Set the external name
-		LanguageRegistry.addName(this, "Weird leggins");
+		LanguageRegistry.addName(this, "Weird Leggins");
 
 		// How to make a weird leggins
 		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdLeggins), "wiw", "w w", "w w",

@@ -60,7 +60,7 @@ public class WeirdOre extends Block {
 	    MinecraftForge.setBlockHarvestLevel(this, "pickaxe", 2);
 	
 	    // Add a human readable name
-	    LanguageRegistry.addName(this, "Weird ore");
+	    LanguageRegistry.addName(this, "Weird Ore");
 
 		logger.info("postInit() complete newId: " + blockID);
 	}
