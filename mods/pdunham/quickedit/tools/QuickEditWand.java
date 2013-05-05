@@ -66,31 +66,28 @@ public class QuickEditWand extends ItemTool {
 
 		logger.info("postInit() complete newId: " + itemID);
 	}
-
+	
 	private void rightClick(EntityPlayer player, World world, int x, int y, int z) {
-		int Id = 0;
-		int metaData = 0;
+		// Default is, not item in slot #9, so use delete mode.
+		int currentBlockMetaData = 0;
+		int currentBlockID = 0;
+		String currentBlockName = "Delete mode";
+		ItemStack itemStack = player.inventory.mainInventory[8];
 
-		// Check the right most inventory bar item. If it is empty do nothing.
-		if (player.inventory.mainInventory[8] == null) {
-			logger.info("rightClick location " + x + ", " + z + "  h=" + y + " inventory slot empty, delete mode enabled");
-		} else {
-			// Check the right most inventory bar item. If it is not a Block or ItemBlock do nothing.
-			Object item = player.inventory.mainInventory[8].getItem();
-			String name = item.getClass().getCanonicalName();
-			boolean isItem = Block.class.isInstance(item); 
-			boolean isItemBlock = ItemBlock.class.isInstance(item);
-			if (!isItem  && !isItemBlock) {
-				logger.info("rightClick location " + x + ", " + z + "  h=" + y + " not a block: " + name);
+		// If there is an item in slot #9, check to see if it is a block item. If not, return;
+		if (itemStack != null) {
+			Item item = itemStack.getItem();
+			currentBlockID = itemStack.itemID;
+			currentBlockName = itemStack.getDisplayName();
+			currentBlockMetaData = itemStack.getItemDamageForDisplay();
+
+			// Check the right most inventory bar item. If it is not a Block based item do nothing.
+			if (!ItemBlock.class.isInstance(item)) {
+				logger.info("rightClick slot #9 is not a block: " + currentBlockName);
 				return;
 			}
-			Id = player.inventory.mainInventory[8].itemID;
-			if (isItemBlock) {
-				metaData = ((ItemBlock)item).getIconFromDamage(0);
-				logger.info("Meta=" + metaData);
-			}
-			logger.info("rightClick location " + x + ", " + z + "  h=" + y + " state=" + clickState + " slot=" + name + " meta=" + metaData);
 		}
+		logger.info("rightClick slot #9 is " + currentBlockName + " meta is " + currentBlockMetaData);
 
 		if (clickState == ClickState.waitingFirstClick) {
 			x1 = x;
@@ -117,33 +114,35 @@ public class QuickEditWand extends ItemTool {
 			int zStart = (z1 <= z2) ? z1 : z2;
 			int zStop  = (z1 <= z2) ? z2 : z1;
 
-			int count = 0;
+			int blockCount = 0;
 			logger.finest("Params " + x1 + ", " + z1 + " h=" + y1);
 			logger.finest("Params " + x2 + ", " + z2 + " h=" + y2);
 			
 			for (int ix = xStart; ix <= xStop; ix++) {
 				for (int iy = yStart; iy <= yStop; iy++) {
 					for (int iz = zStart; iz <= zStop; iz++) {
-						logger.finest("Filling " + ix + ", " + iz + " h=" + iy + " total=" + ++count);
+						// logger.finest("rightClick Filling " + ix + ", " + iz + " h=" + iy + " id=" + currentBlockID + " meta=" + currentBlockMetaData);
 						// World.addBlockEvent(X,Y,Z, BlockID, EventID, EventParameter)
-						world.setBlockAndMetadata(ix, iy, iz, Id, metaData);
+						world.setBlockAndMetadata(ix, iy, iz, currentBlockID, currentBlockMetaData);
+						blockCount++;
 					}
 				}
 			}
-			player.addChatMessage(count + " blocks created");
+			player.addChatMessage(blockCount + " blocks created");
 	        return;
 		}
 		logger.error("rightClick invalid click state = " + clickState);
 	}
 	
 	@Override
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
-    {
-		super.onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
-		logger.info("onItemUseFirst location " + x + ", " + z + "  h=" + y + " player=" + player);
-		rightClick(player, world, x, y, z);
-		return true; 
-    }
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+		logger.info("onItemUse location " + x + ", " + z + "  h=" + y + " player=" + player);
+		if (!world.isRemote) {
+			rightClick(player, world, x, y, z);
+		}
+		return true;
+	}
+
    
 	@Override
     public String getTextureFile(){

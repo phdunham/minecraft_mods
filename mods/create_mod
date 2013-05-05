@@ -33,7 +33,7 @@ function CopySounds {
     do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures
     do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/*png
     do_cmd cp    ~/work/minecraft_mods/mods/pdunham/$1/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/
- /Users/pdunham/work/minecraft_mods/mods/pdunham/weird/textures/}
+}
 
 # Zip of the mod so we can use it in the minecraft/mods folder
 function ZipMod {
@@ -43,11 +43,14 @@ function ZipMod {
 }
 
 # Copy the mod to the various local destinations
-function CopyModLocal {
+function CopyModLocalClient {
     do_cmd cp $1 ~/ftb/YogCraft/minecraft/mods/
+    do_cmd cp $1 ~/Desktop/
+}
+
+function CopyModLocalServer {
     do_cmd cp $1 ~/Desktop/MineCraft/FeedTheBeast/MindCrack/minecraft/mods/
     do_cmd cp $1 ~/Desktop/MineCraft/YogCraft_Server/mods/
-    do_cmd cp $1 ~/Desktop/
 }
 
 # Copy the mod to Ian's machine
@@ -61,10 +64,11 @@ CopyTextures 'quickedit'
 CopySounds   'weird'
 
 ZipMod 'weirdBlock.zip' 'weird*'
-CopyModLocal 'weirdBlock.zip'
+CopyModLocalServer 'weirdBlock.zip'
+CopyModLocalClient 'weirdBlock.zip'
 
 ZipMod 'quickEdit.zip'  'quick*'
-CopyModLocal 'quickEdit.zip'
+CopyModLocalClient 'quickEdit.zip'
 
 echo "Successs"
 echo
