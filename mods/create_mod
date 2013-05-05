@@ -21,35 +21,50 @@ if [ -z $1 ]; then
     do_cmd ./reobfuscate.sh
 fi
 
-# Update the Texture resources
-do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures
-do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/*png
-do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/weird/textures/
+# Copy the texture resources to the compiled mod's folder
+function CopyTextures {
+    do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures
+    do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/*png
+    do_cmd cp    ~/work/minecraft_mods/mods/pdunham/$1/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/
+}
 
-# Update the Sound resources
-do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby
-do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby/*ogg
-do_cmd cp    ~/work/minecraft_mods/mods/pdunham/weird/sounds/baby/*ogg ~/work/forge/mcp/reobf/minecraft/pdunham/weird/sounds/baby/
+# Copy the sound resources to the compiled mod's folder
+function CopySounds {
+    do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures
+    do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/*png
+    do_cmd cp    ~/work/minecraft_mods/mods/pdunham/$1/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/
+ /Users/pdunham/work/minecraft_mods/mods/pdunham/weird/textures/}
 
-# Make the zip file
-zip=weirdBlock.zip
-do_cmd cd ~/work/forge/mcp/reobf/minecraft/
-do_cmd zip -r ${zip} pdunham/
+# Zip of the mod so we can use it in the minecraft/mods folder
+function ZipMod {
+    zip=$1
+    do_cmd cd ~/work/forge/mcp/reobf/minecraft/
+    do_cmd zip -r ${zip} pdunham/$2
+}
 
-# Copy the mod to the client and server
-do_cmd cp ${zip} ~/ftb/YogCraft/minecraft/mods/
-do_cmd cp ${zip} ~/Desktop/MineCraft/FeedTheBeast/MindCrack/minecraft/mods/
-do_cmd cp ${zip} ~/Desktop/MineCraft/YogCraft_Server/mods/
-do_cmd cp ${zip} ~/Desktop/
+# Copy the mod to the various local destinations
+function CopyModLocal {
+    do_cmd cp $1 ~/ftb/YogCraft/minecraft/mods/
+    do_cmd cp $1 ~/Desktop/MineCraft/FeedTheBeast/MindCrack/minecraft/mods/
+    do_cmd cp $1 ~/Desktop/MineCraft/YogCraft_Server/mods/
+    do_cmd cp $1 ~/Desktop/
+}
 
 # Copy the mod to Ian's machine
-# do_cmd rm /Volumes/Users/Ian/Desktop/FTB/Direwolf20/minecraft/mods/${zip}
-# do_cmd cp ${zip} /Volumes/Users/Ian/Desktop/FTB/Direwolf20/minecraft/mods 
-# # Copying files w/ spaces is messed up
-# set "${zip}" "/Volumes/Users/Ian/Documents/Game Folders/Minecraft/Yogcraft server FTB/mods/"
-# echo cp $@
-# rm "$@"
-# cp "$@${zip}"
-# 
+function CopyModIan {
+    do_cmd cp $1 /Volumes/Users/Ian/Documents/Weird/
+}
+
+# Update the Texture resources
+CopyTextures 'weird'
+CopyTextures 'quickedit'
+CopySounds   'weird'
+
+ZipMod 'weirdBlock.zip' 'weird*'
+CopyModLocal 'weirdBlock.zip'
+
+ZipMod 'quickEdit.zip'  'quick*'
+CopyModLocal 'quickEdit.zip'
+
 echo "Successs"
 echo
