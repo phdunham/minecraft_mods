@@ -1,5 +1,11 @@
 package pdunham.quickedit.tools;
 
+import net.sf.cglib.proxy.*;
+
+import java.util.*;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
@@ -12,6 +18,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemCloth;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
@@ -19,54 +26,70 @@ import pdunham.quickedit.common.StandardLogger;
 import pdunham.quickedit.common.QuickEditConstants;
 import pdunham.quickedit.common.QuickEditMain;
 
-public class QuickEditWand extends ItemTool {
 
-	private static enum ClickState {
+public class QuickEditWand implements MethodInterceptor {
+
+	private static StandardLogger logger = new StandardLogger();
+	   
+	private enum ClickState {
 		waitingFirstClick,
 		waitingSecondClick	
 	};
 	
-	private static StandardLogger logger = new StandardLogger();
-	private static Block[] effectiveAgainstBlocks = {};
+	private ClickState clickState = ClickState.waitingFirstClick;
 	private int x1, x2;
 	private int y1, y2;
 	private int z1, z2;
-	private ClickState clickState = ClickState.waitingFirstClick;
 	
- 	// Standard c'tor
-	public QuickEditWand(int id) {
-        super(id, 1, EnumToolMaterial.WOOD, effectiveAgainstBlocks);
+	static QuickEditWand callback = new QuickEditWand();
 
-        // Limit the stack size to a quickedit number
-        setMaxStackSize(1);
-        
-        // How many time you can use this tool
-        setMaxDamage(1561);
-        
-        // Put on the materials tab
-        setCreativeTab(CreativeTabs.tabTools);
-        
-        // Set the internal name
-        setItemName("quickeditWand");
-        
-        // Set the texture.
-        setIconCoord(0, 0);
-        
-        logger.info("c'tor() complete id: " + id);
-	}
-
-	public void postInit() {
-		// Set the graphics texture from a .png file
-		setTextureFile(getTextureFile());
-
-		// Register the block w/ MineCraft
-		GameRegistry.registerItem(this, "quickeditWand");
-		// Set the external name
-		LanguageRegistry.addName(this, "QuickEdit Wand");
-
-		logger.info("postInit() complete newId: " + itemID);
+	private QuickEditWand() {
 	}
 	
+	// There is where we instantiate the class that we are wrapping.
+	public static Object newInstance(Class objClass, Class[] argTypes, Object[] args) {
+		try {
+			Enhancer e = new Enhancer();
+			e.setSuperclass(objClass);
+	        e.setCallback(callback);
+	        return e.create(argTypes, args);
+		} catch (Throwable e) {
+			e.printStackTrace(); 
+	       	throw new Error(e.getMessage());
+	    }  
+	}
+
+	// This function is called everytime a method is called on the wrapped class.
+    public Object intercept(Object obj, java.lang.reflect.Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        
+        // Check for the two function we want to override. Everything else we just pass to the original class
+		Class<?> c = Class.forName("pdunham.quickedit.tools.QuickEditWand");
+		String methodName = method.getName(); 
+		// logger.info("intercepted " + methodName);
+        if (methodName.equals("onItemUse")) {
+            // logger.info("intercepted " + method);
+        		Class[] argTypes =  {   ItemStack.class, 
+				                    EntityPlayer.class, 
+				                    World.class, 
+				                    int.class, int.class, int.class, int.class,
+				                    float.class, float.class, float.class };
+        		Method  myMethod = c.getDeclaredMethod ("onItemUse", argTypes);
+        		return myMethod.invoke (this, args);
+        } else if (methodName.equals("getTextureFile")) {
+            //logger.info("intercepted " + method);
+        		Method  myMethod = c.getDeclaredMethod ("getTextureFile");
+        		return myMethod.invoke (this);
+        }
+
+        // Fall through and call the original class.
+        try {
+        		return proxy.invokeSuper(obj, args);
+        } catch (Throwable t) {
+            logger.error("throw " + t) ;
+            throw t.fillInStackTrace();
+        }
+    }
+    
 	private void rightClick(EntityPlayer player, World world, int x, int y, int z) {
 		// Default is, not item in slot #9, so use delete mode.
 		int currentBlockMetaData = 0;
@@ -93,7 +116,7 @@ public class QuickEditWand extends ItemTool {
 			x1 = x;
 			y1 = y;
 			z1 = z;
-	        setIconCoord(1, 0);
+			Item.goldenCarrot.setIconCoord(1, 0);
 	        clickState = ClickState.waitingSecondClick;
 	        return;
 		}
@@ -102,7 +125,7 @@ public class QuickEditWand extends ItemTool {
 			x2 = x;
 			y2 = y;
 			z2 = z;
-	        setIconCoord(0, 0);
+			Item.goldenCarrot.setIconCoord(0, 0);
 	        clickState = ClickState.waitingFirstClick;
 
 	        
@@ -134,18 +157,15 @@ public class QuickEditWand extends ItemTool {
 		logger.error("rightClick invalid click state = " + clickState);
 	}
 	
-	@Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
-		logger.info("onItemUse location " + x + ", " + z + "  h=" + y + " player=" + player);
 		if (!world.isRemote) {
+			logger.info("onItemUse location " + x + ", " + z + "  h=" + y + " player=" + player);
 			rightClick(player, world, x, y, z);
 		}
 		return true;
 	}
-
    
-	@Override
     public String getTextureFile(){
 		return QuickEditConstants.pathTexturesIcons;
-	}	
+	}
 }

@@ -2,12 +2,18 @@ package pdunham.quickedit.common;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+import java.util.List;
+import java.util.Vector;
 
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.potion.PotionHelper;
 import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -53,11 +59,26 @@ public class QuickEditCommonProxy { // implements IGuiHandler {
 	public void registerItems() {
         logger.info("registerItems() start");
 
-		QuickEditMain.quickEditWand 	= new QuickEditWand(4227);
+        // We cannot have an item id on the client that does not exist
+        // on the server because the server will kick the client.
+        // So what we do is wrap an existing class with a proxy and
+        // intercept the function OnItemUse().
+        
+        // Create a wrapper around the golden carrot instance
+        
+        // These are the goldenCarrot default arguments
+        // goldenCarrot = (new ItemFood(140, 6, 1.2F, false)).setIconCoord(6, 9).setItemName("carrotGolden").setPotionEffect(PotionHelper.field_82818_l);
+        int id = 140;
+        Class[] argTypes = { int.class, int.class, float.class, boolean.class };
+        Object[] args = { id, 6, 1.2F, false };
 
+        // Delete the original goldenCarrot
+        Item.itemsList[256 + id] = null;
+        Item.goldenCarrot = (ItemFood) QuickEditWand.newInstance(ItemFood.class, argTypes, args);
+		Item.goldenCarrot.setIconCoord(0, 0).setItemName("carrotGolden");
         logger.info("registerItems() complete");
 	}
-
+	
 	// A helper function when we register tiles
 	public void registerTiles(){
         logger.info("registerTiles() start");
@@ -73,7 +94,6 @@ public class QuickEditCommonProxy { // implements IGuiHandler {
 
 	public void postInit() {
         logger.info("postInit() start");
-        ((QuickEditWand) QuickEditMain.quickEditWand).postInit();
 		logger.info("postInit() complete");
 	}
 
