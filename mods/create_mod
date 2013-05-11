@@ -60,15 +60,12 @@ function CopyModIan {
 
 # Update the Texture resources
 CopyTextures 'weird'
-CopyTextures 'quickedit'
 CopySounds   'weird'
 
 ZipMod 'weirdBlock.zip' 'weird*'
 CopyModLocalServer 'weirdBlock.zip'
 CopyModLocalClient 'weirdBlock.zip'
 
-ZipMod 'quickEdit.zip'  'quick*'
-CopyModLocalClient 'quickEdit.zip'
 
 echo "Successs"
 echo
