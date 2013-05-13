@@ -23,23 +23,21 @@ fi
 
 # Copy the texture resources to the compiled mod's folder
 function CopyTextures {
-    do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures
-    do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/*png
-    do_cmd cp    ~/work/minecraft_mods/mods/pdunham/$1/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/
+    do_cmd rm   -rf ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/
+    do_cmd cp    -r ~/work/minecraft_mods/mods/pdunham/$1/textures/ ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/
 }
 
 # Copy the sound resources to the compiled mod's folder
 function CopySounds {
-    do_cmd mkdir -p ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures
-    do_cmd rm -f ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/*png
-    do_cmd cp    ~/work/minecraft_mods/mods/pdunham/$1/textures/*png ~/work/forge/mcp/reobf/minecraft/pdunham/$1/textures/
+    do_cmd rm -rf ~/work/forge/mcp/reobf/minecraft/pdunham/$1/sounds/
+    do_cmd cp -r ~/work/minecraft_mods/mods/pdunham/$1/sounds/ ~/work/forge/mcp/reobf/minecraft/pdunham/$1/sounds/
 }
 
 # Zip of the mod so we can use it in the minecraft/mods folder
 function ZipMod {
-    zip=$1
     do_cmd cd ~/work/forge/mcp/reobf/minecraft/
-    do_cmd zip -r ${zip} pdunham/$2
+    do_cmd rm -f $1
+    do_cmd zip -r $1 pdunham/$2
 }
 
 # Copy the mod to the various local destinations
