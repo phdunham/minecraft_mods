@@ -14,7 +14,7 @@ public class WeirdAchievementStickyToIt extends Achievement {
 
 	public WeirdAchievementStickyToIt() {
 		// id, name, x, y, item display, prerequisite
-		super(2006, "Weird Sticky To It", 7, 9, WeirdMain.weirdStickyGrenade, WeirdMain.weirdAchievementPowder);
+		super(2006, "Weird Sticky To It", 7, 9, WeirdMain.weirdStickyGrenade, null);//, WeirdMain.weirdAchievementPowder);
 		registerAchievement();
 
 		logger.info("c'tor() complete");

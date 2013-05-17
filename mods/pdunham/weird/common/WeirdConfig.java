@@ -51,6 +51,7 @@ public class WeirdConfig {
 	public static int weirdStickyGrenadeID	= 7256;
 	public static int weirdStrongGrenadeID	= 7257;
 	public static int weirdPoopID			= 7258;
+	public static int weirdWormDrillID		= 7259;
 	
 	// Blocks
 	public static int weirdOreID				= 3125;

@@ -14,7 +14,7 @@ public class WeirdAchievementPowder extends Achievement {
 
 	public WeirdAchievementPowder() {
 		// id, name, x, y, item display, prerequisite
-		super(2004, "Weird Powder", 5, 11, WeirdMain.weirdPowder, WeirdMain.weirdAchievementStartingOff);
+		super(2004, "Weird Powder", 5, 11, WeirdMain.weirdPowder, null); //, WeirdMain.weirdAchievementStartingOff);
 		registerAchievement();
 
 		logger.info("c'tor() complete");

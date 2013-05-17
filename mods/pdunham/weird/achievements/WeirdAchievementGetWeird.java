@@ -8,13 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.stats.AchievementList;
 
-public class WeirdAchievementOre extends Achievement {
+public class WeirdAchievementGetWeird extends Achievement {
 	
 	private static StandardLogger logger = new StandardLogger();
 
-	public WeirdAchievementOre() {
+	public WeirdAchievementGetWeird() {
 		// id, name, x, y, item display, prerequisite
-		super(2001, "Weird ore", 1, 11, WeirdMain.weirdOre, AchievementList.acquireIron); 
+		super(2001, "Weird ingot", 1, 11, WeirdMain.weirdIngot, null); //, AchievementList.acquireIron); 
 		registerAchievement();
 
 		logger.info("c'tor() complete");
@@ -30,6 +30,6 @@ public class WeirdAchievementOre extends Achievement {
     @SideOnly(Side.CLIENT)
     @Override
     public String getDescription() {
-	    return "Mined weird ore";
+	    return "Smelted weird ore";
     }
 }

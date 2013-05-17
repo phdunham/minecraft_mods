@@ -14,7 +14,7 @@ public class WeirdAchievementStartingOff extends Achievement {
 
 	public WeirdAchievementStartingOff() {
 		// id, name, x, y, item display, prerequisite
-		super(2003, "Weird Starting Off", 3, 11, WeirdMain.weirdPickaxe, WeirdMain.weirdAchievementOre);
+		super(2003, "Weird Starting Off", 3, 11, WeirdMain.weirdPickaxe, null);//, WeirdMain.weirdAchievemenGetWeird);
 		registerAchievement();
 
 		logger.info("c'tor() complete");

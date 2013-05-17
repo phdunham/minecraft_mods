@@ -39,6 +39,7 @@ import pdunham.weird.tools.QuickEditWand;
 import pdunham.weird.tools.WeirdAxe;
 import pdunham.weird.tools.WeirdHoe;
 import pdunham.weird.tools.WeirdPickaxe;
+import pdunham.weird.tools.WeirdWormDrill;
 import pdunham.weird.tools.WeirdShovel;
 import pdunham.weird.weapons.Pebble;
 import pdunham.weird.weapons.WeirdCasing;
@@ -106,6 +107,7 @@ public class WeirdCoProxy { // implements IGuiHandler {
         WeirdMain.weirdStickyGrenade	= new WeirdGrenade(WeirdConfig.weirdStickyGrenadeID, "WeirdStickyGrenade", "Weird Sticky Grenade", WeirdMain.weirdStickyCasing,  true,  9, 1, 2.0f);
         WeirdMain.weirdStrongGrenade	= new WeirdGrenade(WeirdConfig.weirdStrongGrenadeID, "WeirdStrongGrenade", "Weird Strong Grenade", WeirdMain.weirdStrongCasing, false, 10, 1, 4.0f);
         WeirdMain.weirdPoop         	= new WeirdPoop(WeirdConfig.weirdPoopID);
+		WeirdMain.weirdWormDrill    	= new WeirdWormDrill(WeirdConfig.weirdWormDrillID);
         
         // Delete the original axe
         int id = 30;
@@ -165,6 +167,7 @@ public class WeirdCoProxy { // implements IGuiHandler {
         ((WeirdGrenade)WeirdMain.weirdStickyGrenade).postInit();
         ((WeirdGrenade)WeirdMain.weirdStrongGrenade).postInit();
         ((WeirdPoop) WeirdMain.weirdPoop).postInit();
+        ((WeirdWormDrill) WeirdMain.weirdWormDrill).postInit();
 		logger.info("postInit() complete");
 	}
 

@@ -14,7 +14,7 @@ public class WeirdAchievementGrenadeCreeper extends Achievement {
 
 	public WeirdAchievementGrenadeCreeper() {
 		// id, name, x, y, item display, prerequisite
-		super(2002, "Weird Grenade Creeper", 7, 11, WeirdMain.weirdGrenade, WeirdMain.weirdAchievementPowder);
+		super(2002, "Weird Grenade Creeper", 7, 11, WeirdMain.weirdGrenade, null); //, WeirdMain.weirdAchievementPowder);
 		registerAchievement();
 
 		logger.info("c'tor() complete");

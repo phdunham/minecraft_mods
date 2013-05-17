@@ -3,9 +3,11 @@ package pdunham.weird.common;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.src.BaseMod;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
@@ -16,7 +18,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import pdunham.weird.achievements.CraftingHandler;
 import pdunham.weird.achievements.WeirdAchievementBetterBoom;
 import pdunham.weird.achievements.WeirdAchievementGrenadeCreeper;
-import pdunham.weird.achievements.WeirdAchievementOre;
+import pdunham.weird.achievements.WeirdAchievementGetWeird;
 import pdunham.weird.achievements.WeirdAchievementPowder;
 import pdunham.weird.achievements.WeirdAchievementStartingOff;
 import pdunham.weird.achievements.WeirdAchievementStickyToIt;
@@ -40,6 +42,7 @@ import pdunham.weird.tools.WeirdAxe;
 import pdunham.weird.tools.WeirdHoe;
 import pdunham.weird.tools.WeirdPickaxe;
 import pdunham.weird.tools.WeirdShovel;
+import pdunham.weird.tools.WeirdWormDrill;
 import pdunham.weird.weapons.Pebble;
 import pdunham.weird.weapons.WeirdCasing;
 import pdunham.weird.weapons.WeirdGrenade;
@@ -78,7 +81,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 		name    = WeirdMain.name, 
 		version = WeirdMain.version)
 
-public class WeirdMain /* extends BaseMod */ {
+public class WeirdMain extends BaseMod {
 	public static final String version = "0.1.1";
 	public static final String modid = "WeirdMod";
 	public static final String name = "A Weird Mod";
@@ -106,6 +109,9 @@ public class WeirdMain /* extends BaseMod */ {
 
     @Instance("WeirdHoe")
     public static WeirdHoe weirdHoe;
+
+    @Instance("WeirdWormDrill")
+  	public static WeirdWormDrill weirdWormDrill;
 
     @Instance("WeirdSlingShot")
     public static WeirdSlingShot weirdSlingShot;
@@ -156,8 +162,8 @@ public class WeirdMain /* extends BaseMod */ {
     @Instance("WeirdPoop")
     public static WeirdPoop weirdPoop;
     
-    @Instance("WeirdAchievementOre")
-    public static WeirdAchievementOre weirdAchievementOre;
+    @Instance("WeirdAchievementGetWeird")
+    public static WeirdAchievementGetWeird weirdAchievemenGetWeird;
 
     @Instance("WeirdAchievementGrenadeCreeper")
     public static WeirdAchievementGrenadeCreeper weirdAchievementGrenadeCreeper;
@@ -231,6 +237,17 @@ public class WeirdMain /* extends BaseMod */ {
 		return WeirdMain.version;
 	}
 
+	// trigger the acheivement for picking up WeirdOre for the first time.
+	@Override
+	public void onItemPickup(EntityPlayer entityPlayer, ItemStack itemStack)
+	{
+		if(itemStack.itemID == WeirdMain.weirdOre.blockID) {
+			entityPlayer.addStat(WeirdMain.weirdAchievemenGetWeird, 1);
+		}
+		super.onItemPickup(entityPlayer, itemStack);
+		logger.info("onItemPickup " + itemStack.getDisplayName() + " " + entityPlayer);
+	}
+	
 	public void load() {
         logger.info("*********************************************load() start");
         logger.info("*********************************************load() complete");

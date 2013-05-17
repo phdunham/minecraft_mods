@@ -23,7 +23,7 @@ import net.minecraftforge.event.EventBus;
 import pdunham.weird.achievements.CraftingHandler;
 import pdunham.weird.achievements.WeirdAchievementBetterBoom;
 import pdunham.weird.achievements.WeirdAchievementGrenadeCreeper;
-import pdunham.weird.achievements.WeirdAchievementOre;
+import pdunham.weird.achievements.WeirdAchievementGetWeird;
 import pdunham.weird.achievements.WeirdAchievementPowder;
 import pdunham.weird.achievements.WeirdAchievementStartingOff;
 import pdunham.weird.achievements.WeirdAchievementStickyToIt;
@@ -103,7 +103,7 @@ public class WeirdClProxy extends WeirdCoProxy {
 		super.registerAchievements();
 
 		// Order matters. You must have the dependent Achievements registered first.
-    		WeirdMain.weirdAchievementOre = new WeirdAchievementOre();
+    		WeirdMain.weirdAchievemenGetWeird = new WeirdAchievementGetWeird();
     		WeirdMain.weirdAchievementStartingOff = new WeirdAchievementStartingOff();
     		WeirdMain.weirdAchievementPowder = new WeirdAchievementPowder();
     		WeirdMain.weirdAchievementGrenadeCreeper = new WeirdAchievementGrenadeCreeper();

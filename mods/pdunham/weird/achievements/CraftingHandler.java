@@ -16,9 +16,8 @@ public class CraftingHandler implements ICraftingHandler {
 	}
 
 	@Override
-	public void onCrafting(net.minecraft.entity.player.EntityPlayer player,
-						  net.minecraft.item.ItemStack item,
-						  net.minecraft.inventory.IInventory craftMatrix) {
+	public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) {
+		logger.info("onCrafting '" + item.getDisplayName() + "' - " + player);
         if ((item.itemID == WeirdMain.weirdAxe.itemID)     ||
         		(item.itemID == WeirdMain.weirdPickaxe.itemID) ||
         		(item.itemID == WeirdMain.weirdShovel.itemID)  ||
@@ -37,7 +36,10 @@ public class CraftingHandler implements ICraftingHandler {
 
 
 	@Override
-	public void onSmelting(net.minecraft.entity.player.EntityPlayer player,
-						   net.minecraft.item.ItemStack item) {
-	}
+	public void onSmelting(EntityPlayer player, ItemStack item) {
+		logger.info("onSmelting '" + item.getDisplayName() + "' - " + player);
+		if (item.itemID == WeirdMain.weirdIngot.itemID) {
+			player.triggerAchievement(WeirdMain.weirdAchievemenGetWeird);
+		}
+	} 
 }

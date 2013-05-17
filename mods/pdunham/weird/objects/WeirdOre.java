@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import pdunham.weird.common.StandardLogger;
@@ -65,13 +66,6 @@ public class WeirdOre extends Block {
 		logger.info("postInit() complete newId: " + blockID);
 	}
 
-	// trigger the acheivement
-    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6) {
-    		super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
-    		par2EntityPlayer.triggerAchievement(WeirdMain.weirdAchievementOre);
-		logger.info("harvestBlock()");
-	}
-	
 	// Define what the block drops when mined
 	public int idDropped(int zero1, Random random, int zero2) {
 		int itemId = WeirdMain.weirdOre.blockID;
