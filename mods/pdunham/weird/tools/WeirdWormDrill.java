@@ -33,7 +33,7 @@ public class WeirdWormDrill extends ItemPickaxe {
         setItemName("weirdWormDrill");
         
         // Set the texture.
-        setIconCoord(5, 0);
+        setIconCoord(2, 2);
         
         logger.info("c'tor() complete id: " + id);
 	}
@@ -70,10 +70,10 @@ public class WeirdWormDrill extends ItemPickaxe {
 			logger.info("Harvest normal block? " + world.isBlockNormalCubeDefault(x, y, z, false));
 			if (world.isBlockNormalCubeDefault(x, y, z, false)) {
 				
-				// Give the player the block, if it is a normal block.
-				ItemStack stack = new ItemStack(Block.blocksList[blockID], 1);
-				boolean added = player.inventory.addItemStackToInventory(stack);
-				// logger.info("Harvested " + stack.getItemName());
+				// Drop the block on the ground if it is a 'normal' block
+				Block block = Block.blocksList[blockID];
+				block.dropBlockAsItem(world, x, y, z, 1, 1);
+				logger.info("Harvested " + block.getBlockName());
 				harvested = true;
 			}
 			// Remove the block at the location
