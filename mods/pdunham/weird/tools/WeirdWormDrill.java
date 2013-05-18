@@ -2,6 +2,8 @@ package pdunham.weird.tools;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,6 +61,11 @@ public class WeirdWormDrill extends ItemPickaxe {
 	public String getTextureFile(){
 		return WeirdConstants.pathTexturesIcons;
 	}	
+
+	@SideOnly(Side.CLIENT)
+	public boolean hasEffect(ItemStack is) {
+		return true;
+	}
 	
 	private boolean harvest(EntityPlayer player, World world, int x, int y, int z) {
 		// Check to see if there is a block at the location
@@ -67,13 +74,13 @@ public class WeirdWormDrill extends ItemPickaxe {
 		// logger.info("Harvest blockid " + blockID);
 		if (blockID != 0) {
 			
-			logger.info("Harvest normal block? " + world.isBlockNormalCubeDefault(x, y, z, false));
+			// logger.info("Harvest normal block? " + world.isBlockNormalCubeDefault(x, y, z, false));
 			if (world.isBlockNormalCubeDefault(x, y, z, false)) {
 				
 				// Drop the block on the ground if it is a 'normal' block
 				Block block = Block.blocksList[blockID];
 				block.dropBlockAsItem(world, x, y, z, 1, 1);
-				logger.info("Harvested " + block.getBlockName());
+				// logger.info("Harvested " + block.getBlockName());
 				harvested = true;
 			}
 			// Remove the block at the location
