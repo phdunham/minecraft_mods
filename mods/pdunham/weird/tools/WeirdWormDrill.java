@@ -1,5 +1,8 @@
 package pdunham.weird.tools;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -20,6 +23,7 @@ import pdunham.weird.common.WeirdMain;
 public class WeirdWormDrill extends ItemPickaxe {
 
 	private static StandardLogger logger = new StandardLogger();
+	private static List<Integer> nonHarvestableBlocks = new ArrayList<Integer>();
 
  	// Standard c'tor
 	public WeirdWormDrill(int id) {
@@ -36,6 +40,15 @@ public class WeirdWormDrill extends ItemPickaxe {
         
         // Set the texture.
         setIconCoord(2, 2);
+        
+        // Set list of block that cannot be harvested.
+        nonHarvestableBlocks.add(Block.bedrock.blockID);
+        nonHarvestableBlocks.add(Block.lavaMoving.blockID);
+        nonHarvestableBlocks.add(Block.lavaStill.blockID);
+        nonHarvestableBlocks.add(Block.waterMoving.blockID);
+        nonHarvestableBlocks.add(Block.waterStill.blockID);
+        nonHarvestableBlocks.add(Block.fire.blockID);
+        nonHarvestableBlocks.add(Block.leaves.blockID);
         
         logger.info("c'tor() complete id: " + id);
 	}
@@ -70,16 +83,16 @@ public class WeirdWormDrill extends ItemPickaxe {
 	private boolean harvest(EntityPlayer player, World world, int x, int y, int z) {
 		// Check to see if there is a block at the location
 		boolean harvested = false;
-		int blockID = world.getBlockId(x,  y,  z); 
-		// logger.info("Harvest blockid " + blockID);
-		if (blockID != 0) {
-			
-			// logger.info("Harvest normal block? " + world.isBlockNormalCubeDefault(x, y, z, false));
-			if (world.isBlockNormalCubeDefault(x, y, z, false)) {
-				
+		int blockID = world.getBlockId(x,  y,  z);
+		int meta = world.getBlockMetadata(x,  y,  z);
+		
+		// Don't harvest air or bed rock.
+		if (blockID != 0 && blockID != Block.bedrock.blockID) {
+			if (!nonHarvestableBlocks.contains(blockID)) { 
+
 				// Drop the block on the ground if it is a 'normal' block
 				Block block = Block.blocksList[blockID];
-				block.dropBlockAsItem(world, x, y, z, 1, 1);
+				block.dropBlockAsItem(world, x, y, z, meta, 1);
 				// logger.info("Harvested " + block.getBlockName());
 				harvested = true;
 			}

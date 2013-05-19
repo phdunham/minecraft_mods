@@ -81,6 +81,7 @@ public class QuickEditWand extends ItemAxe {
 			int yStop  = (y1 <= y2) ? y2 : y1;
 			int zStart = (z1 <= z2) ? z1 : z2;
 			int zStop  = (z1 <= z2) ? z2 : z1;
+			int totalBlocks = (xStop - xStart) * (yStop - yStart) * (zStop - zStart);
 
 			int blockCount = 0;
 			// logger.finest("Params " + x1 + ", " + z1 + " h=" + y1);
@@ -93,6 +94,9 @@ public class QuickEditWand extends ItemAxe {
 						// World.addBlockEvent(X,Y,Z, BlockID, EventID, EventParameter)
 						world.setBlockAndMetadata(ix, iy, iz, currentBlockID, currentBlockMetaData);
 						blockCount++;
+						if ((blockCount %25000) == 0) {
+							player.addChatMessage(blockCount + " blocks out of " + totalBlocks + " " + mode);
+						} 
 					}
 				}
 			}

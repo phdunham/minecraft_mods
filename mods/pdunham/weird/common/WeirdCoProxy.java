@@ -14,6 +14,13 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
+import pdunham.weird.achievements.CraftingHandler;
+import pdunham.weird.achievements.WeirdAchievementBetterBoom;
+import pdunham.weird.achievements.WeirdAchievementGetWeird;
+import pdunham.weird.achievements.WeirdAchievementGrenadeCreeper;
+import pdunham.weird.achievements.WeirdAchievementPowder;
+import pdunham.weird.achievements.WeirdAchievementStartingOff;
+import pdunham.weird.achievements.WeirdAchievementStickyToIt;
 import pdunham.weird.armor.WeirdBoots;
 import pdunham.weird.armor.WeirdChestPlate;
 import pdunham.weird.armor.WeirdHelmet;
@@ -58,6 +65,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 
@@ -255,8 +263,21 @@ public class WeirdCoProxy { // implements IGuiHandler {
 	}
 	
 	public void registerAchievements() {
-		logger.info("registerAchievements() start");
-		logger.info("registerAchievements() complete");
+		logger.info("registerAchievements start");
+		// super.registerAchievements();
+
+		// Order matters. You must have the dependent Achievements registered first.
+    		WeirdMain.weirdAchievemenGetWeird = new WeirdAchievementGetWeird();
+    		WeirdMain.weirdAchievementStartingOff = new WeirdAchievementStartingOff();
+    		WeirdMain.weirdAchievementPowder = new WeirdAchievementPowder();
+    		WeirdMain.weirdAchievementGrenadeCreeper = new WeirdAchievementGrenadeCreeper();
+    		WeirdMain.weirdAchievementBetterBoom = new WeirdAchievementBetterBoom();
+    		WeirdMain.weirdAchievementStickyToIt = new WeirdAchievementStickyToIt();
+    		
+    		// The Crafting handler let's us hook crafting and smelting to trigger achievements
+    		WeirdMain.craftingHandler = new CraftingHandler();
+    		GameRegistry.registerCraftingHandler(WeirdMain.craftingHandler);    		
+		logger.info("registerAchievements complete");
 	}
 
 	public void sendTextToServer(String msg) {

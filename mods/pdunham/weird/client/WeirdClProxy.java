@@ -97,25 +97,6 @@ public class WeirdClProxy extends WeirdCoProxy {
         logger.info("registerRenderers() complete");
 	}
 	
-    @Override
-	public void registerAchievements() {
-		logger.info("registerAchievements start");
-		super.registerAchievements();
-
-		// Order matters. You must have the dependent Achievements registered first.
-    		WeirdMain.weirdAchievemenGetWeird = new WeirdAchievementGetWeird();
-    		WeirdMain.weirdAchievementStartingOff = new WeirdAchievementStartingOff();
-    		WeirdMain.weirdAchievementPowder = new WeirdAchievementPowder();
-    		WeirdMain.weirdAchievementGrenadeCreeper = new WeirdAchievementGrenadeCreeper();
-    		WeirdMain.weirdAchievementBetterBoom = new WeirdAchievementBetterBoom();
-    		WeirdMain.weirdAchievementStickyToIt = new WeirdAchievementStickyToIt();
-    		
-    		// The Crafting handler let's us hook crafting and smelting to trigger achievements
-    		WeirdMain.craftingHandler = new CraftingHandler();
-    		GameRegistry.registerCraftingHandler(WeirdMain.craftingHandler);    		
-		logger.info("registerAchievements complete");
-	}
-
 	@Override
 	public void sendTextToServer(String msg) {
 		logger.info("sendTextToServer(" + FMLCommonHandler.instance().getEffectiveSide() + ") start " + msg);
