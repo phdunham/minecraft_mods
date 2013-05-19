@@ -59,13 +59,13 @@ public class WeirdWormDrill extends ItemPickaxe {
 
 		// Register the block w/ MineCraft
 		GameRegistry.registerItem(this, "weirdWormDrill");
+
 		// Set the external name
 		LanguageRegistry.addName(this, "Weird Worm Drive Drill");
 
-		// A weird pickaxe is 3 weird ingots and 2 iron ingots
-		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdWormDrill), "www", " i ", " i ",
-							'w', new ItemStack(WeirdMain.weirdIngot),
-							'i', new ItemStack(Item.ingotIron));
+		GameRegistry.addRecipe(new ItemStack(WeirdMain.weirdWormDrill), "www", " dw", "d w",
+		  				  'w', new ItemStack(WeirdMain.weirdPlating),
+						  'd', new ItemStack(Item.diamond));
 		
 		logger.info("postInit() complete newId: " + itemID);
 	}
