@@ -1,0 +1,8 @@
+
+language.name=English
+language.region=US
+language.code=en_US
+
+commands.drill.usage=/drill <default | tube>
+commands.drill.default=Drill set to default worm mode
+commands.drill.tube=Drill set to tube mode

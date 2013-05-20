@@ -2,6 +2,7 @@ package pdunham.weird.common;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumArmorMaterial;
@@ -27,6 +28,7 @@ import pdunham.weird.armor.WeirdChestPlate;
 import pdunham.weird.armor.WeirdHelmet;
 import pdunham.weird.armor.WeirdLeggins;
 import pdunham.weird.armor.WeirdPlating;
+import pdunham.weird.commands.CommandDrill;
 import pdunham.weird.common.core.handlers.WeirdClientPacketHandler;
 import pdunham.weird.common.core.handlers.WeirdServerPacketHandler;
 import pdunham.weird.entity.EntityGrenade;
@@ -61,6 +63,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -112,6 +115,9 @@ public class WeirdMain extends BaseMod {
 
     @Instance("WeirdWormDrill")
   	public static WeirdWormDrill weirdWormDrill;
+
+    @Instance("CommandDrill")
+  	public static CommandDrill commandDrill;
 
     @Instance("WeirdSlingShot")
     public static WeirdSlingShot weirdSlingShot;
@@ -252,4 +258,13 @@ public class WeirdMain extends BaseMod {
         logger.info("*********************************************load() start");
         logger.info("*********************************************load() complete");
 	}
+	
+	 @Mod.ServerStarting
+     public void ServerStarting(FMLServerStartingEvent event) {
+		 logger.info("ServerStarting() start");
+		 ServerCommandManager manager = (ServerCommandManager)event.getServer().getCommandManager();
+		 commandDrill = new CommandDrill();
+         manager.registerCommand(commandDrill);
+		 logger.info("ServerStarting() end");
+	 }
 }

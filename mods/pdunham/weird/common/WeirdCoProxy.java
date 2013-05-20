@@ -2,12 +2,16 @@ package pdunham.weird.common;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.net.URL;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.client.Minecraft;
+import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
@@ -27,6 +31,7 @@ import pdunham.weird.armor.WeirdHelmet;
 import pdunham.weird.armor.WeirdLeggins;
 import pdunham.weird.armor.WeirdPlating;
 import pdunham.weird.client.model.ModelWeirdBaby;
+import pdunham.weird.commands.CommandDrill;
 import pdunham.weird.common.WeirdConfig;
 import pdunham.weird.common.core.handlers.WeirdConnectionHandler;
 import pdunham.weird.entity.EntityGrenade;
@@ -126,7 +131,7 @@ public class WeirdCoProxy { // implements IGuiHandler {
 
         logger.info("registerItems() complete");
 	}
-
+	
 	// A helper function when we register tiles
 	public void registerTiles(){
         logger.info("registerTiles() start");
@@ -176,6 +181,7 @@ public class WeirdCoProxy { // implements IGuiHandler {
         ((WeirdGrenade)WeirdMain.weirdStrongGrenade).postInit();
         ((WeirdPoop) WeirdMain.weirdPoop).postInit();
         ((WeirdWormDrill) WeirdMain.weirdWormDrill).postInit();
+        registerLanguageResources();
 		logger.info("postInit() complete");
 	}
 
@@ -301,5 +307,11 @@ public class WeirdCoProxy { // implements IGuiHandler {
 			logger.warn("sendTextToClient(" + FMLCommonHandler.instance().getEffectiveSide() + ") failed to " + toPlayer + ", " + msg);
 		    ex.printStackTrace();
 		}
+	}
+	
+	public void registerLanguageResources() {
+		logger.info("registerLanguageResources started");
+		LanguageRegistry.instance().loadLocalization(WeirdConstants.baseLanguageLocalizations + "en_US.lang", "en_US", false);
+		logger.info("registerLanguageResources complete");
 	}
 }

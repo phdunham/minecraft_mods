@@ -10,6 +10,7 @@ public class WeirdConstants {
     
     public static final String baseSounds = "/pdunham/weird/sounds/";
     public static final String baseTextures = "/pdunham/weird/textures/";
+    public static final String baseLanguageLocalizations = "/pdunham/weird/lang/";
     public static final String packetChannelName = "pdunhamWeird";
 
     public static final String pathTexturesIcons 			= baseTextures + "weirdIcons.png";

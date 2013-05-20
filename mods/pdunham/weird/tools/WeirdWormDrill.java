@@ -101,7 +101,6 @@ public class WeirdWormDrill extends ItemPickaxe {
 		}
 		return harvested;
 	}
-
 	private void activateWormDrill(EntityPlayer player, World world, int xs, int ys, int zs, int blockFace) {
 		int delta = 2;
 		int areaDrilledCount = 0;
@@ -165,13 +164,82 @@ public class WeirdWormDrill extends ItemPickaxe {
 		// create a circular hole. Set the direction based on which block face is clicked on.
 		logger.info("Activated " + xs + ", " + ys + ", " + zs + ", " + blockFace + " area harvested: " + areaDrilledCount + " blocks reclaimed " + blockHarvestCount);
 	}
+
+	private void activateTubeDrill(EntityPlayer player, World world, int xs, int ys, int zs, int blockFace) {
+		int delta = 1;
+		int areaDrilledCount = 0;
+		int blockHarvestCount = 0;
+		for (int d1 = -delta; d1 <= delta; d1++) {
+				for (int d2 = 0; d2 <= (delta * 2) + 1; d2++) {
+					for (int d3 = 0; d3 <= 15; d3++) {
+ 					int x = 0, y = 0, z = 0;
+
+ 					switch (blockFace) {
+ 						// Block faces:
+						//   y = 0
+			            case 0:
+		 					x = xs + d1;
+		 					y = ys + d3;
+		 					z = zs + d2;
+	                    break;
+	 				
+	                    //  -y = 1
+			            case 1:
+		 					x = xs + d1;
+		 					y = ys - d3;
+		 					z = zs + d2;
+	                    break;
+	 				
+	                    //   z = 2
+			            case 2:
+		 					x = xs + d1;
+		 					y = ys + d2;
+		 					z = zs + d3;
+	                    break;
+	 			
+	                    //  -z = 3
+			            case 3:
+		 					x = xs + d1;
+		 					y = ys + d2;
+		 					z = zs - d3;
+	                    break;
+	 					
+		                //   x = 4
+			            case 4:
+		 					x = xs + d3;
+		 					y = ys + d2;
+		 					z = zs + d1;
+		                break;
+
+		                //  -x = 5
+			            case 5:
+		 					x = xs - d3;
+		 					y = ys + d2;
+		 					z = zs + d1;
+	                    break;
+					}
+					if (harvest(player, world, x, y, z)) {
+						blockHarvestCount++;
+					}
+					areaDrilledCount++;
+				}
+			}
+		}
+		// create a circular hole. Set the direction based on which block face is clicked on.
+		logger.info("Activated " + xs + ", " + ys + ", " + zs + ", " + blockFace + " area harvested: " + areaDrilledCount + " blocks reclaimed " + blockHarvestCount);
+	}
 	
 	@Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int blockFace, float par8, float par9, float par10) {
 		if (!world.isRemote) {
 			// logger.info("onItemUse location " + x + ", " + z + "  h=" + y + " player=" + player);
+			if (WeirdMain.commandDrill.getDrillMode() == "tube") {
+				activateTubeDrill(player, world, x, y, z, blockFace);
+				return true;
+			}
 			activateWormDrill(player, world, x, y, z, blockFace);
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
