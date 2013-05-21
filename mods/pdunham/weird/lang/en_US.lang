@@ -3,6 +3,10 @@ language.name=English
 language.region=US
 language.code=en_US
 
-commands.drill.usage=/drill <default | tube>
-commands.drill.default=Drill set to default worm mode
-commands.drill.tube=Drill set to tube mode
+commands.drill.usage=/drill <cone | cube | hall | tube | worm>
+commands.drill.worm=Drill shape set to default worm mode
+commands.drill.tube=Drill shape set to tube mode
+commands.drill.cube=Drill shape set to cube mode
+commands.drill.hall=Drill shape set to hall mode
+commands.drill.cone=Drill shape set to cone mode
+
