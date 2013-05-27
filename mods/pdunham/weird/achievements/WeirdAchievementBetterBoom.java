@@ -14,7 +14,7 @@ public class WeirdAchievementBetterBoom extends Achievement {
 
 	public WeirdAchievementBetterBoom() {
 		// id, name, x, y, item display, prerequisite
-		super(2005, "Weird Better Boom", 7, 13, WeirdMain.weirdTNT, null); //, WeirdMain.weirdAchievementPowder);
+		super(2005, "Weird Better Boom", 7, 13, WeirdMain.weirdTNT, WeirdMain.weirdAchievementPowder);
 		registerAchievement();
 
 		logger.info("c'tor() complete");

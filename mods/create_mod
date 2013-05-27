@@ -33,6 +33,12 @@ function CopySounds {
     do_cmd cp -r ~/work/minecraft_mods/mods/pdunham/$1/sounds/ ~/work/forge/mcp/reobf/minecraft/pdunham/$1/sounds/
 }
 
+# Copy the language resources to the compiled mod's folder
+function CopyLanguage {
+    do_cmd rm -rf ~/work/forge/mcp/reobf/minecraft/pdunham/$1/lang/
+    do_cmd cp -r ~/work/minecraft_mods/mods/pdunham/$1/lang/ ~/work/forge/mcp/reobf/minecraft/pdunham/$1/lang/
+}
+
 # Zip of the mod so we can use it in the minecraft/mods folder
 function ZipMod {
     do_cmd cd ~/work/forge/mcp/reobf/minecraft/
@@ -59,6 +65,7 @@ function CopyModIan {
 # Update the Texture resources
 CopyTextures 'weird'
 CopySounds   'weird'
+CopyLanguage 'weird'
 
 ZipMod 'weirdBlock.zip' 'weird*'
 CopyModLocalServer 'weirdBlock.zip'

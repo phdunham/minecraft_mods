@@ -14,7 +14,7 @@ public class WeirdAchievementGetWeird extends Achievement {
 
 	public WeirdAchievementGetWeird() {
 		// id, name, x, y, item display, prerequisite
-		super(2001, "Weird ingot", 1, 11, WeirdMain.weirdIngot, null); //, AchievementList.acquireIron); 
+		super(2001, "Weird ingot", 1, 11, WeirdMain.weirdIngot, AchievementList.acquireIron); 
 		registerAchievement();
 
 		logger.info("c'tor() complete");
