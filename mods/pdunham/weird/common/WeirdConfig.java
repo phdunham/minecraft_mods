@@ -57,6 +57,7 @@ public class WeirdConfig {
 	public static int weirdOreID				= 3125;
 	public static int weirdBlockID			= 3126;
 	public static int weirdTNTID				= 3127;
+	public static int weirdFurnaceID			= 3128;
 
 	public static void load(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -89,6 +90,7 @@ public class WeirdConfig {
         weirdOreID			= config.getBlock("weirdOreBlockID", 		weirdOreID, "Item ID").getInt();
         weirdBlockID			= config.getBlock("weirdBlockBlockID", 		weirdBlockID, "Item ID").getInt();
         weirdTNTID			= config.getBlock("weirdTNTBlockID", 		weirdTNTID, "Item ID").getInt();
+        weirdFurnaceID		= config.getBlock("weirdFurnaceBlockID",  	weirdFurnaceID, "Item ID").getInt();
         
         // Resave out the config so we always have a default config after 1st run.
 		config.save();    

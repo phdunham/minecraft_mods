@@ -35,6 +35,7 @@ import pdunham.weird.entity.EntityGrenade;
 import pdunham.weird.entity.EntityPebble;
 import pdunham.weird.entity.EntityWeirdBaby;
 import pdunham.weird.objects.WeirdBlock;
+import pdunham.weird.objects.WeirdFurnace;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdOre;
 import pdunham.weird.objects.WeirdPoop;
@@ -127,6 +128,9 @@ public class WeirdMain extends BaseMod {
 
     @Instance("WeirdTNT")
     public static WeirdTNT weirdTNT;
+
+    @Instance("WeirdFurnace")
+    public static WeirdFurnace weirdFurnace;
 
     @Instance("WeirdCasing")
     public static WeirdCasing weirdCasing;

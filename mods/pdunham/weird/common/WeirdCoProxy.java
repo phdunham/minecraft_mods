@@ -40,6 +40,7 @@ import pdunham.weird.entity.EntityStickyGrenade;
 import pdunham.weird.entity.EntityStrongGrenade;
 import pdunham.weird.entity.EntityWeirdBaby;
 import pdunham.weird.objects.WeirdBlock;
+import pdunham.weird.objects.WeirdFurnace;
 import pdunham.weird.objects.WeirdIngot;
 import pdunham.weird.objects.WeirdOre;
 import pdunham.weird.objects.WeirdPoop;
@@ -142,9 +143,10 @@ public class WeirdCoProxy { // implements IGuiHandler {
 	// Don't change the IDs
 	public void registerBlocks(){
         logger.info("registerBlocks() start");
-        WeirdMain.weirdOre = (new WeirdOre(WeirdConfig.weirdOreID));
-		WeirdMain.weirdBlock = new WeirdBlock(WeirdConfig.weirdBlockID);
-        WeirdMain.weirdTNT= new WeirdTNT(WeirdConfig.weirdTNTID);
+        WeirdMain.weirdOre 		= new WeirdOre(WeirdConfig.weirdOreID);
+		WeirdMain.weirdBlock 	= new WeirdBlock(WeirdConfig.weirdBlockID);
+        WeirdMain.weirdTNT		= new WeirdTNT(WeirdConfig.weirdTNTID);
+		WeirdMain.weirdFurnace 	= new WeirdFurnace(WeirdConfig.weirdFurnaceID);
         logger.info("registerBlocks() complete");
 	}
 
@@ -166,6 +168,7 @@ public class WeirdCoProxy { // implements IGuiHandler {
         ((WeirdSlingShot) WeirdMain.weirdSlingShot).postInit();
         ((WeirdPowder) WeirdMain.weirdPowder).postInit();
         ((WeirdTNT) WeirdMain.weirdTNT).postInit();
+        ((WeirdFurnace) WeirdMain.weirdFurnace).postInit();
         ((WeirdSword) WeirdMain.weirdSword).postInit();
         ((Pebble) WeirdMain.pebble).postInit();
         ((WeirdCasing) WeirdMain.weirdCasing).postInit();
